@@ -16,8 +16,7 @@ import{
 } from './../components/styles';
 
 
-const Welcome = ({navigation, route}) => {
-    const {nome} = route.params;
+const Welcome = ({navigation}) => {
     return (
         <>
             <StatusBar style = "light" />
@@ -25,7 +24,7 @@ const Welcome = ({navigation, route}) => {
                 <WelcomeImage resizeMode= "cover" source = {require('./../assets/logo.png')}/>
                 <WelcomeContainer>
                     <PageTitle welcome={true}>Bem vindo!</PageTitle>
-                    <SubTitle welcome={true}>{nome || 'Fulano'}</SubTitle>
+                    <SubTitle welcome={true}>Fulano</SubTitle>
                     <StyledFormArea>
                     <Avatar resizeMode= "cover" source = {require('./../assets/logo.png')} />
                     <Line />
