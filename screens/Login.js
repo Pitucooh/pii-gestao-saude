@@ -47,7 +47,7 @@ const Login = ({navigation}) => {
 
     const handleLogin = (credentials, setSubmitting) => {
         handleMessage(null);
-        const url = 'http://localhost:3000/user/signin';
+        const url = 'http://10.2.128.110:3000/user/signin';
 
         axios
         .post(url, credentials)
