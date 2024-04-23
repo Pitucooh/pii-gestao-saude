@@ -28,7 +28,7 @@ router.post('/signup', (req, res) => {
     } else if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(CPF)){
         res.json({
             status: "FALHOU",
-            message: "CPF inválido inserido"
+            message: "CPF inválido inserido. Por favor, insira no formato xxx.xxx.xxx-xx"
         })
     } else if (senha.length < 8){
         res.json({
