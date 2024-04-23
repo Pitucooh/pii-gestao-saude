@@ -20,11 +20,11 @@ router.post('/signup', (req, res) => {
             status: "FALHOU",
             message: "Campos de entrada vazios!"
         });
-    } else if (!/^[a-zA-Z\s]*$/.test(nome)){
+    } else if (!/^[a-zA-ZÀ-ÿ\s]*$/.test(nome)){
         res.json({
             status: "FALHOU",
             message: "Nome inválido inserido"
-        })
+        })    
     } else if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(CPF)){
         res.json({
             status: "FALHOU",
