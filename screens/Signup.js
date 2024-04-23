@@ -10,7 +10,6 @@ import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons';
 import{
     StyledContainer,
     InnerContainer,
-    PageLogo,
     PageTitle,
     SubTitle,
     StyledFormArea,
@@ -29,7 +28,7 @@ import{
     TextLinkContent
 } from './../components/styles';
 
-import {View} from 'react-native';
+import {View, ActivityIndicator} from 'react-native';
 
 //Colors
 const {brand, darkLight, primary} = Colors;
@@ -37,8 +36,48 @@ const {brand, darkLight, primary} = Colors;
 // keyboard avoiding wrapper
 import KeyboardWrapper from '../components/KeyboardWrapper';
 
+//api client
+import axios from 'axios';
+
 const Signup = ({navigation}) => {
     const [hidePassword, setHidePassword] = useState(true);
+    const [message, setMessage] = useState();
+    const [messageType, setMessageType] = useState();
+
+    //form handling
+    const handleSignup = (credentials, setSubmitting) => {
+        handleMessage(null);
+        const url = 'http://192.168.15.102:3000/user/signup';
+
+        axios
+        .post(url, credentials)
+        .then((response) => {
+            const result = response.data;
+            const {message, status, data} = result;
+
+            if (status !== 'SUCESSO'){
+                handleMessage(message, status)
+            } else{
+                navigation.navigate('Welcome', {...data});
+            }
+            setSubmitting(false);
+        })
+        .catch((error) => {
+            console.error("Erro ao processar requisição:", error);
+            if (error.response) {
+                // O servidor retornou um status de erro
+                console.error("Detalhes do erro:", error.response.data);
+            }
+            setSubmitting(false);
+            handleMessage("Ocorreu um erro. Verifique sua conexão de rede e tente novamente.");
+        });
+        
+    };
+
+    const handleMessage = (message, type = 'FALHOU') => {
+        setMessage(message);
+        setMessageType(type);
+    };
 
     return (
         <KeyboardWrapper>
@@ -49,22 +88,36 @@ const Signup = ({navigation}) => {
                 <SubTitle>Fazer Cadastro</SubTitle>
 
                 <Formik
-                    initialValues={{ nomeCompleto: '', email: '', CPF: '', senha: '', confirmeSenha: ''}}
-                    onSubmit={(values) => {
-                        console.log(values);
-                        navigation.navigate('Welcome');
+                    initialValues={{ nome: '', email: '', CPF: '', senha: '', confirmeSenha: ''}}
+                    onSubmit={(values, {setSubmitting}) => {
+                        values = {...values};
+                        if (values.email == ''|| 
+                            values.senha == '' || 
+                            values.nome == ''|| 
+                            values.CPF == '' || 
+                            values.confirmeSenha == ''
+                        ){
+                            handleMessage('Por favor, preencha todos os campos');
+                            setSubmitting(false);
+                        } else if (values.senha !== values.confirmeSenha){
+                            handleMessage('Por favor, verifique se as senhas digitadas são iguais');
+                            setSubmitting(false);
+                        }
+                        else {
+                            handleSignup(values, setSubmitting);
+                        }     
                     }}
                 >
-                    {({ handleChange, handleBlur, handleSubmit, values }) => (
+                    {({ handleChange, handleBlur, handleSubmit, values, isSubmitting }) => (
                         <StyledFormArea>
                             <MyTextInput
                                 label = "Nome Completo"
                                 icon="person"
                                 placeholder=""
                                 placeholderTextColor={darkLight}
-                                onChangeText={handleChange('nomeCompleto')}
-                                onBlur={handleBlur('nomeCompleto')}
-                                value={values.nomeCompleto}
+                                onChangeText={handleChange('nome')}
+                                onBlur={handleBlur('nome')}
+                                value={values.nome}
                             />
                             <MyTextInput
                                 label = "Email"
@@ -113,11 +166,18 @@ const Signup = ({navigation}) => {
                             />
                 
     
-                            <MsgBox>...</MsgBox>
-
+                            <MsgBox type={messageType}>{message}</MsgBox>
+                           
+                            {!isSubmitting &&
                             <StyledButton onPress={handleSubmit}>
-                                <ButtonText>Cadastrar</ButtonText>
-                            </StyledButton>
+                                <ButtonText>Cadastro</ButtonText>
+                            </StyledButton>}
+
+                            {isSubmitting && (
+                                <StyledButton disabled={true}>
+                                    <ActivityIndicator size="large" color={primary} />
+                            </StyledButton>)}
+
                             <Line />
                             <ExtraView>
                                 <ExtraText>Já tem uma conta?</ExtraText>
