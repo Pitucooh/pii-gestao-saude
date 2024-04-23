@@ -29,7 +29,7 @@ import{
     TextLinkContent
 } from './../components/styles';
 
-import {View, ActivityIndicator} from 'react-native';
+import {View} from 'react-native';
 
 //Colors
 const {brand, darkLight, primary} = Colors;
@@ -37,47 +37,8 @@ const {brand, darkLight, primary} = Colors;
 // keyboard avoiding wrapper
 import KeyboardWrapper from '../components/KeyboardWrapper';
 
-//API client
-import axios from 'axios';
-
 const Login = ({navigation}) => {
     const [hidePassword, setHidePassword] = useState(true);
-    const [message, setMessage] = useState();
-    const [messageType, setMessageType] = useState();
-
-    const handleLogin = (credentials, setSubmitting) => {
-        handleMessage(null);
-        const url = 'http://10.2.128.110:3000/user/signin';
-
-        axios
-        .post(url, credentials)
-        .then((response) => {
-            const result = response.data;
-            const {message, status, data} = result;
-
-            if (status !== 'SUCESSO'){
-                handleMessage(message, status)
-            } else{
-                navigation.navigate('Welcome', {...data[0]});
-            }
-            setSubmitting(false);
-        })
-        .catch((error) => {
-            console.error("Erro ao processar requisição:", error);
-            if (error.response) {
-                // O servidor retornou um status de erro
-                console.error("Detalhes do erro:", error.response.data);
-            }
-            setSubmitting(false);
-            handleMessage("Ocorreu um erro. Verifique sua conexão de rede e tente novamente.");
-        });
-        
-    };
-
-    const handleMessage = (message, type = 'FALHOU') => {
-        setMessage(message);
-        setMessageType(type);
-    };
 
     return (
     <KeyboardWrapper>
@@ -90,16 +51,12 @@ const Login = ({navigation}) => {
 
                 <Formik
                     initialValues={{ email: '', senha: '' }}
-                    onSubmit={(values, {setSubmitting}) => {
-                        if (values.email == ''|| values.senha == ''){
-                            handleMessage('Por favor, preencha todos os campos');
-                            setSubmitting(false);
-                        } else {
-                            handleLogin(values, setSubmitting);
-                        }     
+                    onSubmit={(values) => {
+                        console.log(values);
+                        navigation.navigate("Welcome");
                     }}
                 >
-                    {({ handleChange, handleBlur, handleSubmit, values, isSubmitting}) => (
+                    {({ handleChange, handleBlur, handleSubmit, values }) => (
                         <StyledFormArea>
                             <MyTextInput
                                 label = "Seu e-mail"
@@ -125,17 +82,11 @@ const Login = ({navigation}) => {
                                 setHidePassword = {setHidePassword}
                             />
 
-                            <MsgBox type={messageType}>{message}</MsgBox>
-                            {!isSubmitting &&
+                            <MsgBox>...</MsgBox>
+
                             <StyledButton onPress={handleSubmit}>
                                 <ButtonText>Login</ButtonText>
-                            </StyledButton>}
-
-                            {isSubmitting && (
-                                <StyledButton disabled={true}>
-                                    <ActivityIndicator size="large" color={primary} />
-                            </StyledButton>)}
-
+                            </StyledButton>
                             <Line />
                             <StyledButton google={true} onPress={handleSubmit}>
                                 <Fontisto name="google" color={primary} size={25} />
