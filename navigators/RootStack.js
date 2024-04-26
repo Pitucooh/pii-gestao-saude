@@ -11,6 +11,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './../screens/Login';
 import Signup from './../screens/Signup';
 import Welcome from './../screens/Welcome';
+import Menu from './../screens/Menu';
+import Consultas from './../screens/Consultas';
+import Exames from './../screens/Exames';
+import Medicacoes from './../screens/Medicacoes';
+import Meusdados from './../screens/Meusdados';
+
+
 
 const Stack = createStackNavigator();
 
@@ -22,19 +29,29 @@ const RootStack = () => {
                 headerStyle:  {
                     backgroundColor: 'transparent'
                 },
-                headerTintColor: tertiary,
                 headerTransparent: true,
                 headerTitle: '',
                 headerLeftContainerStyle: {
                     paddingLeft: 20
                 },
-                headerBackTitle: 'Voltar' 
+                headerBackTitle: 'Voltar',
+                headerBackTitleStyle: {
+                    color: '#000' 
+                }            
             }}
             initialRouteName="Login"
             >
                 <Stack.Screen name= "Login" component={Login} />
                 <Stack.Screen name= "Signup" component={Signup} />
-                <Stack.Screen options = {{headerTintColor: primary}} name= "Welcome" component={Welcome} />
+                <Stack.Screen options = {{headerTintColor: '#000' }} name= "Welcome" component={Welcome} />
+                <Stack.Screen options = {{headerTintColor: '#000' }} name= "Menu" component={Menu} />
+                <Stack.Screen options = {{headerTintColor: '#000' }} name= "Consultas" component={Consultas} />
+                <Stack.Screen options = {{headerTintColor: '#000' }} name= "Exames" component={Exames} />
+                <Stack.Screen options = {{headerTintColor: '#000' }} name= "Medicacoes" component={Medicacoes} />
+                <Stack.Screen options = {{headerTintColor: '#000' }} name= "Meusdados" component={Meusdados} />
+
+
+
             </Stack.Navigator>
         </NavigationContainer>
     )    
