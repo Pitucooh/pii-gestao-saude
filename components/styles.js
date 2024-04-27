@@ -24,7 +24,7 @@ export const StyledContainer = styled.View`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight + 30}px;
-    background-color: ${primary};
+    background-color: ${ECF5F2};
     display: flex;
     flex-direction: column;
     padding-top: calc(env(safe-area-inset-top) + 30px);
@@ -68,15 +68,19 @@ export const WelcomeImage = styled.Image`
 
 export const PageTitle = styled.Text`
     font-size: 36px;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
     color: black;
     padding: 10px;
+    line-height: 1.5; 
+    white-space: pre-wrap; 
+    word-break: keep-all; 
 
     ${(props) => props.welcome && `
     font-size: 35px;
-        `}
-    `;
+    `}
+`;
+
 
 export const SubTitle = styled.Text`
     font-size: 18px;
@@ -125,7 +129,7 @@ export const RightIcon = styled.TouchableOpacity`
 
 export const StyledButton = styled.TouchableOpacity`
     padding: 15px;
-    background-color: black;
+    background-color: #709383;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
