@@ -59,7 +59,7 @@ const Login = ({navigation}) => {
                     {({ handleChange, handleBlur, handleSubmit, values }) => (
                         <StyledFormArea>
                             <MyTextInput
-                                label = "Seu e-mail"
+                                label = "E-mail"
                                 icon="mail"
                                 placeholder="Digite o seu email"
                                 placeholderTextColor={darkLight}
@@ -69,7 +69,7 @@ const Login = ({navigation}) => {
                                 keyboardType="email-address"
                             />
                                 <MyTextInput
-                                label="Sua Senha"
+                                label="Senha"
                                 icon="lock"
                                 placeholder="* * * * * * * * *"
                                 placeholderTextColor={darkLight}

@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
 import Constants from 'expo-constants';
+import { useFonts } from 'expo-font';
+
 
 const StatusBarHeight = Constants.statusBarHeight;
+
 
 //colors
 export const Colors = {
@@ -21,7 +24,15 @@ export const StyledContainer = styled.View`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight + 30}px;
-    background-color: ${primary};`;
+    background-color: ${primary};
+    display: flex;
+    flex-direction: column;
+    padding-top: calc(env(safe-area-inset-top) + 30px);
+    background-color: var(--primary);
+    width: 100%;
+    box-sizing: border-box;
+    height: 100vh;`;
+    
 
 export const InnerContainer = styled.View`
     flex: 1;
