@@ -24,14 +24,14 @@ export const StyledContainer = styled.View`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight + 30}px;
-    background-color: ${ECF5F2};
+    background-color: '#ECF5F2';
     display: flex;
     flex-direction: column;
     padding-top: calc(env(safe-area-inset-top) + 30px);
     background-color: var(--primary);
     width: 100%;
     box-sizing: border-box;
-    height: 100vh;`;
+    height: 100%;`;
     
 
 export const InnerContainer = styled.View`
