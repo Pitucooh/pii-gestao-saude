@@ -18,6 +18,7 @@ export const Colors = {
     red: '#EF4444',
 }
 
+
 const { primary, secondary, tertiary, darkLight, brand, green, red} = Colors;
 
 export const StyledContainer = styled.View`
@@ -27,12 +28,12 @@ export const StyledContainer = styled.View`
     background-color: '#ECF5F2';
     display: flex;
     flex-direction: column;
-    padding-top: calc(env(safe-area-inset-top) + 30px);
-    background-color: var(--primary);
     width: 100%;
     box-sizing: border-box;
-    height: 100%;`;
+    height: 100%;
+`;
     
+
 
 export const InnerContainer = styled.View`
     flex: 1;
@@ -80,6 +81,7 @@ export const PageTitle = styled.Text`
     font-size: 35px;
     `}
 `;
+
 
 
 export const SubTitle = styled.Text`

@@ -7,6 +7,8 @@ import { Formik } from 'formik';
 //icons
 import {Octicons, Ionicons, Fontisto} from '@expo/vector-icons';
 
+const darkGreen = Colors.darkGreen
+
 import{
     StyledContainer,
     InnerContainer,
@@ -31,6 +33,8 @@ import{
 
 import {View} from 'react-native';
 
+
+
 //Colors
 const {brand, darkLight, primary} = Colors;
 
@@ -46,7 +50,7 @@ const Login = ({navigation}) => {
             <StatusBar style = "dark" />
             <InnerContainer>
                 <PageLogo resizeMode= "cover" source = {require('./../assets/logo.png')} />
-                <PageTitle>Gestão Saude</PageTitle>
+                <PageTitle>YE Gestão em Saúde</PageTitle>
                 <SubTitle>Fazer Login</SubTitle>
 
                 <Formik
@@ -85,20 +89,20 @@ const Login = ({navigation}) => {
                             <MsgBox>...</MsgBox>
 
                             <StyledButton onPress={handleSubmit}>
-                                <ButtonText>Login</ButtonText>
-                            </StyledButton>
-                            <Line />
-                            <StyledButton google={true} onPress={handleSubmit}>
-                                <Fontisto name="google" color={primary} size={25} />
-                                <ButtonText google={true}>Entrar com o google</ButtonText>
-                            </StyledButton>
-                            <ExtraView>
-                                <ExtraText>Não tem uma conta ainda?</ExtraText>
-                                <TextLink onPress={() => navigation.navigate('Signup')}>
-                                    <TextLinkContent>Cadastre-se</TextLinkContent>
-                                </TextLink>
-                        </ExtraView>     
-                        </StyledFormArea>
+                                    <ButtonText>Login </ButtonText>
+                                </StyledButton>
+                                <Line />
+                                <StyledButton google={true} onPress={handleSubmit}>
+                                    <Fontisto name="google" color={primary} size={25} style={{ marginRight: 10 }} />
+                                    <ButtonText google={true}>Entrar com o Google</ButtonText>
+                                </StyledButton>
+                                <ExtraView>
+                                    <ExtraText>Não tem uma conta ainda?</ExtraText>
+                                    <TextLink onPress={() => navigation.navigate('Signup')} >
+                                        <TextLinkContent> Cadastre-se</TextLinkContent>
+                                    </TextLink>
+                                </ExtraView>
+                            </StyledFormArea>
                     )}
                 </Formik>
             </InnerContainer>
@@ -106,6 +110,8 @@ const Login = ({navigation}) => {
         </KeyboardWrapper>
     );
 };
+
+
 
 const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ...props}) =>{
     return (
