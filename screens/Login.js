@@ -76,15 +76,23 @@ const Login = ({navigation}) => {
                 >
                      {({ handleChange, handleBlur, handleSubmit, values }) => (
                     <StyledFormArea>
-                        <MyTextInput
+                       <MyTextInput
                             label="E-mail"
                             icon="mail"
                             placeholder="Digite o seu email"
-                            placeholderTextColor={darkLight}
+                            placeholderTextColor="#FFFFFF"  
                             onChangeText={handleChange('email')}
                             onBlur={handleBlur('email')}
                             value={values.email}
                             keyboardType="email-address"
+                            style={{
+                                backgroundColor: 'green',  
+                                borderRadius: 20,          
+                                borderWidth: 0            
+                            }}
+                            inputStyle={{
+                                color: 'white'            
+                            }}
                         />
                         <MyTextInput
                             label="Senha"
@@ -105,7 +113,7 @@ const Login = ({navigation}) => {
                         <StyledButton onPress={handleSubmit}>
                             <ButtonText>Login</ButtonText>
                         </StyledButton>
-                        <Line />
+                      
                         <StyledButton google={true} onPress={handleSubmit}>
                             <Fontisto name="google" color={primary} size={25} style={{ marginRight: 10 }} />
                             <ButtonText google={true}>Entrar com o Google</ButtonText>

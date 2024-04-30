@@ -33,7 +33,6 @@ export const StyledContainer = styled.View`
     box-sizing: border-box;
     height: 100%;
 `;
-    
 
 
 export const InnerContainer = styled.View`
@@ -80,6 +79,17 @@ export const PageTitle = styled.Text`
     `}
 `;
 
+export const MyTextInput = styled.TextInput`
+
+    background-color: ${green};
+    padding: 15px;
+    padding-left: 55px;
+    border-radius: 20px; 
+    font-size: 16px;
+    margin-vertical: 3px;
+    margin-bottom: 10px;
+    color: ${white}; 
+`;
 
 
 export const SubTitle = styled.Text`
