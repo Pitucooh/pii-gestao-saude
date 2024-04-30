@@ -36,7 +36,7 @@ import {View} from 'react-native';
 
 
 //Colors
-const {brand, darkLight, primary} = Colors;
+const {brand, darkLight, primary, customGreen} = Colors;
 
 // keyboard avoiding wrapper
 import KeyboardWrapper from '../components/KeyboardWrapper';
@@ -45,14 +45,28 @@ const Login = ({navigation}) => {
     const [hidePassword, setHidePassword] = useState(true);
 
     return (
-    <KeyboardWrapper>
+        <KeyboardWrapper>
         <StyledContainer>
-            <StatusBar style = "dark" />
+            <StatusBar style="dark" />
             <InnerContainer>
-                <PageLogo resizeMode= "cover" source = {require('./../assets/logo.png')} />
-                <PageTitle>YE Gestão em Saúde</PageTitle>
-                <SubTitle>Fazer Login</SubTitle>
-
+                <PageLogo 
+                    resizeMode="cover" 
+                    
+                    style={{ width: 100, height: 100 }} 
+                />
+                <PageTitle style={{
+                    textAlign: 'left', 
+                    flexWrap: 'wrap', 
+                    lineHeight: 60, 
+                    fontSize: 60, 
+                    width: '100%',
+                    color: customGreen
+                    
+                }}>
+                    {"YE\nGestão\nem\nSaúde"}
+                </PageTitle>
+                
+                <View style={{ height: 2, backgroundColor: customGreen, marginVertical: 10, width: '100%'}}></View>
                 <Formik
                     initialValues={{ email: '', senha: '' }}
                     onSubmit={(values) => {
@@ -98,7 +112,7 @@ const Login = ({navigation}) => {
                                 </StyledButton>
                                 <ExtraView>
                                     <ExtraText>Não tem uma conta ainda?</ExtraText>
-                                    <TextLink onPress={() => navigation.navigate('Signup')} >
+                                    <TextLink onPress={() => navigation.navigate('Signup')}>
                                         <TextLinkContent> Cadastre-se</TextLinkContent>
                                     </TextLink>
                                 </ExtraView>
