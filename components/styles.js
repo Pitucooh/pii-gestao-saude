@@ -74,7 +74,7 @@ export const PageTitle = styled.Text`
     font-weight: bold;
     color: black;
     padding: 10px;
-    line-height: 1.5; 
+    line-height: 1.5px; 
     white-space: pre-wrap; 
     word-break: keep-all; 
 
