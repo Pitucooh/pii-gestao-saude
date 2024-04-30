@@ -74,50 +74,50 @@ const Login = ({navigation}) => {
                         navigation.navigate("Menu");
                     }}
                 >
-                    {({ handleChange, handleBlur, handleSubmit, values }) => (
-                        <StyledFormArea>
-                            <MyTextInput
-                                label = "E-mail"
-                                icon="mail"
-                                placeholder="Digite o seu email"
-                                placeholderTextColor={darkLight}
-                                onChangeText={handleChange('email')}
-                                onBlur={handleBlur('email')}
-                                value={values.email}
-                                keyboardType="email-address"
-                            />
-                                <MyTextInput
-                                label="Senha"
-                                icon="lock"
-                                placeholder="* * * * * * * * *"
-                                placeholderTextColor={darkLight}
-                                onChangeText={handleChange('senha')}
-                                onBlur={handleBlur('senha')}
-                                value={values.senha}
-                                secureTextEntry= {hidePassword}
-                                isPassword= {true}
-                                hidePassword = {hidePassword}
-                                setHidePassword = {setHidePassword}
-                            />
+                     {({ handleChange, handleBlur, handleSubmit, values }) => (
+                    <StyledFormArea>
+                        <MyTextInput
+                            label="E-mail"
+                            icon="mail"
+                            placeholder="Digite o seu email"
+                            placeholderTextColor={darkLight}
+                            onChangeText={handleChange('email')}
+                            onBlur={handleBlur('email')}
+                            value={values.email}
+                            keyboardType="email-address"
+                        />
+                        <MyTextInput
+                            label="Senha"
+                            icon="lock"
+                            placeholder="* * * * * * * * *"
+                            placeholderTextColor={darkLight}
+                            onChangeText={handleChange('senha')}
+                            onBlur={handleBlur('senha')}
+                            value={values.senha}
+                            secureTextEntry={hidePassword}
+                            isPassword={true}
+                            hidePassword={hidePassword}
+                            setHidePassword={setHidePassword}
+                        />
 
-                            <MsgBox>...</MsgBox>
+                        <MsgBox>...</MsgBox>
 
-                            <StyledButton onPress={handleSubmit}>
-                                    <ButtonText>Login </ButtonText>
-                                </StyledButton>
-                                <Line />
-                                <StyledButton google={true} onPress={handleSubmit}>
-                                    <Fontisto name="google" color={primary} size={25} style={{ marginRight: 10 }} />
-                                    <ButtonText google={true}>Entrar com o Google</ButtonText>
-                                </StyledButton>
-                                <ExtraView>
-                                    <ExtraText>Não tem uma conta ainda?</ExtraText>
-                                    <TextLink onPress={() => navigation.navigate('Signup')}>
-                                        <TextLinkContent> Cadastre-se</TextLinkContent>
-                                    </TextLink>
-                                </ExtraView>
-                            </StyledFormArea>
-                    )}
+                        <StyledButton onPress={handleSubmit}>
+                            <ButtonText>Login</ButtonText>
+                        </StyledButton>
+                        <Line />
+                        <StyledButton google={true} onPress={handleSubmit}>
+                            <Fontisto name="google" color={primary} size={25} style={{ marginRight: 10 }} />
+                            <ButtonText google={true}>Entrar com o Google</ButtonText>
+                        </StyledButton>
+                        <ExtraView>
+                            <ExtraText>Não tem uma conta ainda?</ExtraText>
+                            <TextLink onPress={() => navigation.navigate('Signup')}>
+                                <TextLinkContent> Cadastre-se</TextLinkContent>
+                            </TextLink>
+                        </ExtraView>
+                    </StyledFormArea>
+                )}
                 </Formik>
             </InnerContainer>
         </StyledContainer>

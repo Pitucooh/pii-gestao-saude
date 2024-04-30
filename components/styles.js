@@ -191,3 +191,4 @@ export const TextLinkContent = styled.Text`
     color: ${brand};
     font-size: 15px;
 `;
+
