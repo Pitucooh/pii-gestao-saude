@@ -75,9 +75,6 @@ export const PageTitle = styled.Text`
     color: black;
     padding: 10px;
     line-height: 1.5px; 
-    white-space: pre-wrap; 
-    word-break: keep-all; 
-
     ${(props) => props.welcome && `
     font-size: 35px;
     `}
