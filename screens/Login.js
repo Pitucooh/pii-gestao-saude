@@ -86,7 +86,7 @@ const Login = ({navigation}) => {
                             value={values.email}
                             keyboardType="email-address"
                             style={{
-                                backgroundColor: 'customGreen',  
+                                backgroundColor: customGreen,
                                 borderRadius: 20,          
                                 borderWidth: 0            
                             }}
@@ -105,7 +105,7 @@ const Login = ({navigation}) => {
                             hidePassword={hidePassword}
                             setHidePassword={setHidePassword}
                             style={{
-                                backgroundColor: 'customGreen',  
+                                backgroundColor: customGreen,  
                                 borderRadius: 20,          
                                 borderWidth: 0            
                             }}
