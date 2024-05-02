@@ -20,7 +20,7 @@ export const Colors = {
 }
 
 
-const { primary, secondary, tertiary, darkLight, brand, green, red} = Colors;
+const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen} = Colors;
 
 export const StyledContainer = styled.View`
     flex: 1;
@@ -87,7 +87,7 @@ export const MyTextInput = styled.TextInput`
     font-size: 16px;
     margin-vertical: 3px;
     margin-bottom: 10px;
-    color: ${white}; 
+    color: white; 
 `;
 
 

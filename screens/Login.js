@@ -115,7 +115,7 @@ const Login = ({navigation}) => {
                         <MsgBox>...</MsgBox>
 
                         <StyledButton onPress={handleSubmit}>
-                            <Fontisto name="login" size={25} style={{ marginRight: 10 }} />
+                            <Fontisto size={25} style={{ marginRight: 10 }} />
                             <ButtonText>Login</ButtonText>
                         </StyledButton>
                       
