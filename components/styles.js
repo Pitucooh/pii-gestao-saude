@@ -80,8 +80,7 @@ export const PageTitle = styled.Text`
 `;
 
 export const MyTextInput = styled.TextInput`
-
-    background-color: ${green};
+    background-color: ${customGreen};
     padding: 15px;
     padding-left: 55px;
     border-radius: 20px; 
@@ -165,7 +164,7 @@ export const ButtonText = styled.Text`
 export const MsgBox = styled.Text`
     text-align: center;
     font-size: 13px;
-    color: ${(props) => props.type == 'SUCESSO' ? green : red};
+    color: ${(props) => props.type == 'SUCESSO' ? customGreen : red};
     `;
 
 export const Line = styled.View`
@@ -195,7 +194,7 @@ export const TextLink = styled.TouchableOpacity`
 `;
 
 export const TextLinkContent = styled.Text`
-    color: ${brand};
+    color: ${customGreen};
     font-size: 15px;
 `;
 

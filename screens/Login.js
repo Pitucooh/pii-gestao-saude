@@ -86,19 +86,17 @@ const Login = ({navigation}) => {
                             value={values.email}
                             keyboardType="email-address"
                             style={{
-                                backgroundColor: 'green',  
+                                backgroundColor: 'customGreen',  
                                 borderRadius: 20,          
                                 borderWidth: 0            
                             }}
-                            inputStyle={{
-                                color: 'white'            
-                            }}
+                            
                         />
                         <MyTextInput
                             label="Senha"
                             icon="lock"
                             placeholder="* * * * * * * * *"
-                            placeholderTextColor={darkLight}
+                            placeholderTextColor="#FFFFFF"
                             onChangeText={handleChange('senha')}
                             onBlur={handleBlur('senha')}
                             value={values.senha}
@@ -106,16 +104,23 @@ const Login = ({navigation}) => {
                             isPassword={true}
                             hidePassword={hidePassword}
                             setHidePassword={setHidePassword}
+                            style={{
+                                backgroundColor: 'customGreen',  
+                                borderRadius: 20,          
+                                borderWidth: 0            
+                            }}
+                            
                         />
 
                         <MsgBox>...</MsgBox>
 
                         <StyledButton onPress={handleSubmit}>
+                            <Fontisto name="login" size={25} style={{ marginRight: 10 }} />
                             <ButtonText>Login</ButtonText>
                         </StyledButton>
                       
                         <StyledButton google={true} onPress={handleSubmit}>
-                            <Fontisto name="google" color={primary} size={25} style={{ marginRight: 10 }} />
+                            <Fontisto name="google" size={25} style={{ marginRight: 10 }} />
                             <ButtonText google={true}>Entrar com o Google</ButtonText>
                         </StyledButton>
                         <ExtraView>
