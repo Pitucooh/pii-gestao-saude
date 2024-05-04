@@ -113,16 +113,17 @@ const Login = ({navigation}) => {
                         />
 
                         <MsgBox>...</MsgBox>
-
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                         <StyledButton onPress={handleSubmit}>
-                            <Fontisto size={25} style={{ marginRight: 10 }} />
+                            <Fontisto name="person" size={25} style={{ marginRight: 10 }} />
                             <ButtonText>Login</ButtonText>
                         </StyledButton>
-                      
+
                         <StyledButton google={true} onPress={handleSubmit}>
                             <Fontisto name="google" size={25} style={{ marginRight: 10 }} />
                             <ButtonText google={true}>Entrar com o Google</ButtonText>
                         </StyledButton>
+                        </View>
                         <ExtraView>
                             <ExtraText>Não tem uma conta ainda?</ExtraText>
                             <TextLink onPress={() => navigation.navigate('Signup')}>
