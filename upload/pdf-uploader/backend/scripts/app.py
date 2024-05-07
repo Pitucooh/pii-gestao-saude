@@ -1,3 +1,4 @@
+
 from flask import Flask, request, jsonify
 import os
 import pdfplumber
@@ -5,7 +6,7 @@ import re
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = 'uploads'  # onde os pdf acabam sendo salvos
+UPLOAD_FOLDER = 'uploads'  #onde os pdf acabam sendo salvos
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
@@ -24,7 +25,6 @@ def upload():
     else:
         return jsonify({'error': 'o arquivo não e um pdf valido'}), 400
 
-
 #codigo do joao basicamnete
 @app.route('/send_message', methods=['POST'])
 def send_message():
@@ -34,11 +34,12 @@ def send_message():
 
     pdf_path = os.path.join(UPLOAD_FOLDER, filename)
 
-    #abre o pdf e extrai o texto da primeira página
+    # Abre o arquivo PDF e extrai o texto da primeira página
     with pdfplumber.open(pdf_path) as pdf:
         page = pdf.pages[0]
         text = page.extract_text()
 
+    # Utiliza expressão regular para encontrar todos os resultados de exames no texto
     resultados = re.findall(r'(\w+) (\d+,?\d+ [%\w^+/\w+]+)', text)
     resultados = dict(resultados)
 
