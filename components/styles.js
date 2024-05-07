@@ -191,7 +191,7 @@ export const ExtraView = styled.View`
 export const ExtraText = styled.Text`
     justify-content: center;
     align-content:center;
-    color: ${tertiary};
+    color: ${black};
     font-size: 15px;
 `;
 
