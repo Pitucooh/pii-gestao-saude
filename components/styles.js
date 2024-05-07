@@ -11,22 +11,25 @@ const StatusBarHeight = Constants.statusBarHeight;
 export const Colors = {
     primary: '#ffffff',
     secondary: '#E5E7EB',
-    tertiary: '#1F2937',
+    tertiary: '#fd1d1d',
     darkLight: '#9CA3AF',
     brand: '#6D28D9',
     green: '#10B981',
     red: '#EF4444',
-    customGreen: '#709383'
+    customGreen: '#709383',
+    backgroundGreen: '#CEE5DD',
+    greenForm: '#91A098',
+    white: '#f2f2f2'
 }
 
 
-const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen} = Colors;
+const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, white, greenForm} = Colors;
 
 export const StyledContainer = styled.View`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight + 30}px;
-    background-color: '#ECF5F2';
+    background-color: ${backgroundGreen};
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -39,6 +42,7 @@ export const InnerContainer = styled.View`
     flex: 1;
     width: 100%;
     align-items: center;
+    background-color: ${backgroundGreen};
 `;
 
 export const WelcomeContainer = styled(InnerContainer)`
@@ -114,10 +118,11 @@ export const StyledTextInput = styled.TextInput`
     font-size: 16px;
     margin-vertical: 3px;
     margin-bottom: 10px;
-    color: ${green};
+    color:${white},
+    
     `;
 export const StyledInputLabel = styled.Text`
-    color: black;
+    color:${white},
     font-size: 13px;
     text-align: left;
 `;
@@ -127,6 +132,7 @@ export const LeftIcon = styled.View`
     top: 30px;
     position: absolute;
     z-index: 1;
+    color: ${white};
 `;
 
 export const RightIcon = styled.TouchableOpacity`
@@ -134,6 +140,7 @@ export const RightIcon = styled.TouchableOpacity`
     top: 30px;
     position: absolute;
     z-index: 1;
+    color: ${white};
 `;
 
 export const StyledButton = styled.TouchableOpacity`
@@ -164,7 +171,7 @@ export const ButtonText = styled.Text`
 export const MsgBox = styled.Text`
     text-align: center;
     font-size: 13px;
-    color: ${(props) => props.type == 'SUCESSO' ? customGreen : red};
+    color: ${(props) => props.type == 'SUCESSO' ? customGreen : tertiary};
     `;
 
 export const Line = styled.View`
@@ -184,7 +191,7 @@ export const ExtraView = styled.View`
 export const ExtraText = styled.Text`
     justify-content: center;
     align-content:center;
-    color: ${tertiary};
+    color: ${black};
     font-size: 15px;
 `;
 
