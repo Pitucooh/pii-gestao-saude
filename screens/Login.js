@@ -36,7 +36,7 @@ import {View} from 'react-native';
 
 
 //Colors
-const {brand, darkLight, primary, customGreen} = Colors;
+const {brand, darkLight, primary, customGreen, backgroundGreen, greenForm} = Colors;
 
 // keyboard avoiding wrapper
 import KeyboardWrapper from '../components/KeyboardWrapper';
@@ -63,11 +63,11 @@ const Login = ({navigation}) => {
                     color: customGreen
                     
                 }}>
-                    {"YE\nGestão\nem\nSaúde"}
+                    {"YE\nGESTÃO\nEM\nSAÚDE"}
                 </PageTitle>
                 
                 <View style={{ height: 2, backgroundColor: customGreen, marginVertical: 10, width: '100%'}}></View>
-                <Formik
+                <Formik 
                     initialValues={{ email: '', senha: '' }}
                     onSubmit={(values) => {
                         console.log(values);
@@ -78,7 +78,6 @@ const Login = ({navigation}) => {
                     <StyledFormArea>
                        <MyTextInput
                             label="E-mail"
-                            icon="mail"
                             placeholder="Digite o seu email"
                             placeholderTextColor="#FFFFFF"  
                             onChangeText={handleChange('email')}
@@ -94,7 +93,6 @@ const Login = ({navigation}) => {
                         />
                         <MyTextInput
                             label="Senha"
-                            icon="lock"
                             placeholder="* * * * * * * * *"
                             placeholderTextColor="#FFFFFF"
                             onChangeText={handleChange('senha')}
@@ -112,17 +110,17 @@ const Login = ({navigation}) => {
                             
                         />
 
+                        <></>
+
                         <MsgBox>...</MsgBox>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <StyledButton onPress={handleSubmit}>
-                            <Fontisto name="person" size={25} style={{ marginRight: 10 }} />
+                        <View>
+                        <StyledButton onPress={handleSubmit} style={{ marginBottom: 10, paddingVertical: 15, paddingHorizontal: 30, justifyContent: 'center', marginLeft:100, borderColor: greenForm, }}>
+                            <Fontisto name="person" size={30} style={{color:'white'}} />
                             <ButtonText>Login</ButtonText>
                         </StyledButton>
+                        </View>
 
-                        <StyledButton google={true} onPress={handleSubmit}>
-                            <Fontisto name="google" size={25} style={{ marginRight: 10 }} />
-                            <ButtonText google={true}>Entrar com o Google</ButtonText>
-                        </StyledButton>
                         </View>
                         <ExtraView>
                             <ExtraText>Não tem uma conta ainda?</ExtraText>
