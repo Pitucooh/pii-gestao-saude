@@ -118,10 +118,11 @@ export const StyledTextInput = styled.TextInput`
     font-size: 16px;
     margin-vertical: 3px;
     margin-bottom: 10px;
+    color:${white},
     
     `;
 export const StyledInputLabel = styled.Text`
-    color: black;
+    color:${white},
     font-size: 13px;
     text-align: left;
 `;
@@ -170,7 +171,7 @@ export const ButtonText = styled.Text`
 export const MsgBox = styled.Text`
     text-align: center;
     font-size: 13px;
-    color: ${(props) => props.type == 'SUCESSO' ? customGreen : red};
+    color: ${(props) => props.type == 'SUCESSO' ? customGreen : tertiary};
     `;
 
 export const Line = styled.View`
