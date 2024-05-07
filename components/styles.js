@@ -17,6 +17,7 @@ export const Colors = {
     green: '#10B981',
     red: '#EF4444',
     customGreen: '#709383',
+<<<<<<< Updated upstream
     backgroundGreen: '#CEE5DD',
     greenForm: '#91A098',
     white: '#f2f2f2'
@@ -24,12 +25,19 @@ export const Colors = {
 
 
 const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, white, greenForm} = Colors;
+=======
+    backgroundGreen: '#ECF5F2'
+}
+
+
+const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen} = Colors;
+>>>>>>> Stashed changes
 
 export const StyledContainer = styled.View`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight + 30}px;
-    background-color: '#ECF5F2';
+    background-color: ${backgroundGreen};
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -42,6 +50,7 @@ export const InnerContainer = styled.View`
     flex: 1;
     width: 100%;
     align-items: center;
+    background-color: ${backgroundGreen};
 `;
 
 export const WelcomeContainer = styled(InnerContainer)`
