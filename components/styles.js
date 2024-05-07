@@ -17,7 +17,6 @@ export const Colors = {
     green: '#10B981',
     red: '#EF4444',
     customGreen: '#709383',
-<<<<<<< Updated upstream
     backgroundGreen: '#CEE5DD',
     greenForm: '#91A098',
     white: '#f2f2f2'
@@ -25,13 +24,6 @@ export const Colors = {
 
 
 const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, white, greenForm} = Colors;
-=======
-    backgroundGreen: '#ECF5F2'
-}
-
-
-const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen} = Colors;
->>>>>>> Stashed changes
 
 export const StyledContainer = styled.View`
     flex: 1;
