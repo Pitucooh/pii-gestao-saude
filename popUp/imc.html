@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora de IMC</title>
+</head>
+<body>
+
+<h2>Calculadora de IMC</h2>
+
+<form id="imcForm">
+  <label for="imcInput">Insira seu IMC:</label><br>
+  <input type="text" id="imcInput" name="imcInput"><br><br>
+  <button type="submit">Calcular</button>
+</form>
+
+<script>
+document.getElementById('imcForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    var imcInput = document.getElementById('imcInput').value;
+    var imc = parseFloat(imcInput);
+
+    if (!isNaN(imc)) {
+        calcIMC(imc);
+    } else {
+        alert("Por favor, insira um valor numérico válido para o IMC.");
+    }
+});
+
+function calcIMC(imc){
+    if(imc < 18.5){
+        alert("Abaixo do peso. Emagreça!");
+    } else if(imc >= 18.5 && imc <= 24.9){
+        alert("Peso normal. Continue assim!");
+    } else if(imc >= 25 && imc <= 29.9){
+        alert("Sobrepeso. Emagreça!");
+    } else if(imc >= 30 && imc <= 34.9){
+        alert("Obesidade I. Emagreça!");
+    } else if(imc >= 35 && imc <= 39.9){
+        alert("Obesidade II. Emagreça!");
+    } else {
+        alert("Obesidade grave. Emagreça!");
+    }
+}
+</script>
+
+</body>
+</html>
