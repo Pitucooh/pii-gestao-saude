@@ -115,7 +115,7 @@ const Login = ({navigation}) => {
                         <MsgBox>...</MsgBox>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <View>
-                                <StyledButton onPress={handleSubmit} style={{ marginBottom: 10, paddingVertical: 15, paddingHorizontal: 30, justifyContent: 'center', marginLeft:100, borderColor: 'green', backgroundColor: 'transparent' }}>
+                                <StyledButton onPress={handleSubmit} style={{alignItems: 'center', marginBottom: 10, justifyContent: 'center', marginLeft:100, borderColor: 'green', backgroundColor: 'greenForm' }}>
                                     <Fontisto name="person" size={30} style={{color:'white'}} />
                                     <ButtonText style={{color: 'white'}}>Login</ButtonText>
                                 </StyledButton>
