@@ -36,11 +36,7 @@ import {View} from 'react-native';
 
 
 //Colors
-<<<<<<< Updated upstream
 const {brand, darkLight, primary, customGreen, backgroundGreen, greenForm} = Colors;
-=======
-const {brand, darkLight, primary, customGreen, backgroundGreen} = Colors;
->>>>>>> Stashed changes
 
 // keyboard avoiding wrapper
 import KeyboardWrapper from '../components/KeyboardWrapper';
@@ -118,11 +114,12 @@ const Login = ({navigation}) => {
 
                         <MsgBox>...</MsgBox>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <View>
-                        <StyledButton onPress={handleSubmit} style={{ marginBottom: 10, paddingVertical: 15, paddingHorizontal: 30, justifyContent: 'center', marginLeft:100, borderColor: greenForm, }}>
-                            <Fontisto name="person" size={30} style={{color:'white'}} />
-                            <ButtonText>Login</ButtonText>
-                        </StyledButton>
+                            <View>
+                                <StyledButton onPress={handleSubmit} style={{ marginBottom: 10, paddingVertical: 15, paddingHorizontal: 30, justifyContent: 'center', marginLeft:100, borderColor: 'green', backgroundColor: 'transparent' }}>
+                                    <Fontisto name="person" size={30} style={{color:'white'}} />
+                                    <ButtonText style={{color: 'white'}}>Login</ButtonText>
+                                </StyledButton>
+                    
                         </View>
 
                         </View>
