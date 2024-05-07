@@ -16,7 +16,8 @@ export const Colors = {
     brand: '#6D28D9',
     green: '#10B981',
     red: '#EF4444',
-    customGreen: '#709383'
+    customGreen: '#709383',
+    backgorundGreen: 'ECF5F2'
 }
 
 

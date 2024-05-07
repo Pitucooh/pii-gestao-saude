@@ -46,7 +46,7 @@ const Login = ({navigation}) => {
 
     return (
         <KeyboardWrapper>
-        <StyledContainer>
+        <StyledContainer style={{backgroundColor: backgroundGreen}}>
             <StatusBar style="dark" />
             <InnerContainer>
                 <PageLogo 
