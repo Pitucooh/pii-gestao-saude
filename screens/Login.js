@@ -36,11 +36,7 @@ import {View} from 'react-native';
 
 
 //Colors
-<<<<<<< Updated upstream
 const {brand, darkLight, primary, customGreen, backgroundGreen, greenForm} = Colors;
-=======
-const {brand, darkLight, primary, customGreen, backgroundGreen} = Colors;
->>>>>>> Stashed changes
 
 // keyboard avoiding wrapper
 import KeyboardWrapper from '../components/KeyboardWrapper';
