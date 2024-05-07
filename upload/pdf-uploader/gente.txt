@@ -1,0 +1,1 @@
+-- por enquanto tem q abrir 2 terminal um pro npm start do app e um pra rodar o app.py
