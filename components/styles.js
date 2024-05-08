@@ -53,7 +53,9 @@ export const WelcomeContainer = styled(InnerContainer)`
 
 export const PageLogo = styled.Image`
     width: 250px;
-    height: 200px;`;
+    height: 200px;
+
+    `;
 
 export const Avatar = styled.Image`
     width: 100px;
@@ -75,7 +77,6 @@ export const PageTitle = styled.Text`
     font-size: 36px;
     text-align: left;
     font-weight: bold;
-    color: black;
     padding: 10px;
     line-height: 1.5px; 
     ${(props) => props.welcome && `
@@ -105,8 +106,8 @@ export const SubTitle = styled.Text`
     ${(props) => props.welcome && `
     margin-bottom: 5px;
     font-weight: normal;
-        `}
-    `;
+    `}
+`;
 export const StyledFormArea = styled.View`
     width: 90%; `;
 
@@ -118,11 +119,11 @@ export const StyledTextInput = styled.TextInput`
     font-size: 16px;
     margin-vertical: 3px;
     margin-bottom: 10px;
-    color:${white},
+    color:${white};
     
     `;
 export const StyledInputLabel = styled.Text`
-    color:${white},
+    color:${white};
     font-size: 13px;
     text-align: left;
 `;
@@ -151,12 +152,6 @@ export const StyledButton = styled.TouchableOpacity`
     border-radius: 5px;
     margin-vertical: 5px;
     height: 60px;
-
-    ${(props) => props.google == true && `
-        background-color: ${green};
-        flex-direction: row;
-        justify-content: center;
-    `}
 `;
 
 export const ButtonText = styled.Text`
@@ -171,8 +166,9 @@ export const ButtonText = styled.Text`
 export const MsgBox = styled.Text`
     text-align: center;
     font-size: 13px;
-    color: ${(props) => props.type == 'SUCESSO' ? customGreen : tertiary};
-    `;
+    color: ${(props) => props.type === 'SUCESSO' ? customGreen : tertiary};
+`;
+
 
 export const Line = styled.View`
     height: 1px;
@@ -191,7 +187,7 @@ export const ExtraView = styled.View`
 export const ExtraText = styled.Text`
     justify-content: center;
     align-content:center;
-    color: ${black};
+    color: ${tertiary};
     font-size: 15px;
 `;
 

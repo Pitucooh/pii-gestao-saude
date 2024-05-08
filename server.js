@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const port = 3000;
@@ -43,15 +44,23 @@ app.post('/login', (req, res) => {
       return res.status(500).json({ success: false, message: 'Erro interno do servidor.' });
     }
     if (results.length === 0) {
-      return res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
+      return res.status(401).json({ success: false, message: 'Usuário não encontrado.' });
     }
 
     const user = results[0];
     // Comparar a senha
-    if (user.senha !== senha) {
-      return res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
-    }
-    
+    bcrypt.compare(senha, user.senha, (err, result) => {
+      if (err) {
+        console.error('Erro ao comparar senhas:', err);
+        return res.status(500).json({ success: false, message: 'Erro interno do servidor.' });
+      }
+      if (!result) {
+        return res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
+      }
+
+      // Se chegou até aqui, login bem-sucedido
+      res.status(200).json({ success: true, message: 'Login bem-sucedido.' });
+    });
   });
 });
 
@@ -65,10 +74,10 @@ app.post('/signup', (req, res) => {
   }
 
   // Verificar se o nome contém caracteres válidos
-  if (!/^[a-zA-ZÀ-ÿ\s]*$/.test(nome)) {
+  if (!/^[a-zA-ZÀ-ÿ\s']*$/u.test(nome)) {
     return res.status(400).json({ success: false, message: 'Nome inválido inserido.' });
   }
-
+  
   // Verificar se o CPF está no formato correto
   if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(CPF)) {
     return res.status(400).json({ success: false, message: 'CPF inválido inserido. Por favor, insira no formato xxx.xxx.xxx-xx.' });
@@ -95,13 +104,30 @@ app.post('/signup', (req, res) => {
       return res.status(409).json({ success: false, message: 'Este email já está cadastrado.' });
     }
 
-    // Inserir o novo usuário no banco de dados
-    const insertQuery = 'INSERT INTO usuarios (nome, email, CPF, senha) VALUES (?, ?, ?, ?)';
-    db.query(insertQuery, [nome, email, CPF, senha], (err) => {
+    // Gerar um salt para adicionar à senha
+    bcrypt.genSalt(10, (err, salt) => {
       if (err) {
-        console.error('Erro ao inserir novo usuário no banco de dados:', err);
+        console.error('Erro ao gerar salt:', err);
         return res.status(500).json({ success: false, message: 'Erro interno do servidor.' });
       }
+
+      // Usar o salt para hash da senha
+      bcrypt.hash(senha, salt, (err, hash) => {
+        if (err) {
+          console.error('Erro ao gerar hash da senha:', err);
+          return res.status(500).json({ success: false, message: 'Erro interno do servidor.' });
+        }
+
+        // Inserir o novo usuário no banco de dados com a senha criptografada
+        const insertQuery = 'INSERT INTO usuarios (nome, email, CPF, senha) VALUES (?, ?, ?, ?)';
+        db.query(insertQuery, [nome, email, CPF, hash], (err) => {
+          if (err) {
+            console.error('Erro ao inserir novo usuário no banco de dados:', err);
+            return res.status(500).json({ success: false, message: 'Erro interno do servidor.' });
+          }
+          res.status(201).json({ success: true, message: 'Usuário cadastrado com sucesso.' });
+        });
+      });
     });
   });
 });

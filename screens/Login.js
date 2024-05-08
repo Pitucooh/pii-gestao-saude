@@ -41,8 +41,33 @@ const {brand, darkLight, primary, customGreen, backgroundGreen, greenForm} = Col
 // keyboard avoiding wrapper
 import KeyboardWrapper from '../components/KeyboardWrapper';
 
-const Login = ({navigation}) => {
-    const [hidePassword, setHidePassword] = useState(true);
+    const Login = ({ navigation }) => {
+        const [hidePassword, setHidePassword] = useState(true);
+        const [errorMsg, setErrorMsg] = useState('');
+    
+        const handleLogin = async (values) => {
+            setErrorMsg('');
+            try {
+                const response = await fetch('http://192.168.15.102:3000/login', {
+                method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(values),
+                });
+                const data = await response.json();
+               if (data.success) {
+                    navigation.navigate('Menu');
+                }
+                else {
+                    setErrorMsg(data.message);
+                }
+            } catch (error) {
+                console.error('Erro ao fazer login:', error);
+                setErrorMsg('Erro ao fazer login. Por favor, tente novamente.');
+            }
+    };
+    
 
     return (
         <KeyboardWrapper>
@@ -69,12 +94,9 @@ const Login = ({navigation}) => {
                 <View style={{ height: 2, backgroundColor: customGreen, marginVertical: 10, width: '100%'}}></View>
                 <Formik 
                     initialValues={{ email: '', senha: '' }}
-                    onSubmit={(values) => {
-                        console.log(values);
-                        navigation.navigate("Menu");
-                    }}
+                    onSubmit={handleLogin} 
                 >
-                     {({ handleChange, handleBlur, handleSubmit, values }) => (
+                     {({ handleChange, handleBlur, handleSubmit,  values }) => (
                     <StyledFormArea>
                        <MyTextInput
                             label="E-mail"
@@ -112,13 +134,14 @@ const Login = ({navigation}) => {
 
                         <></>
 
-                        <MsgBox>...</MsgBox>
+                        <MsgBox>{errorMsg}</MsgBox>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <View>
+    
                                 <StyledButton onPress={handleSubmit} style={{alignItems: 'center', marginBottom: 10, justifyContent: 'center', marginLeft:100, borderColor: 'green', backgroundColor: 'greenForm' }}>
-                                    <Fontisto name="person" size={30} style={{color:'white'}} />
+                                <Fontisto name="person" size={30} style={{color:'white'}} />
                                     <ButtonText style={{color: 'white'}}>Login</ButtonText>
-                                </StyledButton>
+                            </StyledButton>
                     
                         </View>
 
@@ -126,7 +149,7 @@ const Login = ({navigation}) => {
                         <ExtraView>
                             <ExtraText>Não tem uma conta ainda?</ExtraText>
                             <TextLink onPress={() => navigation.navigate('Signup')}>
-                                <TextLinkContent> Cadastre-se</TextLinkContent>
+                                <TextLinkContent>Cadastre-se</TextLinkContent>
                             </TextLink>
                         </ExtraView>
                     </StyledFormArea>
@@ -137,7 +160,6 @@ const Login = ({navigation}) => {
         </KeyboardWrapper>
     );
 };
-
 
 
 const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ...props}) =>{
