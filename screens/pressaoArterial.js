@@ -1,9 +1,13 @@
 const readline = require('readline');
+const Pilha = require('./../Pilha');
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
+
+const historicoPressoes = new Pilha();
+
 
 function pressaoArterial(sistolica, diastolica) {
     if (sistolica < 90 && diastolica < 60) {
@@ -25,10 +29,30 @@ function infos() {
             sistolica = parseInt(sistolica);
             diastolica = parseInt(diastolica);
             var result = pressaoArterial(sistolica, diastolica); // Corrigido para passar ambos os argumentos
+            // Adicionando o novo registro à pilha
+            historicoPressoes.push({sistolica, diastolica, dataHora: new Date()});
             console.log(result);
             rl.close();
+            // Chamando a função exibirHistorico após inserir as informações de pressão
+            exibirHistorico();
         });
     });
 }
+
+function exibirHistorico() {
+    console.log("Histórico de Pressões Arteriais:");
+    let temp = new Pilha();
+    while (!historicoPressoes.isEmpty()) {
+        const registro = historicoPressoes.pop();
+        console.log(`Sistólica: ${registro.sistolica}, Diastólica: ${registro.diastolica}, Data/Hora: ${registro.dataHora}`);
+        temp.push(registro);
+    }
+
+    // Restaurando a pilha original
+    while (!temp.isEmpty()) {
+        historicoPressoes.push(temp.pop());
+    }
+}
+
 
 infos();
