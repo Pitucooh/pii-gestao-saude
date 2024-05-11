@@ -111,7 +111,7 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
                                 borderRadius: 20,          
                                 borderWidth: 0, 
                                 textAlign: LeftIcon     ,
-                                color: black 
+                                color: primary  
                             }}
                             
                         />
@@ -131,7 +131,7 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
                                 borderRadius: 20,          
                                 borderWidth: 0,
                                 textAlign: LeftIcon,
-                                color: black
+                                color: primary 
 
                             }}
                             

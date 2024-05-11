@@ -96,7 +96,7 @@ const Signup = ({ navigation }) => {
                                         borderRadius: 20,          
                                         borderWidth: 0, 
                                         textAlign: LeftIcon     ,
-                                        color: black 
+                                        color: primary 
                                     }}
                                 />
                                 <MyTextInput
@@ -115,7 +115,7 @@ const Signup = ({ navigation }) => {
                                         borderRadius: 20,          
                                         borderWidth: 0, 
                                         textAlign: LeftIcon     ,
-                                        color: black 
+                                        color: primary 
                                     }}
                                 />
                                 <MyTextInput
@@ -133,7 +133,7 @@ const Signup = ({ navigation }) => {
                                         borderRadius: 20,          
                                         borderWidth: 0, 
                                         textAlign: LeftIcon     ,
-                                        color: black 
+                                        color: primary 
                                     }}
                                 />
                                 <MyTextInput
@@ -154,7 +154,7 @@ const Signup = ({ navigation }) => {
                                         borderRadius: 20,          
                                         borderWidth: 0, 
                                         textAlign: LeftIcon     ,
-                                        color: black 
+                                        color: primary 
                                     }}
                                 />
                                 <MyTextInput
@@ -176,7 +176,7 @@ const Signup = ({ navigation }) => {
                                         borderRadius: 20,          
                                         borderWidth: 0, 
                                         textAlign: LeftIcon     ,
-                                        color: black 
+                                        color: primary 
                                     }}
                                 />
 
