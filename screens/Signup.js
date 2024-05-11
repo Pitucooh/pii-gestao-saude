@@ -70,11 +70,11 @@ const Signup = ({ navigation }) => {
 
     return (
         <KeyboardWrapper>
-            <StyledContainer>
+            <StyledContainer style={{backgroundColor: backgroundGreen}}>
                 <StatusBar style="dark" />
-                <InnerContainer>
-                    <PageTitle>Gestão Saude</PageTitle>
-                    <SubTitle>Fazer Cadastro</SubTitle>
+                <InnerContainer  style={{backgroundColor: backgroundGreen}}>
+                    <PageTitle>YE GESTÃO EM SAÚDE</PageTitle>
+                    <SubTitle>Fazer cadastro</SubTitle>
 
                     <Formik
                         initialValues={{ nome: '', email: '', CPF: '', senha: '', confirmeSenha: '' }}
@@ -86,39 +86,61 @@ const Signup = ({ navigation }) => {
                                     label="Nome Completo"
                                     icon="person"
                                     placeholder=""
-                                    placeholderTextColor={darkLight}
+                                    placeholderTextColor="#FFFFFF"  
                                     onChangeText={handleChange('nome')}
                                     onBlur={handleBlur('nome')}
                                     value={values.nome}
                                     maxLength={50}
+                                    style={{
+                                        backgroundColor: customGreen,
+                                        borderRadius: 20,          
+                                        borderWidth: 0, 
+                                        textAlign: LeftIcon     ,
+                                        color: black 
+                                    }}
                                 />
                                 <MyTextInput
                                     label="Email"
                                     icon="mail"
                                     placeholder="Digite o seu email"
-                                    placeholderTextColor={darkLight}
+                                    placeholderTextColor="#FFFFFF" 
                                     onChangeText={handleChange('email')}
                                     onBlur={handleBlur('email')}
                                     value={values.email}
                                     keyboardType="email-address"
                                     maxLength={30}
+
+                                    style={{
+                                        backgroundColor: customGreen,
+                                        borderRadius: 20,          
+                                        borderWidth: 0, 
+                                        textAlign: LeftIcon     ,
+                                        color: black 
+                                    }}
                                 />
                                 <MyTextInput
                                     label="CPF"
                                     icon="credit-card"
                                     placeholder="xxx.xxx.xxx-xx"
-                                    placeholderTextColor={darkLight}
+                                    placeholderTextColor="#FFFFFF" 
                                     onChangeText={handleChange('CPF')} 
                                     onBlur={handleBlur('CPF')} 
                                     value={formatCPF(values.CPF)} 
                                     keyboardType="numeric" 
                                     maxLength={14} 
+                                    style={{
+                                        backgroundColor: customGreen,
+                                        borderRadius: 20,          
+                                        borderWidth: 0, 
+                                        textAlign: LeftIcon     ,
+                                        color: black 
+                                    }}
                                 />
                                 <MyTextInput
                                     label="Senha"
                                     icon="lock"
                                     placeholder="* * * * * * * * *"
-                                    placeholderTextColor={darkLight}
+                                    placeholderTextColor="#FFFFFF" 
                                     onChangeText={handleChange('senha')}
                                     onBlur={handleBlur('senha')}
                                     value={values.senha}
@@ -127,12 +149,19 @@ const Signup = ({ navigation }) => {
                                     hidePassword={hidePassword}
                                     setHidePassword={setHidePassword}
                                     maxLength={20}
+                                    style={{
+                                        backgroundColor: customGreen,
+                                        borderRadius: 20,          
+                                        borderWidth: 0, 
+                                        textAlign: LeftIcon     ,
+                                        color: black 
+                                    }}
                                 />
                                 <MyTextInput
                                     label="Confirme a Senha"
                                     icon="lock"
                                     placeholder="* * * * * * * * *"
-                                    placeholderTextColor={darkLight}
+                                    placeholderTextColor="#FFFFFF" 
                                     onChangeText={handleChange('confirmeSenha')}
                                     onBlur={handleBlur('confirmeSenha')}
                                     value={values.confirmeSenha}
@@ -141,13 +170,22 @@ const Signup = ({ navigation }) => {
                                     hidePassword={hidePassword}
                                     setHidePassword={setHidePassword}
                                     maxLength={20}
+
+                                    style={{
+                                        backgroundColor: customGreen,
+                                        borderRadius: 20,          
+                                        borderWidth: 0, 
+                                        textAlign: LeftIcon     ,
+                                        color: black 
+                                    }}
                                 />
 
                                 <MsgBox type={errorMsg ? 'ERRO' : 'SUCESSO'}>{errorMsg || successMsg}</MsgBox>
 
-                                <StyledButton onPress={handleSubmit}>
-                                    <ButtonText>Cadastrar</ButtonText>
-                                </StyledButton>
+                                <StyledButton onPress={handleSubmit} style={{padding: 10, alignItems: 'center', marginBottom: 10, justifyContent: 'center', marginLeft:100, borderColor: 'green', backgroundColor: 'transparent' }}>
+                                <Fontisto name="person" size={30} style={{color:'white'}} />
+                                    <ButtonText style={{color: 'white'}}>Cadastrar</ButtonText>
+                            </StyledButton>
                                 <Line />
                                 <ExtraView>
                                     <ExtraText>Já tem uma conta?</ExtraText>

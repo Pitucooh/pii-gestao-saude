@@ -19,11 +19,12 @@ export const Colors = {
     customGreen: '#709383',
     backgroundGreen: '#CEE5DD',
     greenForm: '#91A098',
-    white: '#f2f2f2'
+    white: '#f2f2f2',
+    black: '#000000'
 }
 
 
-const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, white, greenForm} = Colors;
+const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, white, greenForm, black} = Colors;
 
 export const StyledContainer = styled.View`
     flex: 1;

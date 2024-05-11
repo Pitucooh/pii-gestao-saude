@@ -36,7 +36,7 @@ import {View} from 'react-native';
 
 
 //Colors
-const {brand, darkLight, primary, customGreen, backgroundGreen, greenForm} = Colors;
+const {brand, darkLight, primary, customGreen, backgroundGreen, greenForm, black} = Colors;
 
 // keyboard avoiding wrapper
 import KeyboardWrapper from '../components/KeyboardWrapper';
@@ -110,7 +110,8 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
                                 backgroundColor: customGreen,
                                 borderRadius: 20,          
                                 borderWidth: 0, 
-                                textAlign: LeftIcon      
+                                textAlign: LeftIcon     ,
+                                color: black 
                             }}
                             
                         />
@@ -129,7 +130,9 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
                                 backgroundColor: customGreen,  
                                 borderRadius: 20,          
                                 borderWidth: 0,
-                                textAlign: LeftIcon
+                                textAlign: LeftIcon,
+                                color: black
+
                             }}
                             
                         />
@@ -151,7 +154,7 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
                         <ExtraView>
                             <ExtraText>Não tem uma conta ainda?</ExtraText>
                             <TextLink onPress={() => navigation.navigate('Signup')}>
-                                <TextLinkContent>Cadastre-se</TextLinkContent>
+                                <TextLinkContent> Cadastre-se</TextLinkContent>
                             </TextLink>
                         </ExtraView>
                     </StyledFormArea>
