@@ -109,7 +109,8 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
                             style={{
                                 backgroundColor: customGreen,
                                 borderRadius: 20,          
-                                borderWidth: 0            
+                                borderWidth: 0, 
+                                textAlign: LeftIcon      
                             }}
                             
                         />
@@ -127,7 +128,8 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
                             style={{
                                 backgroundColor: customGreen,  
                                 borderRadius: 20,          
-                                borderWidth: 0            
+                                borderWidth: 0,
+                                textAlign: LeftIcon
                             }}
                             
                         />
@@ -138,7 +140,7 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <View>
     
-                                <StyledButton onPress={handleSubmit} style={{alignItems: 'center', marginBottom: 10, justifyContent: 'center', marginLeft:100, borderColor: 'green', backgroundColor: 'greenForm' }}>
+                                <StyledButton onPress={handleSubmit} style={{padding: 10, alignItems: 'center', marginBottom: 10, justifyContent: 'center', marginLeft:100, borderColor: 'green', backgroundColor: 'transparent' }}>
                                 <Fontisto name="person" size={30} style={{color:'white'}} />
                                     <ButtonText style={{color: 'white'}}>Login</ButtonText>
                             </StyledButton>
