@@ -31,9 +31,6 @@ const { brand, darkLight, primary, customGreen, backgroundGreen, greenForm, blac
 const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, ...props }) => {
     return (
         <View>
-            <LeftIcon>
-                <Octicons name={icon} size={30} color={brand} />
-            </LeftIcon>
             <StyledInputLabel>{label}</StyledInputLabel>
             <StyledTextInput {...props} />
             {isPassword && (
@@ -139,12 +136,11 @@ const Login = ({ navigation }) => {
                                 <></>
 
                                 <MsgBox>{errorMsg}</MsgBox>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                                     <View>
 
-                                        <StyledButton onPress={handleSubmit} style={{ padding: 10, alignItems: 'center', marginBottom: 10, justifyContent: 'center', marginLeft: 100, borderColor: 'green', backgroundColor: 'transparent' }}>
-                                            <Fontisto name="person" size={30} style={{ color: 'white' }} />
-                                            <ButtonText style={{ color: 'white' }}>Login</ButtonText>
+                                        <StyledButton onPress={handleSubmit} style={{ padding: 10, alignItems: 'center' ,marginBottom: 10, justifyContent: 'center', borderWidth: 2, width: 100, borderColor: customGreen, backgroundColor: 'transparent' }}>
+                                            <ButtonText style={{ color: 'black' }}>Login</ButtonText>
                                         </StyledButton>
 
                                     </View>

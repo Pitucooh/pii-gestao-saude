@@ -93,7 +93,7 @@ export const MyTextInput = styled.TextInput`
     font-size: 16px;
     margin-vertical: 3px;
     margin-bottom: 10px;
-    color: ${primary};  
+    color: ${black};  
 `;
 
 
@@ -125,9 +125,9 @@ export const StyledTextInput = styled.TextInput`
     
     `;
 export const StyledInputLabel = styled.Text`
-    color: ${primary}; 
+    color: ${black}; 
     font-size: 13px;
-    text-align: left;
+    
 `;
 
 export const LeftIcon = styled.View`
