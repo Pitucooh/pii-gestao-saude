@@ -93,7 +93,7 @@ export const MyTextInput = styled.TextInput`
     font-size: 16px;
     margin-vertical: 3px;
     margin-bottom: 10px;
-    color: ${primary }  
+    color: ${primary};  
 `;
 
 
@@ -102,7 +102,7 @@ export const SubTitle = styled.Text`
     margin-bottom: 20px;
     letter-spacing: 1px;
     font-weight: bold;
-    color: ${primary } 
+    color: ${primary}; 
 
     ${(props) => props.welcome && `
     margin-bottom: 5px;
@@ -111,6 +111,7 @@ export const SubTitle = styled.Text`
 `;
 export const StyledFormArea = styled.View`
     width: 90%; `;
+    
 
 export const StyledTextInput = styled.TextInput`
     background-color: ${secondary};
@@ -120,11 +121,11 @@ export const StyledTextInput = styled.TextInput`
     font-size: 16px;
     margin-vertical: 3px;
     margin-bottom: 10px;
-    color: ${primary } 
+    color: ${primary}; 
     
     `;
 export const StyledInputLabel = styled.Text`
-    color: ${primary } 
+    color: ${primary}; 
     font-size: 13px;
     text-align: left;
 `;
@@ -134,7 +135,7 @@ export const LeftIcon = styled.View`
     top: 30px;
     position: absolute;
     z-index: 1;
-    color: ${primary } 
+    color: ${primary};
 `;
 
 export const RightIcon = styled.TouchableOpacity`
@@ -142,7 +143,7 @@ export const RightIcon = styled.TouchableOpacity`
     top: 30px;
     position: absolute;
     z-index: 1;
-    color: ${primary } 
+    color: ${primary}; 
 `;
 
 export const StyledButton = styled.TouchableOpacity`
@@ -188,7 +189,7 @@ export const ExtraView = styled.View`
 export const ExtraText = styled.Text`
     justify-content: center;
     align-content:center;
-    color: ${tertiary};
+    color: ${black};
     font-size: 15px;
 `;
 

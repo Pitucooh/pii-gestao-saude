@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Formik } from 'formik';
-import { Octicons, Ionicons } from '@expo/vector-icons';
-import { View, Text } from 'react-native';
+import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons';
+import { View } from 'react-native';
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import {
     StyledContainer,
@@ -25,7 +25,7 @@ import {
     TextLinkContent
 } from './../components/styles';
 
-const { brand, darkLight } = Colors;
+const { brand, darkLight, backgroundGreen, customGreen, primary } = Colors;
 
 const Signup = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true);
@@ -35,11 +35,18 @@ const Signup = ({ navigation }) => {
     const handleSignup = async (values) => {
         setErrorMsg('');
         try {
+            // Verificar se todos os campos estão preenchidos
+            if (!values.nome || !values.email || !values.CPF || !values.senha || !values.confirmeSenha) {
+                setErrorMsg('Por favor, preencha todos os campos.');
+                return;
+            }
+    
+            // Verificar se o email tem formato válido
             if (!validateEmail(values.email)) {
                 setErrorMsg('Por favor, insira um email válido.');
                 return;
             }
-
+    
             const response = await fetch('http://192.168.15.102:3000/signup', {
                 method: 'POST',
                 headers: {
@@ -68,11 +75,26 @@ const Signup = ({ navigation }) => {
         return emailRegex.test(email);
     };
 
+    const formatCPF = (input) => {
+        if (!input) return ''; // Verifica se input é undefined ou vazio e retorna uma string vazia
+
+        // Remover caracteres não numéricos do input
+        const cleaned = input.replace(/\D/g, '');
+
+        // Aplicar a formatação do CPF (xxx.xxx.xxx-xx)
+        const match = cleaned.match(/^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})$/);
+        if (match) {
+            return match[1] + (match[2] ? '.' + match[2] : '') + (match[3] ? '.' + match[3] : '') + (match[4] ? '-' + match[4] : '');
+        }
+
+        return input;
+    };
+
     return (
         <KeyboardWrapper>
-            <StyledContainer style={{backgroundColor: backgroundGreen}}>
+            <StyledContainer style={{ backgroundColor: backgroundGreen }}>
                 <StatusBar style="dark" />
-                <InnerContainer  style={{backgroundColor: backgroundGreen}}>
+                <InnerContainer style={{ backgroundColor: backgroundGreen }}>
                     <PageTitle>YE GESTÃO EM SAÚDE</PageTitle>
                     <SubTitle>Fazer cadastro</SubTitle>
 
@@ -86,61 +108,60 @@ const Signup = ({ navigation }) => {
                                     label="Nome Completo"
                                     icon="person"
                                     placeholder=""
-                                    placeholderTextColor="#FFFFFF"  
+                                    placeholderTextColor="#FFFFFF"
                                     onChangeText={handleChange('nome')}
                                     onBlur={handleBlur('nome')}
                                     value={values.nome}
                                     maxLength={50}
-                                    style={{
+                                    inputStyle={{
                                         backgroundColor: customGreen,
-                                        borderRadius: 20,          
-                                        borderWidth: 0, 
-                                        textAlign: LeftIcon     ,
-                                        color: primary 
+                                        borderRadius: 20,
+                                        borderWidth: 0,
+                                        textAlign: 'left',
+                                        color: primary
                                     }}
                                 />
                                 <MyTextInput
                                     label="Email"
                                     icon="mail"
                                     placeholder="Digite o seu email"
-                                    placeholderTextColor="#FFFFFF" 
+                                    placeholderTextColor="#FFFFFF"
                                     onChangeText={handleChange('email')}
                                     onBlur={handleBlur('email')}
                                     value={values.email}
                                     keyboardType="email-address"
                                     maxLength={30}
-
-                                    style={{
+                                    inputStyle={{
                                         backgroundColor: customGreen,
-                                        borderRadius: 20,          
-                                        borderWidth: 0, 
-                                        textAlign: LeftIcon     ,
-                                        color: primary 
+                                        borderRadius: 20,
+                                        borderWidth: 0,
+                                        textAlign: 'left',
+                                        color: primary
                                     }}
                                 />
                                 <MyTextInput
                                     label="CPF"
                                     icon="credit-card"
                                     placeholder="xxx.xxx.xxx-xx"
-                                    placeholderTextColor="#FFFFFF" 
-                                    onChangeText={handleChange('CPF')} 
-                                    onBlur={handleBlur('CPF')} 
-                                    value={formatCPF(values.CPF)} 
-                                    keyboardType="numeric" 
-                                    maxLength={14} 
-                                    style={{
+                                    placeholderTextColor="#FFFFFF"
+                                    onChangeText={handleChange('CPF')}
+                                    onBlur={handleBlur('CPF')}
+                                    value={formatCPF(values.CPF)}
+                                    keyboardType="numeric"
+                                    maxLength={14}
+                                    inputStyle={{
                                         backgroundColor: customGreen,
-                                        borderRadius: 20,          
-                                        borderWidth: 0, 
-                                        textAlign: LeftIcon     ,
-                                        color: primary 
+                                        borderRadius: 20,
+                                        borderWidth: 0,
+                                        textAlign: 'left',
+                                        color: primary
                                     }}
                                 />
                                 <MyTextInput
                                     label="Senha"
                                     icon="lock"
                                     placeholder="* * * * * * * * *"
-                                    placeholderTextColor="#FFFFFF" 
+                                    placeholderTextColor="#FFFFFF"
                                     onChangeText={handleChange('senha')}
                                     onBlur={handleBlur('senha')}
                                     value={values.senha}
@@ -149,19 +170,19 @@ const Signup = ({ navigation }) => {
                                     hidePassword={hidePassword}
                                     setHidePassword={setHidePassword}
                                     maxLength={20}
-                                    style={{
+                                    inputStyle={{
                                         backgroundColor: customGreen,
-                                        borderRadius: 20,          
-                                        borderWidth: 0, 
-                                        textAlign: LeftIcon     ,
-                                        color: primary 
+                                        borderRadius: 20,
+                                        borderWidth: 0,
+                                        textAlign: 'left',
+                                        color: primary
                                     }}
                                 />
                                 <MyTextInput
                                     label="Confirme a Senha"
                                     icon="lock"
                                     placeholder="* * * * * * * * *"
-                                    placeholderTextColor="#FFFFFF" 
+                                    placeholderTextColor="#FFFFFF"
                                     onChangeText={handleChange('confirmeSenha')}
                                     onBlur={handleBlur('confirmeSenha')}
                                     value={values.confirmeSenha}
@@ -170,22 +191,21 @@ const Signup = ({ navigation }) => {
                                     hidePassword={hidePassword}
                                     setHidePassword={setHidePassword}
                                     maxLength={20}
-
-                                    style={{
+                                    inputStyle={{
                                         backgroundColor: customGreen,
-                                        borderRadius: 20,          
-                                        borderWidth: 0, 
-                                        textAlign: LeftIcon     ,
-                                        color: primary 
+                                        borderRadius: 20,
+                                        borderWidth: 0,
+                                        textAlign: 'left',
+                                        color: primary
                                     }}
                                 />
 
                                 <MsgBox type={errorMsg ? 'ERRO' : 'SUCESSO'}>{errorMsg || successMsg}</MsgBox>
 
-                                <StyledButton onPress={handleSubmit} style={{padding: 10, alignItems: 'center', marginBottom: 10, justifyContent: 'center', marginLeft:100, borderColor: 'green', backgroundColor: 'transparent' }}>
-                                <Fontisto name="person" size={30} style={{color:'white'}} />
-                                    <ButtonText style={{color: 'white'}}>Cadastrar</ButtonText>
-                            </StyledButton>
+                                <StyledButton onPress={handleSubmit} style={{ padding: 10, alignItems: 'center', marginBottom: 10, justifyContent: 'center', marginLeft: 100, borderColor: 'green', backgroundColor: 'transparent' }}>
+                                    <Fontisto name="person" size={30} style={{ color: 'white' }} />
+                                    <ButtonText style={{ color: 'white' }}>Cadastrar</ButtonText>
+                                </StyledButton>
                                 <Line />
                                 <ExtraView>
                                     <ExtraText>Já tem uma conta?</ExtraText>
@@ -203,39 +223,14 @@ const Signup = ({ navigation }) => {
     );
 };
 
-// Função para formatar o CPF enquanto o usuário digita
-const formatCPF = (input) => {
-    if (!input) return ''; // Verifica se input é undefined ou vazio e retorna uma string vazia
-    
-    // Remover caracteres não numéricos do input
-    const cleaned = input.replace(/\D/g, '');
-    
-    // Aplicar a formatação do CPF (xxx.xxx.xxx-xx)
-    const match = cleaned.match(/^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})$/);
-    if (match) {
-      return match[1] + (match[2] ? '.' + match[2] : '') + (match[3] ? '.' + match[3] : '') + (match[4] ? '-' + match[4] : '');
-    }
-    
-    return input;
-};
-
-const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, ...props }) => {
+const MyTextInput = ({ label, icon, inputStyle, ...props }) => {
     return (
         <View>
             <LeftIcon>
                 <Octicons name={icon} size={30} color={brand} />
             </LeftIcon>
             <StyledInputLabel>{label}</StyledInputLabel>
-            <StyledTextInput {...props} />
-            {isPassword && (
-                <RightIcon onPress={() => setHidePassword(!hidePassword)}>
-                    <Ionicons
-                        name={hidePassword ? 'md-eye-off' : 'md-eye'}
-                        size={30}
-                        color={darkLight}
-                    />
-                </RightIcon>
-            )}
+            <StyledTextInput {...props} style={inputStyle} />
         </View>
     );
 };
