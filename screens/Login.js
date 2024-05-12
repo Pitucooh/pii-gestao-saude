@@ -110,7 +110,7 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
                                 backgroundColor: customGreen,
                                 borderRadius: 20,          
                                 borderWidth: 0, 
-                                textAlign: LeftIcon     ,
+                                
                                 color: primary  
                             }}
                             
@@ -130,7 +130,7 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
                                 backgroundColor: customGreen,  
                                 borderRadius: 20,          
                                 borderWidth: 0,
-                                textAlign: LeftIcon,
+                                
                                 color: primary 
 
                             }}
