@@ -110,7 +110,6 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
                                 backgroundColor: customGreen,
                                 borderRadius: 20,          
                                 borderWidth: 0, 
-                                
                                 color: primary  
                             }}
                             
@@ -130,7 +129,6 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
                                 backgroundColor: customGreen,  
                                 borderRadius: 20,          
                                 borderWidth: 0,
-                                
                                 color: primary 
 
                             }}
@@ -178,7 +176,7 @@ const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ..
             <StyledTextInput {...props}/>
             {isPassword && (
                 <RightIcon onPress={() => setHidePassword(!hidePassword)}>
-                    <Ionicons name = {hidePassword ? 'md-eye-off' : 'md-eye'} size={30} color= {darkLight} />
+                    <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={30} color={darkLight} />  
                 </RightIcon>
             )}
         </View>
