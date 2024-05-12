@@ -95,7 +95,18 @@ const Signup = ({ navigation }) => {
             <StyledContainer style={{ backgroundColor: backgroundGreen }}>
                 <StatusBar style="dark" />
                 <InnerContainer style={{ backgroundColor: backgroundGreen }}>
-                    <PageTitle>YE GESTÃO EM SAÚDE</PageTitle>
+                <PageTitle style={{
+                        textAlign: 'left',
+                        flexWrap: 'wrap',
+                        lineHeight: 60,
+                        fontSize: 60,
+                        width: '100%',
+                        color: customGreen
+                    }}>
+                        {"YE\nGESTÃO\nEM\nSAÚDE"}
+                    </PageTitle>
+
+                    <View style={{ height: 2, backgroundColor: customGreen, marginVertical: 10, width: '100%' }}></View>
                     <SubTitle>Fazer cadastro</SubTitle>
 
                     <Formik
@@ -202,7 +213,7 @@ const Signup = ({ navigation }) => {
 
                                 <MsgBox type={errorMsg ? 'ERRO' : 'SUCESSO'}>{errorMsg || successMsg}</MsgBox>
 
-                                <StyledButton onPress={handleSubmit} style={{ padding: 10, alignItems: 'center', marginBottom: 10, justifyContent: 'center', marginLeft: 100, borderColor: 'green', backgroundColor: 'transparent' }}>
+                                <StyledButton onPress={handleSubmit} style={{ padding: 10, alignItems: 'center' ,marginBottom: 10, justifyContent: 'center', borderWidth: 2, width: 100, borderColor: customGreen, backgroundColor: 'transparent' }}>
                                     <Fontisto name="person" size={30} style={{ color: 'white' }} />
                                     <ButtonText style={{ color: 'white' }}>Cadastrar</ButtonText>
                                 </StyledButton>
@@ -210,7 +221,7 @@ const Signup = ({ navigation }) => {
                                 <ExtraView>
                                     <ExtraText>Já tem uma conta?</ExtraText>
                                     <TextLink onPress={() => navigation.navigate('Login')}>
-                                        <TextLinkContent>Login</TextLinkContent>
+                                        <TextLinkContent> Login</TextLinkContent>
                                     </TextLink>
                                     <TextLink />
                                 </ExtraView>
