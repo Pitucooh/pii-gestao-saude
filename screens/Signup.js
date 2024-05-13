@@ -99,14 +99,15 @@ const Signup = ({ navigation }) => {
                          textAlign: 'left',
                          flexWrap: 'wrap',
                          lineHeight: 60,
-                         fontSize: 30,
+                         fontSize: 25,
                          color: customGreen
                     }}>
                         {"YE GESTÃO EM SAÚDE"}
                     </PageTitle>
 
                     <View style={{ height: 2, backgroundColor: customGreen, marginVertical: 10, width: '50%' }}></View>
-                    <SubTitle>Fazer cadastro</SubTitle>
+                    <SubTitle style={{ color: black }}>Fazer cadastro 
+                    </SubTitle>
 
                     <Formik
                         initialValues={{ nome: '', email: '', CPF: '', senha: '', confirmeSenha: '' }}
@@ -212,11 +213,11 @@ const Signup = ({ navigation }) => {
 
                                 <MsgBox type={errorMsg ? 'ERRO' : 'SUCESSO'}>{errorMsg || successMsg}</MsgBox>
 
-                                <StyledButton onPress={handleSubmit} style={{ padding: 10, alignItems: 'center' ,marginBottom: 10, justifyContent: 'center', borderWidth: 2, width: 100, borderColor: customGreen, backgroundColor: 'transparent' }}>
+                                <StyledButton onPress={handleSubmit} style={{ padding: 10, alignItems: 'center' ,marginBottom: 10, justifyContent: 'center', borderWidth: 3, width: 149, borderColor: customGreen, backgroundColor: 'transparent', }}>
                                     <Fontisto name="person" size={30} style={{ color: 'white' }} />
-                                    <ButtonText style={{ color: 'white' }}>Cadastrar</ButtonText>
+                                    <ButtonText style={{ color: customGreen }}>Cadastrar</ButtonText>
                                 </StyledButton>
-                                <Line />
+                                <View style={{ height: 2, backgroundColor: customGreen, marginVertical: 10, width: '50%' }}></View>
                                 <ExtraView>
                                     <ExtraText>Já tem uma conta?</ExtraText>
                                     <TextLink onPress={() => navigation.navigate('Login')}>
