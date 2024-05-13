@@ -96,17 +96,16 @@ const Signup = ({ navigation }) => {
                 <StatusBar style="dark" />
                 <InnerContainer style={{ backgroundColor: backgroundGreen }}>
                 <PageTitle style={{
-                        textAlign: 'left',
-                        flexWrap: 'wrap',
-                        lineHeight: 60,
-                        fontSize: 60,
-                        width: '100%',
-                        color: customGreen
+                         textAlign: 'left',
+                         flexWrap: 'wrap',
+                         lineHeight: 60,
+                         fontSize: 30,
+                         color: customGreen
                     }}>
-                        {"YE\nGESTÃO\nEM\nSAÚDE"}
+                        {"YE GESTÃO EM SAÚDE"}
                     </PageTitle>
 
-                    <View style={{ height: 2, backgroundColor: customGreen, marginVertical: 10, width: '100%' }}></View>
+                    <View style={{ height: 2, backgroundColor: customGreen, marginVertical: 10, width: '50%' }}></View>
                     <SubTitle>Fazer cadastro</SubTitle>
 
                     <Formik
