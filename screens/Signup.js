@@ -47,7 +47,7 @@ const Signup = ({ navigation }) => {
                 return;
             }
     
-            const response = await fetch('http://192.168.15.102:3000/signup', {
+            const response = await fetch('http://10.2.128.141:3000/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ const Signup = ({ navigation }) => {
                     </PageTitle>
 
                     <View style={{ height: 2, backgroundColor: customGreen, marginVertical: 10, width: '50%' }}></View>
-                    <SubTitle style={{ color: black }}>Fazer cadastro 
+                    <SubTitle style={{ color: 'black' }}>Fazer cadastro 
                     </SubTitle>
 
                     <Formik
