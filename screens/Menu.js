@@ -63,10 +63,9 @@ const Menu = ({navigation}) => {
                     </View>
 
                     <StyledFormArea>
-                    <Line />
-                        <StyledButton onPress={() => {navigation.navigate('Login')}}>
-                            <ButtonText>Logout</ButtonText>
-                        </StyledButton>      
+                    <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
+
+                          
                     </StyledFormArea>
                 </WelcomeContainer>
             </InnerContainer>
@@ -79,29 +78,26 @@ const Menu = ({navigation}) => {
 const styles = StyleSheet.create({
 
     container:{
-       
-        flex: 1, 
         backgroundColor: greenForm, 
         width: 300,
-        borderRadius: 20
-        
+        borderRadius: 20,
+        height: 350,
+        alignItems: 'flex-start'
     }, 
     
     card: {
-        backgroundColor: 'transparent', 
-        marginBottom: 10, 
-        padding: 15,
-        borderWidth: 2,
-        borderColor: green2,
-        borderRadius: 5,
-        alignContent: 'center',
-        justifyContent: 'center', 
-       
+        backgroundColor: backgroundGreen, 
+        width: 110,
+        marginRight:1000,
+        flex: 1,
+        marginHorizontal: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
         
     },
     cardText: {
       fontSize: 18,
-      color: primary
+      color: greenForm
       
     },
   });
