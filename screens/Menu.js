@@ -41,7 +41,7 @@ const Menu = ({navigation}) => {
                 <WelcomeContainer>
                    
                     <PageTitle welcome={true} style={{flexWrap: 'wrap', lineHeight: 30, color:customGreen, 
-                         fontSize: 30, marginTop: 20}}>MENU</PageTitle>
+                         fontSize: 30, marginTop: 25}}>MENU</PageTitle>
                     <View style={{ height: 2, backgroundColor: customGreen, width: '50%' }}></View>
                     <SubTitle welcome={true} style={{color: greenForm, marginTop: 10}}>Seja bem vindo, Fulano</SubTitle>
                     <View style={styles.container}>
