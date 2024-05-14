@@ -26,7 +26,7 @@ import {
     WelcomeContainer
 } from './../components/styles';
 
-const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm } = Colors;
+const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black} = Colors;
 
 const Menu = ({navigation}) => {
     
@@ -45,19 +45,20 @@ const Menu = ({navigation}) => {
                     <View style={{ height: 2, backgroundColor: customGreen, width: '50%' }}></View>
                     <SubTitle welcome={true} style={{color: greenForm, marginTop: 10}}>Seja bem vindo, Fulano</SubTitle>
                     <View style={styles.container}>
-                <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Exames')}>
-                    <Text style={styles.cardText}>Exames</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Consultas')}>
-                    <Text style={styles.cardText}>Consultas</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Medicacoes')}>
-                    <Text style={styles.cardText}>Medicações</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Meusdados')}>
-                    <Text style={styles.cardText}>Meus Dados</Text>
-                </TouchableOpacity>
-                </View>
+                    <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Exames')}>
+                        <Text style={styles.cardText}>Exames</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Consultas')}>
+                        <Text style={styles.cardText}>Consultas</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Medicacoes')}>
+                        <Text style={styles.cardText}>Medicações</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Meusdados')}>
+                        <Text style={styles.cardText}>Meus Dados</Text>
+                    </TouchableOpacity>
+                    </View>
+
                     <StyledFormArea>
                     <Line />
                         <StyledButton onPress={() => {navigation.navigate('Login')}}>
@@ -73,23 +74,27 @@ const Menu = ({navigation}) => {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+        backgroundColor: greenForm, 
+        padding: 10,
+        borderRadius: 10, 
+        flex: 1, 
+        width: 300
     },
     card: {
-      backgroundColor: '#fff',
-      borderRadius: 8,
-      padding: 20,
-      marginVertical: 10,
-      elevation: 2,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.3,
-      shadowRadius: 2,
+        backgroundColor: 'transparent', 
+        marginBottom: 10, 
+        padding: 15,
+        borderWidth: 2,
+        borderColor: primary,
+        borderRadius: 5,
+        alignContent: 'center',
+        justifyContent: 'center'
+        
     },
     cardText: {
       fontSize: 18,
+      color: primary
+      
     },
   });
 
