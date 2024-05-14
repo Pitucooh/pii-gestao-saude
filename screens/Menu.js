@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
 
 
 import KeyboardWrapper from '../components/KeyboardWrapper';
@@ -30,6 +29,7 @@ import {
 
 const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black} = Colors;
 
+
 const Menu = ({navigation}) => {
     
     const handleCardPress = (screenName) => {
@@ -46,6 +46,7 @@ const Menu = ({navigation}) => {
                          fontSize: 30, marginTop: 25}}>MENU</PageTitle>
                     <View style={{ height: 2, backgroundColor: customGreen, width: '50%' }}></View>
                     <SubTitle welcome={true} style={{color: greenForm, marginTop: 10}}>Seja bem vindo, Fulano</SubTitle>
+                    <Text style={{color: greenForm, marginBottom:20}}>{'Monitore a sua saúde'} </Text>
                     <View style={styles.container}>
                     <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Exames')}>
                         <Text style={styles.cardText}>Exames</Text>
@@ -74,22 +75,15 @@ const Menu = ({navigation}) => {
     );
 };
 
-const GradientContainer = ({ children }) => {
-    return (
-      <LinearGradient
-        colors={['rgba(255,253,192,1)', 'rgba(132,202,130,1)']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.container}
-      >
-        {children}
-      </LinearGradient>
-    );
-  };
 
 const styles = StyleSheet.create({
 
     container:{
+       
+        flex: 1, 
+        backgroundColor: greenForm, 
+        width: 300,
+        borderRadius: 20
         
     }, 
     
