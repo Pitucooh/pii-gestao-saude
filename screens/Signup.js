@@ -25,7 +25,7 @@ import {
     TextLinkContent
 } from './../components/styles';
 
-const { brand, darkLight, backgroundGreen, customGreen, primary } = Colors;
+const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm } = Colors;
 
 const Signup = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true);
@@ -98,15 +98,15 @@ const Signup = ({ navigation }) => {
                 <PageTitle style={{
                          textAlign: 'left',
                          flexWrap: 'wrap',
-                         lineHeight: 60,
+                         lineHeight: 30,
                          fontSize: 25,
                          color: customGreen
                     }}>
                         {"YE GESTÃO EM SAÚDE"}
                     </PageTitle>
 
-                    <View style={{ height: 2, backgroundColor: customGreen, marginVertical: 10, width: '50%' }}></View>
-                    <SubTitle style={{ color: 'black' }}>Fazer cadastro 
+                    <View style={{ height: 2, backgroundColor: customGreen, width: '50%' }}></View>
+                    <SubTitle style={{ color: greenForm, padding:3}}>Fazer cadastro 
                     </SubTitle>
 
                     <Formik
@@ -213,11 +213,11 @@ const Signup = ({ navigation }) => {
 
                                 <MsgBox type={errorMsg ? 'ERRO' : 'SUCESSO'}>{errorMsg || successMsg}</MsgBox>
 
-                                <StyledButton onPress={handleSubmit} style={{ padding: 10, alignItems: 'center' ,marginBottom: 10, justifyContent: 'center', borderWidth: 3, width: 149, borderColor: customGreen, backgroundColor: 'transparent', }}>
-                                    <Fontisto name="person" size={30} style={{ color: 'white' }} />
-                                    <ButtonText style={{ color: customGreen }}>Cadastrar</ButtonText>
+                                <StyledButton onPress={handleSubmit} style={{marginBottom: 10, borderWidth: 3, width: 149, borderColor: customGreen, backgroundColor: 'transparent', flex: 1, justifyContent: 'center', alignItems: 'center', marginLeft:55  }}>
+                                    
+                                    <ButtonText style={{ color: greenForm }}>Cadastrar</ButtonText>
                                 </StyledButton>
-                                <View style={{ height: 2, backgroundColor: customGreen, marginVertical: 10, width: '50%' }}></View>
+                                    <View style={{ height: 2, backgroundColor: customGreen, marginVertical: 10, width: '50%', alignItems:'center', marginLeft:60  }}></View>
                                 <ExtraView>
                                     <ExtraText>Já tem uma conta?</ExtraText>
                                     <TextLink onPress={() => navigation.navigate('Login')}>

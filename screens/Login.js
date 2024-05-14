@@ -140,7 +140,7 @@ const Login = ({ navigation }) => {
                                     <View>
 
                                         <StyledButton onPress={handleSubmit} style={{ padding: 10, alignItems: 'center' ,marginBottom: 10, justifyContent: 'center', borderWidth: 2, width: 100, borderColor: customGreen, backgroundColor: 'transparent' }}>
-                                            <ButtonText style={{ color: 'black' }}>Login</ButtonText>
+                                            <ButtonText style={{ color: greenForm }}>Login</ButtonText>
                                         </StyledButton>
 
                                     </View>
