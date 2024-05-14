@@ -3,21 +3,30 @@ import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-
-
-import{
+import KeyboardWrapper from '../components/KeyboardWrapper';
+import {
+    StyledContainer,
     InnerContainer,
     PageTitle,
     SubTitle,
     StyledFormArea,
+    LeftIcon,
+    StyledInputLabel,
+    StyledTextInput,
+    RightIcon,
     StyledButton,
     ButtonText,
+    Colors,
+    MsgBox,
     Line,
-    WelcomeContainer,
-    PageLogo,
-    Avatar
+    ExtraText,
+    ExtraView,
+    TextLink,
+    TextLinkContent, 
+    WelcomeContainer
 } from './../components/styles';
 
+const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm } = Colors;
 
 const Menu = ({navigation}) => {
     
@@ -30,9 +39,11 @@ const Menu = ({navigation}) => {
             <StatusBar style = "light" />
             <InnerContainer>
                 <WelcomeContainer>
-                    <PageLogo resizeMode= "cover" source = {require('./../assets/logo.png')} />
-                    <PageTitle welcome={true}>Bem vindo!</PageTitle>
-                    <SubTitle welcome={true}>Fulano</SubTitle>
+                   
+                    <PageTitle welcome={true} style={{flexWrap: 'wrap', lineHeight: 30, color:customGreen, 
+                         fontSize: 30, marginTop: 20}}>MENU</PageTitle>
+                    <View style={{ height: 2, backgroundColor: customGreen, width: '50%' }}></View>
+                    <SubTitle welcome={true} style={{color: greenForm, marginTop: 10}}>Seja bem vindo, Fulano</SubTitle>
                     <View style={styles.container}>
                 <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Exames')}>
                     <Text style={styles.cardText}>Exames</Text>
