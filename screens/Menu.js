@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import {
@@ -72,23 +74,35 @@ const Menu = ({navigation}) => {
     );
 };
 
+const GradientContainer = ({ children }) => {
+    return (
+      <LinearGradient
+        colors={['rgba(255,253,192,1)', 'rgba(132,202,130,1)']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.container}
+      >
+        {children}
+      </LinearGradient>
+    );
+  };
+
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: greenForm, 
-        padding: 10,
-        borderRadius: 10, 
-        flex: 1, 
-        width: 300
-    },
+
+    container:{
+        
+    }, 
+    
     card: {
         backgroundColor: 'transparent', 
         marginBottom: 10, 
         padding: 15,
         borderWidth: 2,
-        borderColor: primary,
+        borderColor: green2,
         borderRadius: 5,
         alignContent: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center', 
+       
         
     },
     cardText: {
