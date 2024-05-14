@@ -67,6 +67,9 @@ const Menu = ({navigation}) => {
 
                           
                     </StyledFormArea>
+                    <View style={styles.footer}>
+                        <Text style={styles.footerText}>Sobre nós</Text>
+                    </View>
                 </WelcomeContainer>
             </InnerContainer>
             
@@ -100,6 +103,13 @@ const styles = StyleSheet.create({
       color: greenForm
       
     },
+
+    footer:{
+        backgroundColor: greenForm,
+        width: 500,
+        marginTop:200,
+        flex: 1,
+    }
   });
 
 
