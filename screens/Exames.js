@@ -45,6 +45,7 @@ const App = () => {
         ))
     ) : (
         <Text style={styles.placeholderText}>Nenhum resultado disponível</Text>
+        
     )}
 </ScrollView>
     </View>

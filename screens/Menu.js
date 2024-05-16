@@ -70,7 +70,9 @@ const Menu = ({navigation}) => {
                     <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Meusdados')}>
                         <Text style={styles.cardText}>Meus Dados</Text>
                     </TouchableOpacity>
-                   
+                    <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Upload')}>
+                        <Text style={styles.cardText}>Upload temporario</Text>
+                    </TouchableOpacity>
                     </View>
 
 
