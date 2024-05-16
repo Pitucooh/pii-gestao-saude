@@ -60,6 +60,13 @@ const Menu = ({navigation}) => {
                     <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Meusdados')}>
                         <Text style={styles.cardText}>Meus Dados</Text>
                     </TouchableOpacity>
+                    <View style={styles.container}>
+                    <TextInput 
+                        style={styles.input} 
+                        multiline={true}
+                        placeholder="Escreva suas notas aqui..."
+                    />
+                    </View>
                     </View>
 
                     <StyledFormArea>
@@ -105,7 +112,15 @@ const styles = StyleSheet.create({
         backgroundColor: greenForm,
         width: 500,
         marginTop:200,
-        flex: 1,
+        flex: 1
+    },
+
+    input:{
+        height: 200,
+        borderColor: 'gray',
+        borderWidth: 1,
+        padding: 10
+       
     }
   });
 
