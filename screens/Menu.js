@@ -67,9 +67,6 @@ const Menu = ({navigation}) => {
 
                           
                     </StyledFormArea>
-                    <Footer>
-                        este é o footer 
-                    </Footer>
                 </WelcomeContainer>
             </InnerContainer>
             
