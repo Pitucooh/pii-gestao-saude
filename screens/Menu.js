@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -47,6 +47,16 @@ const Menu = ({navigation}) => {
                     <View style={{ height: 2, backgroundColor: customGreen, width: '50%' }}></View>
                     <SubTitle welcome={true} style={{color: greenForm, marginTop: 10}}>Seja bem vindo, Fulano</SubTitle>
                     <Text style={{color: greenForm, marginBottom:20}}>{'Monitore a sua saúde'} </Text>
+                    
+                    <View style={styles.notesContainer}>
+                        <Text style={styles.notesText}>Bloco de Notas:</Text>
+                        <TextInput
+                            style={styles.notesInput}
+                            multiline={true}
+                            numberOfLines={4}
+                            placeholder="Digite suas notas aqui..."
+                        />
+                    </View>
                     <View style={styles.container}>
                     <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Exames')}>
                         <Text style={styles.cardText}>Exames</Text>
@@ -60,14 +70,9 @@ const Menu = ({navigation}) => {
                     <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Meusdados')}>
                         <Text style={styles.cardText}>Meus Dados</Text>
                     </TouchableOpacity>
-                    <View style={styles.container}>
-                    <TextInput 
-                        style={styles.input} 
-                        multiline={true}
-                        placeholder="Escreva suas notas aqui..."
-                    />
+                   
                     </View>
-                    </View>
+
 
                     <StyledFormArea>
                     <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
@@ -115,14 +120,34 @@ const styles = StyleSheet.create({
         flex: 1
     },
 
-    input:{
-        height: 200,
-        borderColor: 'gray',
-        borderWidth: 1,
-        padding: 10
-       
-    }
+    notesContainer: {
+        backgroundColor: backgroundGreen,
+        borderRadius: 10,
+        padding: 10,
+        marginTop: 20,
+        width: '100%',
+        alignSelf: 'center',
+        borderWidth: 2, 
+        borderColor: greenForm, 
+        marginBottom: 20
+    },
+    notesText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 5,
+        color: greenForm,
+    },
+    notesInput: {
+        height: 100,
+        backgroundColor: greenForm,
+        borderRadius: 5,
+        padding: 5,
+        color: primary
+    },
+
+
   });
+
 
 
 export default Menu;
