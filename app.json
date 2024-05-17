@@ -15,6 +15,10 @@
       "**/*"
     ],
     "ios": {
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "We need access to your photo library to pick documents.",
+        "NSDocumentPickerUsageDescription": "We need access to your documents to pick files."
+      },
       "supportsTablet": true
     },
     "android": {
