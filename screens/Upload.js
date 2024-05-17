@@ -9,19 +9,22 @@ const DocumentPickerExample = () => {
   const handleFilePick = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: 'application/pdf', // Specify the MIME type for PDF files
+        type: 'application/pdf', // especificar extensão do arquivo
       });
-
+  
+      console.log('Resultado da seleção do documento:', result);
+  
       if (result.type === 'success') {
         setSelectedFile(result);
         uploadFile(result.uri);
       } else {
-        console.log('Document picking cancelled');
+        console.log('Selecionar documento cancelado ou erro:', result);
       }
     } catch (error) {
-      console.log('Error picking document:', error);
+      console.log('Erro selecionando documento:', error);
     }
   };
+  
 
   const uploadFile = async (uri) => {
     try {
@@ -32,24 +35,24 @@ const DocumentPickerExample = () => {
         name: 'selectedFile.pdf',
       });
 
-      const response = await axios.post('http://127.0.0.1:5000', formData, {
+      const response = await axios.post('http://10.2.130.84:5000', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      console.log('File uploaded successfully:', response.data);
+      console.log('upload feito com sucesso:', response.data);
     } catch (error) {
-      console.log('Error uploading file:', error);
+      console.log('erro fazendo upload:', error);
     }
   };
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text style={{ marginBottom: 20 }}>
-        Selected File: {selectedFile ? selectedFile.name : 'None'}
+        Arquivo selecionado: {selectedFile ? selectedFile.name : 'None'}
       </Text>
-      <Button title="Pick a Document" onPress={handleFilePick} />
+      <Button title="selecionar documento" onPress={handleFilePick} />
     </View>
   );
 };
