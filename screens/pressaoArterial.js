@@ -7,15 +7,15 @@ const rl = readline.createInterface({
 
 function pressaoArterial(sistolica, diastolica) {
     if (sistolica < 90 && diastolica < 60) {
-        return "Pressão baixa";
+        return "Pressão baixa. É indicado que você procure atendimento médico de emergência para avaliação, principalmente se estiver com algum sintoma";
     } else if (90 <= sistolica && sistolica < 120 && 60 <= diastolica && diastolica < 80) {
-        return "Pressão ótima";
+        return "Pressão ótima. Meus parabéns, os valores das suas aferições estão ótimos, continue fazendo um bom trabalho, sua saúde agradece";
     } else if (120 <= sistolica && sistolica <= 129 && 80 <= diastolica && diastolica <= 84) {
-        return "Pressão normal";
+        return "Pressão normal. Meus parabéns, os valores das suas aferições estão ótimos, continue fazendo um bom trabalho, sua saúde agradece";
     } else if (130 <= sistolica && sistolica <= 139 && 85 <= diastolica && diastolica <= 89) {
-        return "Atenção";
+        return "Atenção. É indicado que você procure atendimento médico de emergência para avaliação, principalmente se estiver com algum sintoma";
     } else if (sistolica>=140 && diastolica >=90) {
-        return "Pressão alta";
+        return "Pressão alta. É indicado que você procure atendimento médico de emergência para avaliação, principalmente se estiver com algum sintoma";
     }
 }
 
