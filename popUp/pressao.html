@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Pressão Arterial</title>
+</head>
+<body>
+
+<div id="popup" style="display: none;">
+    <h2>Informe sua pressão arterial:</h2>
+    <label for="sistolica">Pressão Sistólica:</label>
+    <input type="text" id="sistolica"><br><br>
+    <label for="diastolica">Pressão Diastólica:</label>
+    <input type="text" id="diastolica"><br><br>
+    <button onclick="checkPressure()">Verificar</button>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'block';
+    });
+
+    function checkPressure() {
+        var sistolica = parseInt(document.getElementById('sistolica').value);
+        var diastolica = parseInt(document.getElementById('diastolica').value);
+        
+        // Verificando se os valores inseridos são válidos
+        if (isNaN(sistolica) || isNaN(diastolica)) {
+            alert("Por favor, insira valores numéricos válidos.");
+            return;
+        }
+
+        var result = pressaoArterial(sistolica, diastolica);
+        alert(result);
+    };
+
+    function pressaoArterial(sistolica, diastolica) {
+        if (sistolica < 90 && diastolica < 60) {
+            return "Pressão baixa. É indicado que você procure atendimento médico de emergência para avaliação, principalmente se estiver com algum sintoma ";
+        } else if (90 <= sistolica && sistolica < 120 && 60 <= diastolica && diastolica < 80) {
+            return "Pressão ótima. Meus parabéns, os valores das suas aferições estão ótimos, continue fazendo um bom trabalho, sua saúde agradece";
+        } else if (120 <= sistolica && sistolica <= 129 && 80 <= diastolica && diastolica <= 84) {
+            return "Pressão normal. Meus parabéns, os valores das suas aferições estão ótimos, continue fazendo um bom trabalho, sua saúde agradece";
+        } else if (130 <= sistolica && sistolica <= 139 && 85 <= diastolica && diastolica <= 89) {
+            return "Atenção. É indicado que você procure atendimento médico de emergência para avaliação, principalmente se estiver com algum sintoma";
+        } else if (sistolica >= 140 && diastolica >= 90) {
+            return "Pressão alta. É indicado que você procure atendimento médico de emergência para avaliação, principalmente se estiver com algum sintoma";
+        }
+    }
+</script>
+
+</body>
+</html>
