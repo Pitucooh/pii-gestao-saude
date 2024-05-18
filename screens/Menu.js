@@ -1,22 +1,33 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
-
-import{
+import KeyboardWrapper from '../components/KeyboardWrapper';
+import {
+    StyledContainer,
     InnerContainer,
     PageTitle,
     SubTitle,
     StyledFormArea,
+    LeftIcon,
+    StyledInputLabel,
+    StyledTextInput,
+    RightIcon,
     StyledButton,
     ButtonText,
+    Colors,
+    MsgBox,
     Line,
-    WelcomeContainer,
-    PageLogo,
-    Avatar
+    ExtraText,
+    ExtraView,
+    TextLink,
+    TextLinkContent, 
+    WelcomeContainer
 } from './../components/styles';
+
+const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black} = Colors;
 
 
 const Menu = ({navigation}) => {
@@ -30,28 +41,45 @@ const Menu = ({navigation}) => {
             <StatusBar style = "light" />
             <InnerContainer>
                 <WelcomeContainer>
-                    <PageLogo resizeMode= "cover" source = {require('./../assets/logo.png')} />
-                    <PageTitle welcome={true}>Bem vindo!</PageTitle>
-                    <SubTitle welcome={true}>Fulano</SubTitle>
+                   
+                    <PageTitle welcome={true} style={{flexWrap: 'wrap', lineHeight: 30, color:customGreen, 
+                         fontSize: 30, marginTop: 25}}>MENU</PageTitle>
+                    <View style={{ height: 2, backgroundColor: customGreen, width: '50%' }}></View>
+                    <SubTitle welcome={true} style={{color: greenForm, marginTop: 10}}>Seja bem vindo, Fulano</SubTitle>
+                    <Text style={{color: greenForm, marginBottom:20}}>{'Monitore a sua saúde'} </Text>
+                    
+                    <View style={styles.notesContainer}>
+                        <Text style={styles.notesText}>Bloco de Notas:</Text>
+                        <TextInput
+                            style={styles.notesInput}
+                            multiline={true}
+                            numberOfLines={4}
+                            placeholder="Digite suas notas aqui..."
+                        />
+                    </View>
                     <View style={styles.container}>
-                <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Exames')}>
-                    <Text style={styles.cardText}>Exames</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Consultas')}>
-                    <Text style={styles.cardText}>Consultas</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Medicacoes')}>
-                    <Text style={styles.cardText}>Medicações</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Meusdados')}>
-                    <Text style={styles.cardText}>Meus Dados</Text>
-                </TouchableOpacity>
-                </View>
+                    <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Exames')}>
+                        <Text style={styles.cardText}>Exames</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Consultas')}>
+                        <Text style={styles.cardText}>Consultas</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Medicacoes')}>
+                        <Text style={styles.cardText}>Medicações</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Meusdados')}>
+                        <Text style={styles.cardText}>Meus Dados</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Upload')}>
+                        <Text style={styles.cardText}>Upload temporario</Text>
+                    </TouchableOpacity>
+                    </View>
+
+
                     <StyledFormArea>
-                    <Line />
-                        <StyledButton onPress={() => {navigation.navigate('Login')}}>
-                            <ButtonText>Logout</ButtonText>
-                        </StyledButton>      
+                    <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
+
+                          
                     </StyledFormArea>
                 </WelcomeContainer>
             </InnerContainer>
@@ -60,27 +88,68 @@ const Menu = ({navigation}) => {
     );
 };
 
+
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
+
+    container:{
+        backgroundColor: greenForm, 
+        width: 300,
+        borderRadius: 20,
+        height: 350,
+        alignItems: 'flex-start'
+    }, 
+    
     card: {
-      backgroundColor: '#fff',
-      borderRadius: 8,
-      padding: 20,
-      marginVertical: 10,
-      elevation: 2,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.3,
-      shadowRadius: 2,
+        backgroundColor: backgroundGreen, 
+        width: 110,
+        marginRight:1000,
+        flex: 1,
+        marginHorizontal: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        
     },
     cardText: {
       fontSize: 18,
+      color: greenForm
+      
     },
+
+    footer:{
+        backgroundColor: greenForm,
+        width: 500,
+        marginTop:200,
+        flex: 1
+    },
+
+    notesContainer: {
+        backgroundColor: backgroundGreen,
+        borderRadius: 10,
+        padding: 10,
+        marginTop: 20,
+        width: '100%',
+        alignSelf: 'center',
+        borderWidth: 2, 
+        borderColor: greenForm, 
+        marginBottom: 20
+    },
+    notesText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 5,
+        color: greenForm,
+    },
+    notesInput: {
+        height: 100,
+        backgroundColor: greenForm,
+        borderRadius: 5,
+        padding: 5,
+        color: primary
+    },
+
+
   });
+
 
 
 export default Menu;

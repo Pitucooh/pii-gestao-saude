@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { View, TextInput, StyleSheet} from 'react-native';
 
 
 import{
@@ -12,7 +13,8 @@ import{
     Line,
     WelcomeContainer,
     WelcomeImage,
-    Avatar
+    Avatar,
+    MyTextInput
 } from './../components/styles';
 
 
@@ -21,18 +23,17 @@ const Consultas = ({navigation}) => {
         <>
             <StatusBar style = "light" />
             <InnerContainer>
-                <WelcomeImage resizeMode= "cover" source = {require('./../assets/logo.png')}/>
                 <WelcomeContainer>
-                    <PageTitle welcome={true}>Consultas</PageTitle>
-                    <SubTitle welcome={true}>Fulano</SubTitle>
                     <StyledFormArea>
-                    <Avatar resizeMode= "cover" source = {require('./../assets/logo.png')} />
-                    <Line />
-                        <StyledButton onPress={() => {navigation.navigate('Login')}}>
-                            <ButtonText>Logout</ButtonText>
-                        </StyledButton>      
+                        <View>
+                            <MyTextInput placeholder="Especialidade:"></MyTextInput>
+                        </View>
+                    <Avatar resizeMode= "cover" source = {require('./../assets/logo.png')} />    
                     </StyledFormArea>
                 </WelcomeContainer>
+                <StyledButton>
+                    <ButtonText>Salvar</ButtonText>
+                </StyledButton>
             </InnerContainer>
         </>
     );

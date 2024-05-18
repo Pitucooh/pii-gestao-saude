@@ -16,6 +16,7 @@ import Consultas from './../screens/Consultas';
 import Exames from './../screens/Exames';
 import Medicacoes from './../screens/Medicacoes';
 import Meusdados from './../screens/Meusdados';
+import Upload from './../screens/Upload';
 
 
 
@@ -39,7 +40,7 @@ const RootStack = () => {
                     color: '#000' 
                 }            
             }}
-            initialRouteName="Login"
+            initialRouteName="Menu"
             >
                 <Stack.Screen name= "Login" component={Login} />
                 <Stack.Screen name= "Signup" component={Signup} />
@@ -49,6 +50,7 @@ const RootStack = () => {
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "Exames" component={Exames} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "Medicacoes" component={Medicacoes} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "Meusdados" component={Meusdados} />
+                <Stack.Screen options = {{headerTintColor: '#000' }} name= "Upload" component={Upload} />
 
 
 

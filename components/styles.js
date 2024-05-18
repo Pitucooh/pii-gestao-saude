@@ -17,13 +17,14 @@ export const Colors = {
     green: '#10B981',
     red: '#EF4444',
     customGreen: '#709383',
-    backgroundGreen: '#CEE5DD',
+    backgroundGreen: '#FFFBF6',
     greenForm: '#91A098',
-    white: '#f2f2f2'
+    green2: '#CEE5DD',
+    black: '#000000'
 }
 
 
-const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, white, greenForm} = Colors;
+const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black} = Colors;
 
 export const StyledContainer = styled.View`
     flex: 1;
@@ -92,7 +93,7 @@ export const MyTextInput = styled.TextInput`
     font-size: 16px;
     margin-vertical: 3px;
     margin-bottom: 10px;
-    color: white; 
+    color: ${black};  
 `;
 
 
@@ -101,7 +102,7 @@ export const SubTitle = styled.Text`
     margin-bottom: 20px;
     letter-spacing: 1px;
     font-weight: bold;
-    color: black;
+    color: ${primary}; 
 
     ${(props) => props.welcome && `
     margin-bottom: 5px;
@@ -110,22 +111,22 @@ export const SubTitle = styled.Text`
 `;
 export const StyledFormArea = styled.View`
     width: 90%; `;
+    
 
 export const StyledTextInput = styled.TextInput`
     background-color: ${secondary};
     padding: 15px;
-    padding-left: 55px;
     border-radius: 5px;
     font-size: 16px;
     margin-vertical: 3px;
     margin-bottom: 10px;
-    color:${white};
+    color: ${primary}; 
     
     `;
 export const StyledInputLabel = styled.Text`
-    color:${white};
+    color: ${black}; 
     font-size: 13px;
-    text-align: left;
+    
 `;
 
 export const LeftIcon = styled.View`
@@ -133,7 +134,7 @@ export const LeftIcon = styled.View`
     top: 30px;
     position: absolute;
     z-index: 1;
-    color: ${white};
+    color: ${primary};
 `;
 
 export const RightIcon = styled.TouchableOpacity`
@@ -141,7 +142,7 @@ export const RightIcon = styled.TouchableOpacity`
     top: 30px;
     position: absolute;
     z-index: 1;
-    color: ${white};
+    color: ${primary}; 
 `;
 
 export const StyledButton = styled.TouchableOpacity`
@@ -187,7 +188,7 @@ export const ExtraView = styled.View`
 export const ExtraText = styled.Text`
     justify-content: center;
     align-content:center;
-    color: ${tertiary};
+    color: ${black};
     font-size: 15px;
 `;
 

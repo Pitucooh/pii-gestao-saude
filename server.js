@@ -136,3 +136,6 @@ app.post('/signup', (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
+
+// Exportar a instância do servidor Express para uso em outros arquivos
+module.exports = app;
