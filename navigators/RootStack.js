@@ -17,7 +17,9 @@ import Exames from './../screens/Exames';
 import Medicacoes from './../screens/Medicacoes';
 import Meusdados from './../screens/Meusdados';
 import Upload from './../screens/Upload';
-
+import AtualizarGlicemia from './../screens/AtualizarGlicemia';
+import AtualizarImc from './../screens/AtualizarImc';
+import AtualizarPressao from './../screens/AtualizarPressao';
 
 
 const Stack = createStackNavigator();
@@ -51,9 +53,9 @@ const RootStack = () => {
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "Medicacoes" component={Medicacoes} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "Meusdados" component={Meusdados} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "Upload" component={Upload} />
-
-
-
+                <Stack.Screen options = {{headerTintColor: '#000' }} name= "AtualizarGlicemia" component={AtualizarGlicemia} />
+                <Stack.Screen options = {{headerTintColor: '#000' }} name= "AtualizarImc" component={AtualizarImc} />
+                <Stack.Screen options = {{headerTintColor: '#000' }} name= "AtualizarPressao" component={AtualizarPressao} />
             </Stack.Navigator>
         </NavigationContainer>
     )    
