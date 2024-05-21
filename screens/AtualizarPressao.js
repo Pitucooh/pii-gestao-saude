@@ -49,13 +49,11 @@ const AtualizarPressao = () => {
             return "Pressão alta. É indicado que você procure atendimento médico de emergência para avaliação, principalmente se estiver com algum sintoma";
         }
     }
-    
-
-        
 
     const handleSave = () => {
         const sistolicaInt = parseInt(sistolica);
         const diastolicaInt = parseInt(diastolica);
+        let result = '';
         if (!isNaN(sistolicaInt) && !isNaN(diastolicaInt)) {
             const result = pressaoArterial(sistolicaInt, diastolicaInt);
             const date = new Date().toLocaleString();
