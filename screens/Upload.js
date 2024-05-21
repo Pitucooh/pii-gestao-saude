@@ -12,23 +12,23 @@ const DocumentPickerExample = () => {
         type: 'application/pdf',
       });
 
-      console.log('Document selection result:', result);
+      console.log('Resultado da seleção:', result);
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
         const file = result.assets[0];
         setSelectedFile(file);
-        console.log('Selected file:', file);
+        console.log('Arquivo selecionado:', file);
       } else {
-        console.log('Document selection canceled or error:', result);
+        console.log('Erro na seleçao:', result);
       }
     } catch (error) {
-      console.error('Error selecting document:', error);
+      console.error('Erro selecionando documento:', error);
     }
   };
 
   const uploadFile = async () => {
     if (!selectedFile) {
-      Alert.alert('No file selected', 'Please select a file first.');
+      Alert.alert('Nenhum arquivo selecionado', 'Por favor selecionar arquivo antes.');
       return;
     }
 
@@ -41,30 +41,30 @@ const DocumentPickerExample = () => {
       });
 
       // colocar ip certo aqui
-      const response = await axios.post('http://192.168.15.135:5000/upload', formData, {
+      const response = await axios.post('http://10.2.0.191:5000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
         timeout: 120000, //120 segundos?!?!?!?
       });
 
-      console.log('Upload successful:', response.data);
-      Alert.alert('Success', 'Upload successful!');
+      console.log('Upload deu certo:', response.data);
+      Alert.alert('Sucesso!', 'Upload deu certo!');
     } catch (error) {
-      console.error('Error uploading file:', error);
-      Alert.alert('Error', 'Error uploading file. Please try again.');
+      console.error('Erro dando upload:', error);
+      Alert.alert('Erro', 'Erro dando upload no arquivo. Tente novamente.');
     }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.filePickerContainer}>
-        <Button title="Select Document" onPress={handleFilePick} />
+        <Button title="Selecionar" onPress={handleFilePick} />
         {selectedFile && <Text style={styles.fileName}>{selectedFile.name}</Text>}
       </View>
       {selectedFile && (
         <View style={styles.uploadButtonContainer}>
-          <Button title="Upload File" onPress={uploadFile} />
+          <Button title="Upload do arquivo" onPress={uploadFile} />
         </View>
       )}
     </View>
