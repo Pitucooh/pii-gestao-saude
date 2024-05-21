@@ -49,7 +49,7 @@ const Login = ({ navigation }) => {
     const handleLogin = async (values) => {
         setErrorMsg('');
         try {
-            const response = await fetch('http://10.2.129.213:3000/login', {
+            const response = await fetch('http://192.168.15.135:3000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

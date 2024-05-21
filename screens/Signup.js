@@ -47,7 +47,7 @@ const Signup = ({ navigation }) => {
                 return;
             }
     
-            const response = await fetch('http://10.2.129.213:3000/signup', {
+            const response = await fetch('http://192.168.15.135:3000/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -68,7 +68,7 @@ const App = () => {
 
       console.log('FormData:', formData);
 
-      const response = await axios.post('http://10.2.128.216:5000/upload', formData, {
+      const response = await axios.post('http://192.168.15.135:5000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
