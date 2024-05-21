@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: '100%',
     },
-    imcResult: {
+    pressaoResult: {
         marginTop: 10,
         fontWeight: 'bold',
         textAlign: 'center',
