@@ -76,14 +76,14 @@ const AtualizarPressao = () => {
         <View style={styles.container}>
             <Text>Atualizar Pressão Arterial</Text>
             <TextInput
-                placeholder="Sistólica"
+                placeholder="Sistólica (mmHg)"
                 keyboardType="numeric"
                 value={sistolica}
                 onChangeText={setSistolica}
                 style={styles.input}
             />
             <TextInput
-                placeholder="Diastólica"
+                placeholder="Diastólica (mmHg)"
                 keyboardType="numeric"
                 value={diastolica}
                 onChangeText={setDiastolica}
