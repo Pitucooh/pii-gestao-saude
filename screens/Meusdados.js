@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, StyleSheet, TextInput, Button, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Button } from 'react-native';
+
 import {
     InnerContainer,
     SubTitle,
@@ -11,6 +12,7 @@ import {
     WelcomeContainer,
     Avatar
 } from './../components/styles';
+
 import KeyboardWrapper from './../components/KeyboardWrapper';
 import Pilha from './../Pilha';
 
@@ -27,9 +29,6 @@ const Meusdados = ({ navigation }) => {
     const [glicemia, setGlicemia] = useState('');
     const [glicemiaResult, setGlicemiaResult] = useState('');
 
-    const [modalVisible, setModalVisible] = useState(false);
-    const [modalMessage, setModalMessage] = useState('');
-
     const calcIMC = (peso, altura) => {
         const alturaMetros = altura / 100;
         const imc = peso / (alturaMetros * alturaMetros);
@@ -37,7 +36,7 @@ const Meusdados = ({ navigation }) => {
         if (imc < 18.5) {
             return "Você está um pouco abaixo do peso ideal, seria interessante mudar seus habitos, que tal procurar um nutricionista para ganhar peso com saúde?";
         } else if (imc >= 18.5 && imc < 25) {
-            return "Uou, que incrível, você está no seu peso ideal, parabéns!!, mas não se esquece, sempre mantenha uma alimentação saldável e busque fazer exercícios físicos.";
+            return "Uou, que incrível, você está no se peso ideal, parabéns!!, mas não se esquece, sempre mantenha uma alimentação saldável e busque fazer exercícios físicos.";
         } else if (imc >= 25 && imc < 30) {
             return "Sobrepeso. Eita, acho que está na hora de prestar atenção no seu peso, tome cuidado com sua alimentação, pratique exercícios físicos, sua saúde pode melhorar muito com isso.";
         } else if (imc >= 30 && imc < 35) {
@@ -51,7 +50,7 @@ const Meusdados = ({ navigation }) => {
 
     const calcPressaoArterial = (sistolica, diastolica) => {
         if (sistolica < 90 && diastolica < 60) {
-            return "Pressão baixa. É indicado que você procure atendimento médico de emergência para avaliação, principalmente se estiver com algum sintoma.";
+            return "Pressão baixa.É indicado que você procure atendimento médico de emergência para avaliação, principalmente se estiver com algum sintoma.";
         } else if (90 <= sistolica && sistolica < 120 && 60 <= diastolica && diastolica < 80) {
             return "Pressão ótima. Meus parabéns, os valores das suas aferições estão ótimos, continue fazendo um bom trabalho, sua saúde agradece.";
         } else if (120 <= sistolica && sistolica <= 129 && 80 <= diastolica && diastolica <= 84) {
@@ -81,12 +80,8 @@ const Meusdados = ({ navigation }) => {
         if (!isNaN(pesoFloat) && !isNaN(alturaFloat)) {
             const result = calcIMC(pesoFloat, alturaFloat);
             setImcResult(result);
-            setModalMessage(result);
-            setModalVisible(true);
         } else {
             setImcResult('Por favor, insira números válidos para peso e altura.');
-            setModalMessage('Por favor, insira números válidos para peso e altura.');
-            setModalVisible(true);
         }
     }
 
@@ -96,8 +91,6 @@ const Meusdados = ({ navigation }) => {
         if (!isNaN(sistolicaInt) && !isNaN(diastolicaInt)) {
             const result = calcPressaoArterial(sistolicaInt, diastolicaInt);
             setPressaoResult(result);
-            setModalMessage(result);
-            setModalVisible(true);
             // Criando uma cópia da pilha de histórico
             const newHistoricoPressoes = new Pilha([...historicoPressoes.toArray()]);
             // Adicionando o novo registro à cópia da pilha de histórico
@@ -108,8 +101,6 @@ const Meusdados = ({ navigation }) => {
             setHistoricoPressoes(newHistoricoPressoes);
         } else {
             setPressaoResult('Por favor, insira números válidos para pressão arterial.');
-            setModalMessage('Por favor, insira números válidos para pressão arterial.');
-            setModalVisible(true);
         }
     }
 
@@ -118,12 +109,8 @@ const Meusdados = ({ navigation }) => {
         if (!isNaN(glicemiaFloat)) {
             const result = calcGlicemia(glicemiaFloat);
             setGlicemiaResult(result);
-            setModalMessage(result);
-            setModalVisible(true);
         } else {
             setGlicemiaResult('Por favor, insira um número válido para glicemia.');
-            setModalMessage('Por favor, insira um número válido para glicemia.');
-            setModalVisible(true);
         }
     }
 
@@ -153,130 +140,81 @@ const Meusdados = ({ navigation }) => {
                                     onChangeText={setAltura}
                                     style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
                                 />
+                                <Button
+                                    title="Calcular"
+                                    onPress={handleCalculateIMC}
+                                />
                             </View>
-                            <StyledButton onPress={handleCalculateIMC}>
-                                <ButtonText>Calcular IMC</ButtonText>
-                            </StyledButton>
-                            <Text>{imcResult}</Text>
+                            <Text style={{ marginTop: 10 }}>{imcResult}</Text>
                         </View>
 
                         <View style={styles.card}>
                             <Text>Pressão Arterial</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <TextInput
-                                    placeholder="Sistólica"
+                                    placeholder="Sistólica (mmHg)"
                                     keyboardType="numeric"
                                     value={sistolica}
                                     onChangeText={setSistolica}
                                     style={{ borderWidth: 1, padding: 10, marginBottom: 10, marginRight: 10 }}
                                 />
                                 <TextInput
-                                    placeholder="Diastólica"
+                                    placeholder="Diastólica (mmHg)"
                                     keyboardType="numeric"
                                     value={diastolica}
                                     onChangeText={setDiastolica}
                                     style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
                                 />
+                                <Button
+                                    title="Calcular"
+                                    onPress={handleCalculatePressao}
+                                />
                             </View>
-                            <StyledButton onPress={handleCalculatePressao}>
-                                <ButtonText>Calcular Pressão</ButtonText>
-                            </StyledButton>
-                            <Text>{pressaoResult}</Text>
+                            <Text style={{ marginTop: 10 }}>{pressaoResult}</Text>
                         </View>
 
                         <View style={styles.card}>
                             <Text>Glicemia</Text>
-                            <TextInput
-                                placeholder="Glicemia"
-                                keyboardType="numeric"
-                                value={glicemia}
-                                onChangeText={setGlicemia}
-                                style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
-                            />
-                            <StyledButton onPress={handleCalculateGlicemia}>
-                                <ButtonText>Calcular Glicemia</ButtonText>
-                            </StyledButton>
-                            <Text>{glicemiaResult}</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <TextInput
+                                    placeholder="Informe sua glicemia"
+                                    keyboardType="numeric"
+                                    value={glicemia}
+                                    onChangeText={setGlicemia}
+                                    style={{ borderWidth: 1, padding: 10, marginBottom: 10, marginRight: 10 }}
+                                />
+                                <Button
+                                    title="Calcular"
+                                    onPress={handleCalculateGlicemia}
+                                />
+                            </View>
+                            <Text style={{ marginTop: 10 }}>{glicemiaResult}</Text>
                         </View>
 
-                        <StyledButton onPress={() => navigation.navigate('Login')}>
-                            <ButtonText>Logout</ButtonText>
-                        </StyledButton>
+                        <StyledFormArea>
+                            <Line />
+                            <StyledButton onPress={() => { navigation.navigate('Login') }}>
+                                <ButtonText>Logout</ButtonText>
+                            </StyledButton>
+                        </StyledFormArea>
                     </WelcomeContainer>
                 </InnerContainer>
             </KeyboardWrapper>
-
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => setModalVisible(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalView}>
-                        <Text style={styles.modalText}>{modalMessage}</Text>
-                        <TouchableOpacity
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() => setModalVisible(false)}
-                        >
-                            <Text style={styles.textStyle}>Fechar</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
         </>
     );
-}
+};
 
 const styles = StyleSheet.create({
     card: {
         backgroundColor: '#fff',
+        borderRadius: 8,
         padding: 20,
-        margin: 10,
-        borderRadius: 10,
-        elevation: 5,
-        shadowColor: '#000',
-        shadowOpacity: 0.3,
-        shadowRadius: 10,
-        shadowOffset: { width: 0, height: 2 },
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 35,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-    },
-    button: {
-        borderRadius: 20,
-        padding: 10,
+        marginVertical: 10,
         elevation: 2,
-    },
-    buttonClose: {
-        backgroundColor: '#2196F3',
-    },
-    textStyle: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 2,
     },
 });
 
