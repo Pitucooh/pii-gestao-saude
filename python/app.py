@@ -1,9 +1,29 @@
-from flask import Flask, jsonify, request
+from flask import Flask, request, jsonify
+from werkzeug.utils import secure_filename
+import os
+import json
 import pdfplumber
 import re
 import mysql.connector
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+
+UPLOAD_FOLDER = r'uploads/exames'
+RESULT_FOLDER = r'resultados'
+ALLOWED_EXTENSIONS = {'pdf'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['RESULT_FOLDER'] = RESULT_FOLDER
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+if not os.path.exists(RESULT_FOLDER):
+    os.makedirs(RESULT_FOLDER)
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Função para carregar os valores de referência do banco de dados
 def carregar_valores_referencia():
@@ -65,25 +85,39 @@ def processar_pdf_e_verificar_resultados(pdf_path, valores_referencia):
 
     return resultados_totais
 
-
 # Rota para processar o PDF e retornar os resultados verificados em relação aos valores de referência
-@app.route('/api/processar_pdf', methods=['POST'])
-def api_processar_pdf():
-    try:
-        data = request.get_json()
-        pdf_path = data.get('pdf_path')
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'})
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'})
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(file_path)
         
         # Carregar os valores de referência do banco de dados
         valores_referencia = carregar_valores_referencia()
         
         # Processar o PDF e verificar resultados
-        resultados = processar_pdf_e_verificar_resultados(pdf_path, valores_referencia)
-        
-        return jsonify(resultados)
+        resultados = processar_pdf_e_verificar_resultados(file_path, valores_referencia)
 
-    except Exception as e:
-        print(f"Erro durante o processamento do PDF: {str(e)}")
-        return jsonify({'error': 'Erro interno no servidor'}), 500
+        return jsonify(resultados)
+        
+        # Salvar os resultados em um arquivo JSON na pasta "resultados"
+        result_filename = f'result_{os.path.splitext(filename)[0]}.json'
+        result_filepath = os.path.join(app.config['RESULT_FOLDER'], result_filename)
+        with open(result_filepath, 'w') as result_file:
+            json.dump(resultados, result_file, ensure_ascii=False, indent=4)
+        
+        return jsonify({'message': 'File uploaded and processed successfully', 'filename': filename, 'resultados': resultados})
+
+    return jsonify({'error': 'Invalid file'})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Button, Alert } from 'react-native';
+import { View, Text, Button, Alert, StyleSheet } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import axios from 'axios';
 
@@ -9,16 +9,17 @@ const DocumentPickerExample = () => {
   const handleFilePick = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: 'application/pdf', // especificar extensão do arquivo
+        type: 'application/pdf',
       });
 
-      console.log('Resultado da seleção do documento:', result);
+      console.log('Resultado da seleção:', result);
 
-      if (result.type === 'success') {
-        setSelectedFile(result);
-        console.log('Arquivo selecionado:', result);
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        const file = result.assets[0];
+        setSelectedFile(file);
+        console.log('Arquivo selecionado:', file);
       } else {
-        console.log('Seleção de documento cancelada ou erro:', result);
+        console.log('Erro na seleçao:', result);
       }
     } catch (error) {
       console.error('Erro selecionando documento:', error);
@@ -27,7 +28,7 @@ const DocumentPickerExample = () => {
 
   const uploadFile = async () => {
     if (!selectedFile) {
-      Alert.alert('Nenhum arquivo selecionado', 'Por favor, selecione um arquivo primeiro.');
+      Alert.alert('Nenhum arquivo selecionado', 'Por favor selecionar arquivo antes.');
       return;
     }
 
@@ -35,37 +36,58 @@ const DocumentPickerExample = () => {
       const formData = new FormData();
       formData.append('file', {
         uri: selectedFile.uri,
-        type: selectedFile.mimeType,
+        type: selectedFile.mimeType || 'application/pdf',
         name: selectedFile.name,
       });
 
-      const response = await axios.post('http://127.0.0.1:5000/upload', formData, {
+      // colocar ip certo aqui
+      const response = await axios.post('http://10.2.0.191:5000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        timeout: 120000, //120 segundos?!?!?!?
       });
 
-      console.log('Upload feito com sucesso:', response.data);
-      Alert.alert('Sucesso', 'Upload feito com sucesso!');
+      console.log('Upload deu certo:', response.data);
+      Alert.alert('Sucesso!', 'Upload deu certo!');
     } catch (error) {
-      console.log('Erro fazendo upload:', error);
-      Alert.alert('Erro', 'Erro fazendo upload. Por favor, tente novamente.');
+      console.error('Erro dando upload:', error);
+      Alert.alert('Erro', 'Erro dando upload no arquivo. Tente novamente.');
     }
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ marginBottom: 20 }}>
-        Arquivo selecionado: {selectedFile ? selectedFile.name : 'Nenhum'}
-      </Text>
-      <Button title="Selecionar Documento" onPress={handleFilePick} />
+    <View style={styles.container}>
+      <View style={styles.filePickerContainer}>
+        <Button title="Selecionar" onPress={handleFilePick} />
+        {selectedFile && <Text style={styles.fileName}>{selectedFile.name}</Text>}
+      </View>
       {selectedFile && (
-        <View style={{ marginTop: 20 }}>
-          <Button title="Confirmar Upload" onPress={uploadFile} />
+        <View style={styles.uploadButtonContainer}>
+          <Button title="Upload do arquivo" onPress={uploadFile} />
         </View>
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  filePickerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  fileName: {
+    marginLeft: 10,
+    fontSize: 16,
+  },
+  uploadButtonContainer: {
+    marginTop: 20,
+  },
+});
 
 export default DocumentPickerExample;

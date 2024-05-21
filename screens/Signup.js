@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Formik } from 'formik';
-import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons';
+import { Octicons } from '@expo/vector-icons';
 import { View } from 'react-native';
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import {
@@ -117,7 +117,6 @@ const Signup = ({ navigation }) => {
                             <StyledFormArea>
                                 <MyTextInput
                                     label="Nome Completo"
-                                    icon="person"
                                     placeholder=""
                                     placeholderTextColor="#FFFFFF"
                                     onChangeText={handleChange('nome')}
@@ -134,7 +133,6 @@ const Signup = ({ navigation }) => {
                                 />
                                 <MyTextInput
                                     label="Email"
-                                    icon="mail"
                                     placeholder="Digite o seu email"
                                     placeholderTextColor="#FFFFFF"
                                     onChangeText={handleChange('email')}
@@ -152,7 +150,6 @@ const Signup = ({ navigation }) => {
                                 />
                                 <MyTextInput
                                     label="CPF"
-                                    icon="credit-card"
                                     placeholder="xxx.xxx.xxx-xx"
                                     placeholderTextColor="#FFFFFF"
                                     onChangeText={handleChange('CPF')}
@@ -170,7 +167,6 @@ const Signup = ({ navigation }) => {
                                 />
                                 <MyTextInput
                                     label="Senha"
-                                    icon="lock"
                                     placeholder="* * * * * * * * *"
                                     placeholderTextColor="#FFFFFF"
                                     onChangeText={handleChange('senha')}
@@ -191,7 +187,6 @@ const Signup = ({ navigation }) => {
                                 />
                                 <MyTextInput
                                     label="Confirme a Senha"
-                                    icon="lock"
                                     placeholder="* * * * * * * * *"
                                     placeholderTextColor="#FFFFFF"
                                     onChangeText={handleChange('confirmeSenha')}
