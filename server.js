@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
+
 
 const app = express();
 const port = 3000;
@@ -138,4 +140,32 @@ app.listen(port, () => {
 });
 
 // Exportar a instância do servidor Express para uso em outros arquivos
+module.exports = app;
+
+
+const upload = multer({ dest: 'uploads/' });
+
+app.post('/upload', upload.single('file'), (req, res) => {
+  // Verificar se o arquivo foi enviado
+  if (!req.file || req.file.size === 0) {
+    return res.status(400).json({
+      success: false,
+      message: 'O arquivo enviado está vazio.',
+    });
+  }
+
+  // Se o arquivo não estiver vazio, processá-lo e retornar resultados
+  const resultados = {
+    'Exame 2': {
+      resultado: 'Normal_2',
+      parametro: 'mg/dL',
+      valor_minimo: '70',
+      valor_maximo: '100',
+      dentro_limites: true,
+    },
+  };
+
+  res.status(200).json({ resultados });
+});
+
 module.exports = app;

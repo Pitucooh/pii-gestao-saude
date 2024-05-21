@@ -1,12 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Button, Text, ScrollView, Alert, StyleSheet } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [resultados, setResultados] = useState([]);
   const [botaoVisivel, setBotaoVisivel] = useState(true);
+
+  useEffect(() => {
+    loadSavedResults();
+  }, []);
+
+  const loadSavedResults = async () => {
+    try {
+      const savedResults = await AsyncStorage.getItem('resultados');
+      if (savedResults !== null) {
+        setResultados(JSON.parse(savedResults));
+      }
+    } catch (error) {
+      console.error('Erro ao carregar resultados salvos:', error);
+    }
+  };
+
+  const saveResults = async () => {
+    try {
+      await AsyncStorage.setItem('resultados', JSON.stringify(resultados));
+    } catch (error) {
+      console.error('Erro ao salvar resultados:', error);
+    }
+  };
 
   const handleFilePick = async () => {
     try {
@@ -44,7 +68,7 @@ const App = () => {
 
       console.log('FormData:', formData);
 
-      const response = await axios.post('http://10.2.0.191:5000/upload', formData, {
+      const response = await axios.post('http://10.2.128.216:5000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -56,6 +80,7 @@ const App = () => {
       setResultados(response.data);
       setBotaoVisivel(false);
       Alert.alert('Sucesso!', 'Upload feito com sucesso e resultados obtidos!');
+      saveResults();
     } catch (error) {
       console.error('Erro ao fazer upload:', error);
       Alert.alert('Erro', 'Erro ao fazer upload do arquivo. Por favor, tente novamente.');
