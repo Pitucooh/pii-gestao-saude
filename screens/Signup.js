@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Formik } from 'formik';
-import { Octicons } from '@expo/vector-icons';
+import { Octicons, Ionicons } from '@expo/vector-icons';
 import { View } from 'react-native';
 import KeyboardWrapper from '../components/KeyboardWrapper';
+
 import {
     StyledContainer,
     InnerContainer,
@@ -47,7 +48,7 @@ const Signup = ({ navigation }) => {
                 return;
             }
     
-            const response = await fetch('http://192.168.15.135:3000/signup', {
+            const response = await fetch('http://192.168.15.102:3000/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -60,10 +61,10 @@ const Signup = ({ navigation }) => {
                 setTimeout(() => {
                     setSuccessMsg('');
                     navigation.navigate('Login');
-                }, 2000); // Remover mensagem após 3 segundos e redirecionar para a página de login
+                }, 2000); 
             } else {
                 setErrorMsg(data.message);
-            }
+            }            
         } catch (error) {
             console.error('Erro ao fazer cadastro:', error);
             setErrorMsg('Erro ao fazer cadastro. Por favor, tente novamente.');
@@ -229,14 +230,19 @@ const Signup = ({ navigation }) => {
     );
 };
 
-const MyTextInput = ({ label, icon, inputStyle, ...props }) => {
+const MyTextInput = ({ label, icon, inputStyle, isPassword, hidePassword, setHidePassword, ...props }) => {
     return (
         <View>
             <LeftIcon>
                 <Octicons name={icon} size={30} color={brand} />
             </LeftIcon>
             <StyledInputLabel>{label}</StyledInputLabel>
-            <StyledTextInput {...props} style={inputStyle} />
+            <StyledTextInput {...props} style={inputStyle} secureTextEntry={isPassword ? hidePassword : false} />
+            {isPassword && (
+                <RightIcon onPress={() => setHidePassword(!hidePassword)}>
+                    <Ionicons name={hidePassword ? 'eye-off' : 'eye'} size={30} color={darkLight} />
+                </RightIcon>
+            )}
         </View>
     );
 };

@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Formik } from 'formik';
-import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons';
+import { Octicons, Fontisto } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useRoute } from '@react-navigation/native';
+
+
 import { View } from 'react-native';
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import {
@@ -35,7 +39,7 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
             <StyledTextInput {...props} />
             {isPassword && (
                 <RightIcon onPress={() => setHidePassword(!hidePassword)}>
-                    <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={30} color={darkLight} />
+                    <Ionicons name={hidePassword ? 'eye-off' : 'eye'} size={30} color={darkLight} />
                 </RightIcon>
             )}
         </View>
@@ -49,7 +53,7 @@ const Login = ({ navigation }) => {
     const handleLogin = async (values) => {
         setErrorMsg('');
         try {
-            const response = await fetch('http://192.168.15.135:3000/login', {
+            const response = await fetch('http://192.168.15.102:3000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,7 +62,7 @@ const Login = ({ navigation }) => {
             });
             const data = await response.json();
             if (data.success) {
-                navigation.navigate('Menu');
+                navigation.navigate('Menu');  
             }
             else {
                 setErrorMsg(data.message);

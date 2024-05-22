@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform, Animated } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -39,17 +39,17 @@ const AtualizarIMC = () => {
         const alturaMetros = altura / 100;
         const imc = peso / (alturaMetros * alturaMetros);
         if (imc < 18.5) {
-            return "Você está um pouco abaixo do peso ideal, seria interessante mudar seus habitos, que tal procurar um nutricionista para ganhar peso com saúde?";
+            return "Você está um pouco abaixo do peso ideal, seria interessante mudar seus hábitos, que tal procurar um nutricionista para ganhar peso com saúde?";
         } else if (imc >= 18.5 && imc < 25) {
-            return "Uou, que incrível, você está no se peso ideal, parabéns!!, mas não se esquece, sempre mantenha uma alimentação saldável e busque fazer exercícios físicos.";
+            return "Uau, que incrível, você está no seu peso ideal, parabéns!! Mas não se esqueça, sempre mantenha uma alimentação saudável e busque fazer exercícios físicos.";
         } else if (imc >= 25 && imc < 30) {
             return "Sobrepeso. Eita, acho que está na hora de prestar atenção no seu peso, tome cuidado com sua alimentação, pratique exercícios físicos, sua saúde pode melhorar muito com isso.";
         } else if (imc >= 30 && imc < 35) {
-            return "Obesidade I. Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disse, é sempre importante realizar algum tipo de atividade física, isso vai ajudar e muito sua saúde.";
+            return "Obesidade I. Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disso, é sempre importante realizar algum tipo de atividade física, isso vai ajudar muito a sua saúde.";
         } else if (imc >= 35 && imc < 40) {
-            return "Obesidade II. Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disse, é sempre importante realizar algum tipo de atividade física, isso vai ajudar e muito sua saúde.";
+            return "Obesidade II. Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disso, é sempre importante realizar algum tipo de atividade física, isso vai ajudar muito a sua saúde.";
         } else {
-            return "Obesidade grave. Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disse, é sempre importante realizar algum tipo de atividade física, isso vai ajudar e muito sua saúde.";
+            return "Obesidade grave. Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disso, é sempre importante realizar algum tipo de atividade física, isso vai ajudar muito a sua saúde.";
         }
     }
 
@@ -88,11 +88,22 @@ const AtualizarIMC = () => {
         setRecords(records.filter(record => record.key !== key));
     };
 
+    const renderHiddenItem = ({ item }) => (
+        <View style={styles.rowBack}>
+            <TouchableOpacity
+                style={[styles.deleteButton, styles.rightAction]}
+                onPress={() => handleDelete(item.key)}
+            >
+                <Text style={styles.actionText}>Deletar</Text>
+            </TouchableOpacity>
+        </View>
+    );
+
     return (
         <KeyboardAvoidingView
             style={{ flex: 1 }}
             behavior={Platform.OS === 'ios' ? 'padding' : null}
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // adjust the value here if necessary
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
         >
             <Text style={styles.title}>Atualizar IMC</Text>
             <SwipeListView
@@ -118,15 +129,9 @@ const AtualizarIMC = () => {
                         </View>
                     </View>
                 )}
-                renderHiddenItem={({ item }) => (
-                    <View style={styles.rowBack}>
-                        <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.key)}>
-                            <Text style={styles.deleteButtonText}>Delete</Text>
-                        </TouchableOpacity>
-                    </View>
-                )}
-                rightOpenValue={-75}
-                stopRightSwipe={-75}
+                renderHiddenItem={renderHiddenItem}
+                rightOpenValue={-100}
+                stopRightSwipe={-100}
             />
 
             {adding && (
@@ -194,17 +199,21 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 5,
         elevation: 3,
+        width: '100%',
     },
     recordRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 5,
+        flexWrap: 'wrap',
     },
     recordLabel: {
         fontWeight: 'bold',
+        flexShrink: 1,
     },
     recordValue: {
         color: '#555',
+        flexShrink: 1,
     },
     inputContainer: {
         paddingBottom: 20,
@@ -258,6 +267,21 @@ const styles = StyleSheet.create({
     },
     deleteButtonText: {
         color: 'white',
+    },
+    rightAction: {
+        backgroundColor: '#dd2c00',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingRight: 10,
+        marginTop: 10,
+        marginBottom: 10,
+        borderRadius: 8,
+        width: 100,
+    },
+    actionText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
 });
 

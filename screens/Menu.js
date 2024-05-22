@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
+
 
 
 import KeyboardWrapper from '../components/KeyboardWrapper';
@@ -29,12 +30,13 @@ import {
 
 const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black} = Colors;
 
-
-const Menu = ({navigation}) => {
+const Menu = ({navigation}) => {  
     
     const handleCardPress = (screenName) => {
         navigation.navigate(screenName);
-      };
+    };
+
+
     
     return (
         <>
@@ -45,7 +47,7 @@ const Menu = ({navigation}) => {
                     <PageTitle welcome={true} style={{flexWrap: 'wrap', lineHeight: 30, color:customGreen, 
                          fontSize: 30, marginTop: 25}}>MENU</PageTitle>
                     <View style={{ height: 2, backgroundColor: customGreen, width: '50%' }}></View>
-                    <SubTitle welcome={true} style={{color: greenForm, marginTop: 10}}>Seja bem vindo, Fulano</SubTitle>
+                    <SubTitle welcome={true} style={{ color: greenForm, marginTop: 10 }}>Seja bem-vindo, !</SubTitle>
                     <Text style={{color: greenForm, marginBottom:20}}>{'Monitore a sua saúde'} </Text>
                     
                     <View style={styles.notesContainer}>
