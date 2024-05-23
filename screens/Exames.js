@@ -4,6 +4,33 @@ import * as DocumentPicker from 'expo-document-picker';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import KeyboardWrapper from '../components/KeyboardWrapper';
+import {
+    StyledContainer,
+    InnerContainer,
+    PageTitle,
+    SubTitle,
+    StyledFormArea,
+    LeftIcon,
+    StyledInputLabel,
+    StyledTextInput,
+    RightIcon,
+    StyledButton,
+    ButtonText,
+    Colors,
+    MsgBox,
+    Line,
+    ExtraText,
+    ExtraView,
+    TextLink,
+    TextLinkContent, 
+    WelcomeContainer
+} from './../components/styles';
+
+
+
+const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black} = Colors;
+
 const App = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [resultados, setResultados] = useState([]);
@@ -88,66 +115,98 @@ const App = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        {resultados && Object.keys(resultados).length > 0 ? (
-          Object.entries(resultados).map(([tipo_exame, info]) => (
-            <View key={tipo_exame} style={styles.resultadoContainer}>
-              <Text style={styles.resultadoText}>{`${tipo_exame}`}</Text>
-              <Text style={styles.resultadoText}>{`Resultado: ${info.resultado} ${info.parametro}`}</Text>
-              <Text style={styles.resultadoText}>{`Referência: ${info.valor_minimo} - ${info.valor_maximo} ${info.parametro}`}</Text>
-              <Text style={styles.resultadoText}>{`Dentro dos Limites: ${info.dentro_limites ? 'Sim' : 'Não'}`}</Text>
-            </View>
-          ))
-        ) : (
-          <Text style={styles.placeholderText}>Nenhum resultado disponível</Text>
-        )}
-      </ScrollView>
-      <View style={styles.filePickerContainer}>
-        <Button title="Selecionar Arquivo PDF" onPress={handleFilePick} />
-        {selectedFile && <Text style={styles.fileName}>{selectedFile.name}</Text>}
-      </View>
-      {selectedFile && (
-        <View style={styles.uploadButtonContainer}>
-          <Button title="Fazer Upload do Arquivo" onPress={uploadFileAndGetResults} />
-        </View>
-      )}
-    </View>
+    <InnerContainer style={{backgroundColor: backgroundGreen}}>
+       <WelcomeContainer>
+                   
+                   <PageTitle welcome={true} style={{flexWrap: 'wrap', lineHeight: 30, color:customGreen, 
+                        fontSize: 30, marginTop: 25}}>EXAMES</PageTitle>
+                   <Text style={{color: greenForm, marginBottom:20, alignItems: 'center'}}>{'Faça o upload dos exames e tenha os resultados'} </Text>
+                   
+                   <View style={styles.container}>
+    
+                    <ScrollView style={styles.scrollView}>
+                      {resultados && Object.keys(resultados).length > 0 ? (
+                        Object.entries(resultados).map(([tipo_exame, info]) => (
+                          <View key={tipo_exame} style={styles.resultadoContainer}>
+                            <Text style={styles.resultadoText}>{`${tipo_exame}`}</Text>
+                            <Text style={styles.resultadoText}>{`Resultado: ${info.resultado} ${info.parametro}`}</Text>
+                            <Text style={styles.resultadoText}>{`Referência: ${info.valor_minimo} - ${info.valor_maximo} ${info.parametro}`}</Text>
+                            <Text style={styles.resultadoText}>{`Dentro dos Limites: ${info.dentro_limites ? 'Sim' : 'Não'}`}</Text>
+                          </View>
+                        ))
+                      ) : (
+                        <Text style={styles.placeholderText}>Nenhum resultado disponível</Text>
+                      )}
+                    </ScrollView>
+                   
+                    {selectedFile && (
+                      <View style={styles.uploadButtonContainer}>
+                        <Button title="Fazer Upload do Arquivo" onPress={uploadFileAndGetResults} />
+                      </View>
+                    )}
+                  </View>
+
+                  <View style={styles.filePickerContainer}>
+                      <Button title="Selecionar Arquivo PDF" color='#91A098'  borderRadius= '20' padding= '70' bonPress={handleFilePick} />
+                      {selectedFile && <Text style={styles.fileName}>{selectedFile.name}</Text>}
+                  </View>
+                   <StyledFormArea>
+                   <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
+
+                         
+                   </StyledFormArea>
+               </WelcomeContainer>
+    </InnerContainer>
   );
 };
 
+
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 0.5,
+    borderRadius:20,
     padding: 20,
+    height: 30,
+    backgroundColor: greenForm,
+    borderWidth: 2,
+    borderWidth: 1,
+    borderColor: greenForm,
+    
   },
   filePickerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
+    
   },
+
   fileName: {
     marginLeft: 10,
     fontSize: 16,
+    backgroundColor: greenForm,
+
   },
   uploadButtonContainer: {
-    marginBottom: 20,
+    borderRadius: 70,
+    backgroundColor: customGreen,
   },
   scrollView: {
     flex: 1,
     width: '100%',
     borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
+    borderColor: backgroundGreen,
+    padding: 20,
+    borderRadius: 20,
+    
   },
   resultadoContainer: {
     marginBottom: 20,
     padding: 10,
-    borderWidth: 1,
+    borderWidth: 4,
     borderColor: '#ccc',
-    backgroundColor: '#f9f9f9',
+    
+    
   },
   resultadoText: {
     fontSize: 16,
@@ -156,6 +215,7 @@ const styles = StyleSheet.create({
   placeholderText: {
     fontSize: 16,
     fontStyle: 'italic',
+    color: 'white',
   }
 });
 
