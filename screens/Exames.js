@@ -135,21 +135,22 @@ const App = () => {
                           </View>
                         ))
                       ) : (
-                        <Text style={styles.placeholderText}>Nenhum resultado disponível</Text>
+                        <Text style={styles.placeholderText}>Os resultados dos seus exames aparecerão aqui após a seleção!</Text>
                       )}
                     </ScrollView>
                    
+                    <Button title="Selecionar Arquivo PDF" onPress={handleFilePick} color={backgroundGreen}/>
                     {selectedFile && (
                       <View style={styles.uploadButtonContainer}>
-                        <Button title="Fazer Upload do Arquivo" onPress={uploadFileAndGetResults} />
-                        <Button title="Selecionar Arquivo PDF"  onPress={handleFilePick} />
+                       
+                        
                       </View>
                     )}
                   </View>
 
                       
                    <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
-
+                   <Button title="Enviar para a analise"  onPress={uploadFileAndGetResults} color={greenForm}/>
                    <View style={styles.filePickerContainer}>
                           
                           {selectedFile && <Text style={styles.fileName}>{selectedFile.name}</Text>}
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
   filePickerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    
     
   },
 
@@ -202,8 +203,7 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
     width: '100%',
-    borderWidth: 1,
-    borderColor: backgroundGreen,
+    
     padding: 20,
     borderRadius: 20,
     
@@ -211,9 +211,9 @@ const styles = StyleSheet.create({
   resultadoContainer: {
     marginBottom: 20,
     padding: 10,
-    borderWidth: 2,
     borderColor: backgroundGreen,
-    
+    backgroundColor: backgroundGreen, 
+    borderRadius: 15,
     
   },
   resultadoText: {
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   placeholderText: {
     fontSize: 16,
     fontStyle: 'italic',
-    color: 'white',
+    color: backgroundGreen,
   }
 });
 
