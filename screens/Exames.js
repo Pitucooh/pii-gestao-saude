@@ -95,7 +95,7 @@ const App = () => {
 
       console.log('FormData:', formData);
 
-      const response = await axios.post('http://192.168.15.135:5000/upload', formData, {
+      const response = await axios.post('http://10.2.130.202:5000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -146,10 +146,10 @@ const App = () => {
                     )}
                   </View>
 
-                  <View style={styles.filePickerContainer}>
-                      <Button title="Selecionar Arquivo PDF" color='#91A098'  borderRadius= '20' padding= '70' bonPress={handleFilePick} />
-                      {selectedFile && <Text style={styles.fileName}>{selectedFile.name}</Text>}
-                  </View>
+                      <View style={styles.filePickerContainer}>
+                          <Button title="Selecionar Arquivo PDF" color='#91A098'  borderRadius= '20' padding= '70' onPress={handleFilePick} />
+                          {selectedFile && <Text style={styles.fileName}>{selectedFile.name}</Text>}
+                      </View>
                    <StyledFormArea>
                    <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
 
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     flex: 0.5,
     borderRadius:20,
     padding: 20,
-    height: 30,
+    height: 70,
     backgroundColor: greenForm,
     borderWidth: 2,
     borderWidth: 1,
