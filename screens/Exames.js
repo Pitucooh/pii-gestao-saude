@@ -142,18 +142,19 @@ const App = () => {
                     {selectedFile && (
                       <View style={styles.uploadButtonContainer}>
                         <Button title="Fazer Upload do Arquivo" onPress={uploadFileAndGetResults} />
+                        <Button title="Selecionar Arquivo PDF"  onPress={handleFilePick} />
                       </View>
                     )}
                   </View>
 
-                      <View style={styles.filePickerContainer}>
-                          <Button title="Selecionar Arquivo PDF" color='#91A098'  borderRadius= '20' padding= '70' onPress={handleFilePick} />
+                      
+                   <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
+
+                   <View style={styles.filePickerContainer}>
+                          
                           {selectedFile && <Text style={styles.fileName}>{selectedFile.name}</Text>}
                       </View>
                    <StyledFormArea>
-                   <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
-
-                         
                    </StyledFormArea>
                </WelcomeContainer>
     </InnerContainer>
@@ -164,7 +165,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.5,
+    flex: 0.79,
     borderRadius:20,
     padding: 20,
     height: 70,
@@ -184,12 +185,19 @@ const styles = StyleSheet.create({
   fileName: {
     marginLeft: 10,
     fontSize: 16,
-    backgroundColor: greenForm,
+    backgroundColor: 'transparent',
+    borderWidth: 2, 
+    borderColor: greenForm,
+    padding: 13,
+    marginTop: 15, 
+    color: greenForm,
+    flex: 1,
+    borderRadius: 20,
 
   },
+
   uploadButtonContainer: {
-    borderRadius: 70,
-    backgroundColor: customGreen,
+    color: greenForm
   },
   scrollView: {
     flex: 1,
@@ -203,8 +211,8 @@ const styles = StyleSheet.create({
   resultadoContainer: {
     marginBottom: 20,
     padding: 10,
-    borderWidth: 4,
-    borderColor: '#ccc',
+    borderWidth: 2,
+    borderColor: backgroundGreen,
     
     
   },
