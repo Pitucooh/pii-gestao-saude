@@ -36,3 +36,5 @@ Os testes foram implementados utilizando a abordagem de Desenvolvimento Orientad
 
 Atualmente, os testes abrangem as rotas de login e cadastro do servidor, garantindo que as funcionalidades principais estejam funcionando corretamente. Mais testes podem ser adicionados para cobrir outras partes do sistema, conforme necessário.
 
+### INSTALAÇÃO
+Rodar setup.bat no terminal, isso vai instalar todas as dependencias necessarias e rodar o app em terminais e trocar o ip no arquivo ips.js

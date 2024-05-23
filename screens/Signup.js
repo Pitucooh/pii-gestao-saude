@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import { Octicons, Ionicons } from '@expo/vector-icons';
 import { View } from 'react-native';
 import KeyboardWrapper from '../components/KeyboardWrapper';
+import { ipMaquina } from '../ips'; 
 
 import {
     StyledContainer,
@@ -48,7 +49,7 @@ const Signup = ({ navigation }) => {
                 return;
             }
     
-            const response = await fetch('http://10.2.130.202:3000/signup', {
+            const response = await fetch(`http://${ipMaquina}:3000/signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

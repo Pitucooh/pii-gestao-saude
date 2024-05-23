@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import { Octicons, Fontisto } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRoute } from '@react-navigation/native';
+import { ipMaquina } from '../ips'; 
 
 
 import { View } from 'react-native';
@@ -53,7 +54,7 @@ const Login = ({ navigation }) => {
     const handleLogin = async (values) => {
         setErrorMsg('');
         try {
-            const response = await fetch('http://10.2.130.202:3000/login', {
+            const response = await fetch(`http://${ipMaquina}:3000/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

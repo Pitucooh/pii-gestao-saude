@@ -3,6 +3,7 @@ import { View, Button, Text, ScrollView, Alert, StyleSheet } from 'react-native'
 import * as DocumentPicker from 'expo-document-picker';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ipMaquina } from '../ips'; 
 
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import {
@@ -95,7 +96,7 @@ const App = () => {
 
       console.log('FormData:', formData);
 
-      const response = await axios.post('http://10.2.130.202:5000/upload', formData, {
+      const response = await axios.post(`http://${ipMaquina}:5000/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
