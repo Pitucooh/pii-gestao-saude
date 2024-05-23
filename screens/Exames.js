@@ -136,25 +136,27 @@ const App = () => {
                           </View>
                         ))
                       ) : (
-                        <Text style={styles.placeholderText}>Nenhum resultado disponível</Text>
+                        <Text style={styles.placeholderText}>Os resultados dos seus exames aparecerão aqui após a seleção!</Text>
                       )}
                     </ScrollView>
                    
+                    <Button title="Selecionar Arquivo PDF" onPress={handleFilePick} color={backgroundGreen}/>
                     {selectedFile && (
                       <View style={styles.uploadButtonContainer}>
-                        <Button title="Fazer Upload do Arquivo" onPress={uploadFileAndGetResults} />
+                       
+                        
                       </View>
                     )}
                   </View>
 
-                      <View style={styles.filePickerContainer}>
-                          <Button title="Selecionar Arquivo PDF" color='#91A098'  borderRadius= '20' padding= '70' onPress={handleFilePick} />
+                      
+                   <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
+                   <Button title="Enviar para a analise"  onPress={uploadFileAndGetResults} color={greenForm}/>
+                   <View style={styles.filePickerContainer}>
+                          
                           {selectedFile && <Text style={styles.fileName}>{selectedFile.name}</Text>}
                       </View>
                    <StyledFormArea>
-                   <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
-
-                         
                    </StyledFormArea>
                </WelcomeContainer>
     </InnerContainer>
@@ -165,7 +167,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.5,
+    flex: 0.79,
     borderRadius:20,
     padding: 20,
     height: 70,
@@ -178,25 +180,31 @@ const styles = StyleSheet.create({
   filePickerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    
     
   },
 
   fileName: {
     marginLeft: 10,
     fontSize: 16,
-    backgroundColor: greenForm,
+    backgroundColor: 'transparent',
+    borderWidth: 2, 
+    borderColor: greenForm,
+    padding: 13,
+    marginTop: 15, 
+    color: greenForm,
+    flex: 1,
+    borderRadius: 20,
 
   },
+
   uploadButtonContainer: {
-    borderRadius: 70,
-    backgroundColor: customGreen,
+    color: greenForm
   },
   scrollView: {
     flex: 1,
     width: '100%',
-    borderWidth: 1,
-    borderColor: backgroundGreen,
+    
     padding: 20,
     borderRadius: 20,
     
@@ -204,9 +212,9 @@ const styles = StyleSheet.create({
   resultadoContainer: {
     marginBottom: 20,
     padding: 10,
-    borderWidth: 4,
-    borderColor: '#ccc',
-    
+    borderColor: backgroundGreen,
+    backgroundColor: backgroundGreen, 
+    borderRadius: 15,
     
   },
   resultadoText: {
@@ -216,7 +224,7 @@ const styles = StyleSheet.create({
   placeholderText: {
     fontSize: 16,
     fontStyle: 'italic',
-    color: 'white',
+    color: backgroundGreen,
   }
 });
 
