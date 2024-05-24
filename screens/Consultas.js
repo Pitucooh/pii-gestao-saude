@@ -43,11 +43,10 @@ const Consultas = ({navigation}) => {
         </View>
                    
     
-        <View style={styles.buttonContainer}>
-                <StyledButton style={styles.button}>
-                    <ButtonText>Salvar</ButtonText>
-                </StyledButton>
-        </View>
+        <StyledButton style={styles.button}>
+                <ButtonText>Salvar</ButtonText>
+        </StyledButton>
+       
   
            
         </>
@@ -56,33 +55,34 @@ const Consultas = ({navigation}) => {
 
 const styles = StyleSheet.create({
     
-
-    inputCon:{
-        backgroundColor:greenForm,
-        marginBottom: 100,
+    container: {
+        flex: 1,
+    },
+    inputCon: {
+        backgroundColor: 'greenForm',
+        marginBottom: 20, 
         borderRadius: 20,
         padding: 10,
-        
-      
+        width: '90%', 
+        alignSelf: 'center', 
     },
-
     buttonContainer: {
-        alignItems: 'center',
+        alignItems: 'center', 
         marginTop: 20,
-        backgroundColor: backgroundGreen, 
     },
     button: {
         width: 100, 
         padding: 10,
         borderRadius: 5,
-        backgroundColor: backgroundGreen, 
+        backgroundColor: customGreen, 
+        marginBottom: 50,
+        marginLeft:125
     },
-    
-    footer:{
-        backgroundColor: backgroundGreen,
+    footer: {
+        backgroundColor: 'backgroundGreen',
         width: 500,
-        marginTop:200,
-        flex: 1
+        marginTop: 200,
+        flex: 1,
     },
 
     
