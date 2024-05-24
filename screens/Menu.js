@@ -28,7 +28,7 @@ import {
     WelcomeContainer
 } from './../components/styles';
 
-const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black} = Colors;
+const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black, roxinho} = Colors;
 
 const Menu = ({navigation}) => {  
     
@@ -91,7 +91,7 @@ const Menu = ({navigation}) => {
 const styles = StyleSheet.create({
 
     container:{
-        backgroundColor: greenForm, 
+        backgroundColor: roxinho, 
         width: 300,
         borderRadius: 20,
         height: 350,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     },
     cardText: {
       fontSize: 18,
-      color: greenForm
+      color: roxinho 
       
     },
 
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
         backgroundColor: greenForm,
         borderRadius: 5,
         padding: 5,
-        color: primary
+        color: backgroundGreen
     },
 
 

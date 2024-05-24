@@ -143,13 +143,10 @@ const Login = ({ navigation }) => {
                                 <MsgBox>{errorMsg}</MsgBox>
                                 <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                                     <View>
-
                                         <StyledButton onPress={handleSubmit} style={{ padding: 10, alignItems: 'center' ,marginBottom: 10, justifyContent: 'center', borderWidth: 2, width: 100, borderColor: customGreen, backgroundColor: 'transparent' }}>
                                             <ButtonText style={{ color: greenForm }}>Login</ButtonText>
                                         </StyledButton>
-
                                     </View>
-
                                 </View>
                                 <ExtraView>
                                     <ExtraText>Não tem uma conta ainda?</ExtraText>

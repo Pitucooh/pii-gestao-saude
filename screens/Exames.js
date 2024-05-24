@@ -139,23 +139,19 @@ const App = () => {
                         <Text style={styles.placeholderText}>Os resultados dos seus exames aparecerão aqui após a seleção!</Text>
                       )}
                     </ScrollView>
-                   
-                    <Button title="Selecionar Arquivo PDF" onPress={handleFilePick} color={backgroundGreen}/>
-                    {selectedFile && (
-                      <View style={styles.uploadButtonContainer}>
-                       
-                        
+                  </View>
+                  <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
+                   <View style={styles.uploadButtonContainer}>
+                   {!selectedFile ? ( <Button title="Selecionar Arquivo PDF" onPress={handleFilePick} color={customGreen} />
+                    ) : (
+                      <View>
+                      <Button title="Enviar para a analise"  onPress={uploadFileAndGetResults} color={customGreen}/>
+                      <View style={styles.filePickerContainer}>
+                        <Text style={styles.fileName}>{selectedFile.name}</Text>
+                      </View>
                       </View>
                     )}
-                  </View>
-
-                      
-                   <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
-                   <Button title="Enviar para a analise"  onPress={uploadFileAndGetResults} color={greenForm}/>
-                   <View style={styles.filePickerContainer}>
-                          
-                          {selectedFile && <Text style={styles.fileName}>{selectedFile.name}</Text>}
-                      </View>
+                   </View>
                    <StyledFormArea>
                    </StyledFormArea>
                </WelcomeContainer>
@@ -189,10 +185,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: 'transparent',
     borderWidth: 2, 
-    borderColor: greenForm,
+    borderColor: customGreen,
     padding: 13,
     marginTop: 15, 
-    color: greenForm,
+    color: customGreen,
     flex: 1,
     borderRadius: 20,
 
