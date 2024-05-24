@@ -24,51 +24,60 @@ const Consultas = ({navigation}) => {
     return (
         <>
 
-    <InnerContainer style={{backgroundColor: backgroundGreen}}>
+   
        <WelcomeContainer>
                    
             <PageTitle welcome={true} style={{flexWrap: 'wrap', lineHeight: 30, color:customGreen, 
                        marginTop:25, fontSize: 30, }}>EXAMES</PageTitle>
-             <Text style={{color: greenForm, marginBottom:20, alignItems: 'center'}}>{'DSalve aqui seu próximo exame'} </Text>
+             <Text style={{color: greenForm,  alignItems: 'center'}}>{'DSalve aqui seu próximo exame'} </Text>
         </WelcomeContainer>
-        <StatusBar style = "light" />
+        
 
          <View style={styles.inputCon}>
-            <MyTextInput placeholder="Especialidade:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
-            <MyTextInput placeholder="Data:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
-            <MyTextInput placeholder="Horário:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
+        <MyTextInput placeholder="Especialidade:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
+        <MyTextInput placeholder="Data:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
+        <MyTextInput placeholder="Horário:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
                             
-            <MyTextInput placeholder="Retorno:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
-            <MyTextInput placeholder="Lembrete Agendamento:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
+        <MyTextInput placeholder="Retorno:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
+        <MyTextInput placeholder="Lembrete Agendamento:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
         </View>
                    
     
-                <StyledButton>
+        <View style={styles.buttonContainer}>
+                <StyledButton style={styles.button}>
                     <ButtonText>Salvar</ButtonText>
                 </StyledButton>
-            
-    </InnerContainer>
+        </View>
+  
            
         </>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
+    
 
     inputCon:{
         backgroundColor:greenForm,
-        marginBottom: 30,
+        marginBottom: 100,
         borderRadius: 20,
         padding: 10,
-        justifyContent: 'center'
+        
       
     },
 
-  
-    
+
+    buttonContainer: {
+        alignItems: 'center',
+        
+        marginBottom: 30,
+    },
+    button: {
+        width: 100, 
+        padding: 10,
+        borderRadius: 5,
+        backgroundColor: 'blue', 
+    },
 
     
     footer:{
