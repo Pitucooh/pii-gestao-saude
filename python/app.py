@@ -29,11 +29,13 @@ def allowed_file(filename):
 def carregar_valores_referencia():
     try:
         conn = mysql.connector.connect(
-            host='gestao-de-saude.mysql.database.azure.com',
-            user='gestaoadm',
-            password='Wepink123',
-            database='wepink'
+            host='localhost',
+            user='root',
+            password='root',
+            database='wepink',
+            auth_plugin='mysql_native_password'
         )
+
         cursor = conn.cursor()
         query = "SELECT tipo_exame, valor_minimo, valor_maximo, parametro FROM referencia_exames"
         cursor.execute(query)

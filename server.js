@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
+const mysql = require('mysql2')
 const bcrypt = require('bcrypt');
 const multer = require('multer');
 
@@ -14,9 +14,9 @@ app.use(bodyParser.json());
 
 // Configuração do MySQL
 const db = mysql.createConnection({
-  host: "gestao-de-saude.mysql.database.azure.com",
-  user: "gestaoadm",
-  password: "Wepink123",
+  host: "localhost",
+  user: "root",
+  password: "root",
   database: "wepink",   
   port: 3306,
 });
