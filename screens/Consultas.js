@@ -66,22 +66,20 @@ const styles = StyleSheet.create({
       
     },
 
-
     buttonContainer: {
         alignItems: 'center',
-        
-        marginBottom: 30,
+        marginTop: 20,
+        backgroundColor: backgroundGreen, 
     },
     button: {
         width: 100, 
         padding: 10,
         borderRadius: 5,
-        backgroundColor: 'blue', 
+        backgroundColor: backgroundGreen, 
     },
-
     
     footer:{
-        backgroundColor: greenForm,
+        backgroundColor: backgroundGreen,
         width: 500,
         marginTop:200,
         flex: 1
