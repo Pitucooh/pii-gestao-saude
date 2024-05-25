@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "Mamacosma2!",
+  password: "mysqlimt",
   database: "wepink",   
   port: 3306,
 });
@@ -167,5 +167,90 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
   res.status(200).json({ resultados });
 });
+
+
+//IMC
+
+// Rota para calcular o IMC
+app.post('/calcularIMC', (req, res) => {
+  const { peso, altura } = req.body;
+
+  // Verificar se os campos estão preenchidos
+  if (!peso || !altura) {
+    return res.status(400).json({ success: false, message: 'Por favor, preencha todos os campos.' });
+  }
+
+  // Verificar se os campos estão preenchidos com valores válidos
+  if (isNaN(peso) || isNaN(altura) || peso <= 0 || altura <= 0) {
+    return res.status(400).json({ success: false, message: 'Por favor, insira valores válidos para peso e altura.' });
+  }
+
+  // Calcular o IMC
+  const imc = peso / (altura * altura);
+
+  res.status(200).json({ success: true, imc: imc.toFixed(2) });
+});
+
+// Rota para calcular a glicemia
+app.post('/calcularGlicemia', (req, res) => {
+  const { glicemia } = req.body;
+
+  // Verificar se o campo de glicemia está preenchido
+  if (!glicemia) {
+    return res.status(400).json({ success: false, message: 'Por favor, preencha todos os campos.' });
+  }
+
+  let alerta = false;
+  let orientacoes = '';
+
+  // Calcular a glicemia e gerar alerta se estiver fora dos limites saudáveis
+  if (glicemia < 70) {
+    alerta = true;
+    orientacoes = "Glicemia baixa. Seus exames apresentam algum tipo de alteração, é indicado procurar atendimento médico para avaliação.";
+  } else if (glicemia < 100) {
+    orientacoes = "Glicemia normal.";
+  } else if (glicemia >= 100 && glicemia <= 126) {
+    alerta = true;
+    orientacoes = "Atenção! Seus exames apresentam algum tipo de alteração, é indicado procurar atendimento médico para avaliação.";
+  } else if (glicemia > 126) {
+    alerta = true;
+    orientacoes = "Glicemia alta. Seus exames apresentam algum tipo de alteração, é indicado procurar atendimento médico para avaliação.";
+  }
+
+  res.status(200).json({ alerta, orientacoes });
+});
+
+// Rota para calcular a pressão arterial
+app.post('/calcularPressao', (req, res) => {
+  const { sistolica, diastolica } = req.body;
+
+  // Verificar se os campos de sistólica e diastólica estão preenchidos
+  if (!sistolica || !diastolica) {
+    return res.status(400).json({ success: false, message: 'Por favor, preencha todos os campos.' });
+  }
+
+  let alerta = false;
+  let orientacoes = '';
+
+  // Calcular a pressão arterial e gerar alerta se estiver fora dos limites saudáveis
+  if (sistolica < 120 && diastolica < 80) {
+    orientacoes = "Pressão arterial normal. Continue mantendo um estilo de vida saudável!";
+  } else if (sistolica >= 120 && sistolica < 130 && diastolica < 80) {
+    alerta = true;
+    orientacoes = "Pressão arterial elevada. Considere fazer mudanças no estilo de vida.";
+  } else if ((sistolica >= 130 && sistolica < 140) || (diastolica >= 80 && diastolica < 90)) {
+    alerta = true;
+    orientacoes = "Hipertensão estágio 1. Procure orientação médica.";
+  } else if (sistolica >= 140 || diastolica >= 90) {
+    alerta = true;
+    orientacoes = "Hipertensão estágio 2. É importante buscar tratamento médico.";
+  } else {
+    alerta = true;
+    orientacoes = "Crise hipertensiva. Procure atendimento médico imediatamente.";
+  }
+
+  res.status(200).json({ alerta, orientacoes });
+});
+
 
 module.exports = app;
