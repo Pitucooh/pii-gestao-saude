@@ -10,7 +10,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 //screens
 import Login from './../screens/Login';
 import Signup from './../screens/Signup';
-import Welcome from './../screens/Welcome';
 import Menu from './../screens/Menu';
 import Consultas from './../screens/Consultas';
 import Exames from '../screens/Exames';
@@ -45,7 +44,6 @@ const RootStack = () => {
             >
                 <Stack.Screen name= "Login" component={Login} />
                 <Stack.Screen name= "Signup" component={Signup} />
-                <Stack.Screen options = {{headerTintColor: '#000' }} name= "Welcome" component={Welcome} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "Menu" component={Menu} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "Consultas" component={Consultas} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "Exames" component={Exames} />
