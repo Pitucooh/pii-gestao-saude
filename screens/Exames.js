@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button, Text, ScrollView, Alert, StyleSheet } from 'react-native';
+import { View, Button, Text, ScrollView, Alert, StyleSheet, ActivityIndicator } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -36,6 +36,7 @@ const App = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [resultados, setResultados] = useState([]);
   const [botaoVisivel, setBotaoVisivel] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadSavedResults();
@@ -86,6 +87,8 @@ const App = () => {
       return;
     }
 
+    setLoading(true);
+
     try {
       const formData = new FormData();
       formData.append('file', {
@@ -112,6 +115,8 @@ const App = () => {
     } catch (error) {
       console.error('Erro ao fazer upload:', error);
       Alert.alert('Erro', 'Erro ao fazer upload do arquivo. Por favor, tente novamente.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -136,7 +141,12 @@ const App = () => {
                           </View>
                         ))
                       ) : (
-                        <Text style={styles.placeholderText}>Os resultados dos seus exames aparecerão aqui após a seleção!</Text>
+                        <View>
+                          <Text style={styles.placeholderText}>Os resultados dos seus exames aparecerão aqui após a seleção!</Text>
+                          {loading && (
+                            <ActivityIndicator style={styles.loadingIndicator} size="large" color={backgroundGreen} />
+                          )}
+                        </View>
                       )}
                     </ScrollView>
                   </View>
@@ -221,7 +231,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontStyle: 'italic',
     color: backgroundGreen,
-  }
+  },
+  
+  loadingIndicator: {
+    marginTop: 20,
+  },
 });
 
 export default App;

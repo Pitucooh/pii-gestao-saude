@@ -111,14 +111,6 @@ def upload_file():
 
         return jsonify(resultados)
         
-        # Salvar os resultados em um arquivo JSON na pasta "resultados"
-        result_filename = f'result_{os.path.splitext(filename)[0]}.json'
-        result_filepath = os.path.join(app.config['RESULT_FOLDER'], result_filename)
-        with open(result_filepath, 'w') as result_file:
-            json.dump(resultados, result_file, ensure_ascii=False, indent=4)
-        
-        return jsonify({'message': 'File uploaded and processed successfully', 'filename': filename, 'resultados': resultados})
-
     return jsonify({'error': 'Invalid file'})
 
 if __name__ == '__main__':

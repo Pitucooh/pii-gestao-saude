@@ -1,4 +1,4 @@
-export const ipMaquina = '192.168.15.102'; 
+export const ipMaquina = '192.168.68.114'; 
 // teoricamente esse arquivo muda a variavel nos arquivos que importam ele, mas não está funcionando pelo uq parece? (nos meus testes fuincionou normalmente -marcos)
 // exames, signup e login usam essa variavel, importanto a variavel "import { ipMaquina } from '../ips';"
 // se nao funcionar, tentar colocar a variavel em cada arquivo manualmente, so trocar {ipMaquina} pelo ip da maquina na linha de codigo que usa a variavel
