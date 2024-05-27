@@ -17,6 +17,11 @@ const Meusdados = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+              <Text style={styles.profileText}>Nome: João Silva</Text>
+                <Text style={styles.profileText}>Local: São Paulo, SP</Text>
+                <Text style={styles.profileText}>Idade: 30 anos</Text>
+                <Text style={styles.profileText}>Email: joao.silva@example.com</Text>
+                <Text style={styles.profileText}>Telefone: (11) 98765-4321</Text>
             <TouchableOpacity style={styles.metricButton} onPress={handleIMCButtonPress}>
                 <Text style={styles.buttonText}>IMC</Text>
             </TouchableOpacity>
