@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql2')
 const bcrypt = require('bcrypt');
 const multer = require('multer');
-
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
@@ -252,5 +252,19 @@ app.post('/calcularPressao', (req, res) => {
   res.status(200).json({ alerta, orientacoes });
 });
 
+app.post('/saveExam', (req, res) => {
+  const { especialidade, data, horario, retorno, lembrete } = req.body;
+  const sql = 'INSERT INTO exams (especialidade, data, horario, retorno, lembrete) VALUES (?, ?, ?, ?, ?)';
+  db.query(sql, [especialidade, data, horario, retorno, lembrete], (err, result) => {
+      if (err) {
+          return res.status(500).send(err);
+      }
+      res.status(200).send('Exam saved successfully');
+  });
+});
 
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 module.exports = app;
