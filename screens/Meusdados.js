@@ -45,7 +45,7 @@ const Meusdados = ({ navigation }) => {
                     
                     <PageTitle welcome={true} style={{flexWrap: 'wrap', lineHeight: 30, color:customGreen, 
                          fontSize: 30, marginTop: 30}}>MEUS DADOS</PageTitle>
-                    <Text style={{color: roxinho, alignItems: 'center'}}>{'Salve aqui os seus dados para maior facilidade'} </Text>
+                    <Text style={{color: roxinho, alignItems: 'center', marginBottom: 20}}>{'Salve aqui os seus dados para maior facilidade'} </Text>
                     
                     <View style={styles.container}>
                     <View style={styles.profileContainer}>
@@ -59,23 +59,26 @@ const Meusdados = ({ navigation }) => {
                     <View style={styles.metricsGrid}>
                         <View style={styles.metricItem}>
                         <TouchableOpacity style={styles.metricButton} onPress={handleIMCButtonPress}>
-                            <Text style={styles.buttonText}>IMC</Text>
+                            <Text style={styles.buttonText}>IMC</Text> 
+                            <Text style={styles.metricInfo}>22.5</Text>
                         </TouchableOpacity>
-                        <Text style={styles.metricInfo}>22.5</Text>
+                        
                         </View>
                         
                         <View style={styles.metricItem}>
                         <TouchableOpacity style={styles.metricButton} onPress={handlePressaoButtonPress}>
                             <Text style={styles.buttonText}>Pressão Arterial</Text>
+                            <Text style={styles.metricInfo}>120/80</Text>
                         </TouchableOpacity>
-                        <Text style={styles.metricInfo}>120/80</Text>
+                       
                         </View>
                         
                         <View style={styles.metricItem}>
                         <TouchableOpacity style={styles.metricButton} onPress={handleGlicemiaButtonPress}>
                             <Text style={styles.buttonText}>Glicemia</Text>
+                            <Text style={styles.metricInfo}>90 mg/dL</Text>
                         </TouchableOpacity>
-                        <Text style={styles.metricInfo}>90 mg/dL</Text>
+                        
                         </View>
                         </View>
                     </View>
@@ -118,16 +121,16 @@ const Meusdados = ({ navigation }) => {
         marginBottom: 5,
       },
       metricsGrid: {
-        width: '90%',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
+        width: '100%',
+        justifyContent: 'space-between', 
+        flex: 1,
       },
       metricItem: {
         alignItems: 'center',
         marginVertical: 10,
       },
       metricButton: {
-        width: 100,
+        width: 200,
         height: 100,
         justifyContent: 'center',
         alignItems: 'center',
@@ -138,9 +141,12 @@ const Meusdados = ({ navigation }) => {
       metricInfo: {
         marginTop: 10,
         fontSize: 16,
-        color: '#333',
+        color: backgroundGreen,
         borderWidth: 2, 
-        padding: 20
+        padding: 10,
+        borderRadius: 10, 
+        borderColor: backgroundGreen, 
+        width: 1000
       },
       buttonText: {
         color: '#fff',
