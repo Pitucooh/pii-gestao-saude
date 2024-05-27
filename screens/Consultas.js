@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, TextInput, StyleSheet} from 'react-native';
 
-const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black} = Colors;
+const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black, roxinho
+
+} = Colors;
 
 import{
     InnerContainer,
@@ -24,66 +26,56 @@ const Consultas = ({navigation}) => {
     return (
         <>
 
-   
-       <WelcomeContainer>
+<InnerContainer style={{backgroundColor: backgroundGreen}}>
+       <WelcomeContainer style={{backgroundColor: backgroundGreen,}}>
                    
             <PageTitle welcome={true} style={{flexWrap: 'wrap', lineHeight: 30, color:customGreen, 
                        marginTop:25, fontSize: 30, }}>EXAMES</PageTitle>
-             <Text style={{color: greenForm,  alignItems: 'center'}}>{'DSalve aqui seu próximo exame'} </Text>
+             <Text style={{color: roxinho,  alignItems: 'center'}}>{'Salve aqui seu próximo exame'} </Text>
         </WelcomeContainer>
         
 
          <View style={styles.inputCon}>
-        <MyTextInput placeholder="Especialidade:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
-        <MyTextInput placeholder="Data:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
-        <MyTextInput placeholder="Horário:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
+        <MyTextInput placeholder="Especialidade:" style={{backgroundColor: customGreen, color: backgroundGreen,}}></MyTextInput>
+        <MyTextInput placeholder="Data:" style={{backgroundColor: customGreen, color: backgroundGreen}}></MyTextInput>
+        <MyTextInput placeholder="Horário:" style={{backgroundColor: customGreen, color: backgroundGreen}}></MyTextInput>
                             
-        <MyTextInput placeholder="Retorno:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
-        <MyTextInput placeholder="Lembrete Agendamento:" style={{backgroundColor: backgroundGreen}}></MyTextInput>
+        <MyTextInput placeholder="Retorno:" style={{backgroundColor: customGreen, color: backgroundGreen}}></MyTextInput>
+        <MyTextInput placeholder="Lembrete Agendamento:" style={{backgroundColor: customGreen, color: backgroundGreen,  placeholderTextColor: backgroundGreen}}></MyTextInput>
         </View>
-                   
+        
+        <View style={{ height: 2, backgroundColor: roxinho, width: '79%', marginTop:15, marginBottom: 15}}></View>
     
         <StyledButton style={styles.button}>
                 <ButtonText>Salvar</ButtonText>
         </StyledButton>
        
-  
+        </InnerContainer>
            
         </>
     );
 };
 
 const styles = StyleSheet.create({
-    
-    container: {
-        flex: 1,
-    },
+
     inputCon: {
-        backgroundColor: 'greenForm',
+        backgroundColor: backgroundGreen,
         marginBottom: 20, 
-        borderRadius: 20,
+        color:backgroundGreen,
         padding: 10,
         width: '90%', 
-        alignSelf: 'center', 
+        textAlign: 'left',
     },
-    buttonContainer: {
-        alignItems: 'center', 
-        marginTop: 20,
-    },
+
     button: {
         width: 100, 
         padding: 10,
         borderRadius: 5,
-        backgroundColor: customGreen, 
+        backgroundColor: roxinho, 
         marginBottom: 50,
-        marginLeft:125
+        
     },
-    footer: {
-        backgroundColor: 'backgroundGreen',
-        width: 500,
-        marginTop: 200,
-        flex: 1,
-    },
+  
 
     
 

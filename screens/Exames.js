@@ -30,7 +30,7 @@ import {
 
 
 
-const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black} = Colors;
+const {primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black, roxinho} = Colors;
 
 const App = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -126,7 +126,7 @@ const App = () => {
                    
                    <PageTitle welcome={true} style={{flexWrap: 'wrap', lineHeight: 30, color:customGreen, 
                         fontSize: 30, marginTop: 25}}>EXAMES</PageTitle>
-                   <Text style={{color: greenForm, marginBottom:20, alignItems: 'center'}}>{'Faça o upload dos exames e tenha os resultados'} </Text>
+                   <Text style={{color: roxinho, marginBottom:20, alignItems: 'center'}}>{'Faça o upload dos exames e tenha os resultados'} </Text>
                    
                    <View style={styles.container}>
     
@@ -150,12 +150,12 @@ const App = () => {
                       )}
                     </ScrollView>
                   </View>
-                  <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
+                  <View style={{ height: 2, backgroundColor: roxinho, width: '100%', marginTop:15, marginBottom: 15}}></View>
                    <View style={styles.uploadButtonContainer}>
-                   {!selectedFile ? ( <Button title="Selecionar Arquivo PDF" onPress={handleFilePick} color={customGreen} />
+                   {!selectedFile ? ( <Button title="Selecionar Arquivo PDF" onPress={handleFilePick} color={roxinho} />
                     ) : (
                       <View>
-                      <Button title="Enviar para a analise"  onPress={uploadFileAndGetResults} color={customGreen}/>
+                      <Button title="Enviar para a analise"  onPress={uploadFileAndGetResults} color={roxinho} borderRadius={20}/>
                       <View style={styles.filePickerContainer}>
                         <Text style={styles.fileName}>{selectedFile.name}</Text>
                       </View>
@@ -191,16 +191,17 @@ const styles = StyleSheet.create({
   },
 
   fileName: {
-    marginLeft: 10,
+
     fontSize: 16,
     backgroundColor: 'transparent',
     borderWidth: 2, 
     borderColor: customGreen,
-    padding: 13,
+    padding: 10,
     marginTop: 15, 
     color: customGreen,
     flex: 1,
     borderRadius: 20,
+    width: 193
 
   },
 
@@ -236,6 +237,8 @@ const styles = StyleSheet.create({
   loadingIndicator: {
     marginTop: 20,
   },
+
+ 
 });
 
 export default App;

@@ -46,9 +46,9 @@ const Menu = ({navigation}) => {
                    
                     <PageTitle welcome={true} style={{flexWrap: 'wrap', lineHeight: 30, color:customGreen, 
                          fontSize: 30, marginTop: 25}}>MENU</PageTitle>
-                    <View style={{ height: 2, backgroundColor: customGreen, width: '50%' }}></View>
+                    <View style={{ height: 2, backgroundColor: roxinho, width: '50%' }}></View>
                     <SubTitle welcome={true} style={{ color: greenForm, marginTop: 10 }}>Seja bem-vindo!</SubTitle>
-                    <Text style={{color: greenForm, marginBottom:20}}>{'Monitore a sua saúde'} </Text>
+                    <Text style={{color: roxinho, marginBottom:20}}>{'Monitore a sua saúde'} </Text>
                     
                     <View style={styles.notesContainer}>
                         <Text style={styles.notesText}>Bloco de Notas:</Text>
@@ -76,7 +76,7 @@ const Menu = ({navigation}) => {
 
 
                     <StyledFormArea>
-                    <View style={{ height: 2, backgroundColor: customGreen, width: '100%', marginTop:15, marginBottom: 15}}></View>
+                    <View style={{ height: 2, backgroundColor: roxinho, width: '100%', marginTop:15, marginBottom: 15}}></View>
 
                           
                     </StyledFormArea>
@@ -91,7 +91,7 @@ const Menu = ({navigation}) => {
 const styles = StyleSheet.create({
 
     container:{
-        backgroundColor: roxinho, 
+        backgroundColor: greenForm, 
         width: 300,
         borderRadius: 20,
         height: 350,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     },
     cardText: {
       fontSize: 18,
-      color: roxinho 
+      color: greenForm
       
     },
 
@@ -122,28 +122,26 @@ const styles = StyleSheet.create({
     },
 
     notesContainer: {
-        backgroundColor: backgroundGreen,
+        backgroundColor: roxinho,
         borderRadius: 10,
         padding: 10,
         marginTop: 20,
         width: '100%',
         alignSelf: 'center',
-        borderWidth: 2, 
-        borderColor: greenForm, 
         marginBottom: 20
     },
     notesText: {
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 5,
-        color: greenForm,
+        color: backgroundGreen,
     },
     notesInput: {
         height: 100,
-        backgroundColor: greenForm,
+        backgroundColor: backgroundGreen,
         borderRadius: 5,
         padding: 5,
-        color: backgroundGreen
+        color: customGreen
     },
 
 
