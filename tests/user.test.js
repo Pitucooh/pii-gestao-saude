@@ -45,7 +45,7 @@ describe('Testes de Cadastro', () => {
     // Cenário: Cadastro bem-sucedido
     // Dado que sou um visitante
     // Quando eu preencher e enviar o formulário de cadastro corretamente
-    const response = await cadastrarUsuario('Marcos Pedro', 'marcos@gmail.com', '123.456.789-01', 'senha123', 'senha123');
+    const response = await cadastrarUsuario('Carlos', 'carlos@gmail.com', '123.456.789-01', 'teste123', 'teste123');
     // Então devo receber uma mensagem de sucesso indicando que o cadastro foi realizado com sucesso
     expect(response.status).toBe(201);
     expect(response.body.success).toBe(true);
@@ -139,4 +139,119 @@ async function cadastrarUsuario(nome, email, CPF, senha, confirmeSenha) {
     expect(response.body.message).toBe('O arquivo enviado está vazio.');
   });
   
+});
+
+// TESTES DE IMC
+describe('Testes de IMC', () => {
+  it('Deve calcular o IMC corretamente quando peso e altura são fornecidos', async () => {
+    // Funcionalidade: Dados do IMC
+    // Cenário: Inserir e monitorar peso e altura
+    // Dado que sou um usuário do aplicativo de gestão de saúde
+    // Quando eu inserir informações sobre meu peso e altura
+    const response = await request(app)
+      .post('/calcularIMC')
+      .send({ peso: 70, altura: 1.75 });
+
+    // Então eu devo poder visualizar meu IMC calculado
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+    expect(response.body.imc).toBe('22.86'); // 70 / (1.75 * 1.75) = 22.857142857142858
+  });
+
+  it('Deve retornar erro se peso e/ou altura forem fornecidos em branco', async () => {
+    // Funcionalidade: Dados do IMC
+    // Cenário: Tentativa de inserir informações em branco de peso e/ou altura
+    // Dado que sou um usuário do aplicativo de gestão de saúde
+    // Quando eu inserir informações em branco de peso e/ou altura
+    const response = await request(app)
+      .post('/calcularIMC')
+      .send({ peso: '', altura: '' });
+
+    // Então eu devo receber uma mensagem de erro indicando para preencher todos os campos
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe('Por favor, preencha todos os campos.');
+  });
+});
+
+// TESTES DE GLICEMIA
+describe('Testes de Glicemia', () => {
+    it('Deve inserir e monitorar a glicemia corretamente quando os valores estão fora dos limites saudáveis', async () => {
+    // Funcionalidade: Dados da Glicemia
+    // Cenário: Inserir e monitorar glicemia com valores fora dos limites saudáveis
+    // Dado que sou um usuário do aplicativo de gestão de saúde
+    // Quando eu inserir informações sobre minha glicemia
+    // E os valores de glicemia estiverem fora dos limites saudáveis
+    const response = await request(app)
+      .post('/calcularGlicemia')
+      .send({ glicemia: 140 });
+
+    // Então o aplicativo deve gerar um alerta
+    // E fornecer orientações sobre ações a serem tomadas
+    expect(response.status).toBe(200);
+    expect(response.body.alerta).toBe(true);
+    expect(response.body.orientacoes).toBeTruthy(); // Verificar se as orientações não estão vazias
+  });
+
+  it('Deve retornar erro se a glicemia estiver em branco', async () => {
+    // Funcionalidade: Dados da Glicemia
+    // Cenário: Tentativa de inserir informações em branco de glicemia
+    // Dado que sou um usuário do aplicativo de gestão de saúde
+    // Quando eu inserir informações em branco de glicemia
+    const response = await request(app)
+      .post('/calcularGlicemia')
+      .send({ glicemia: '' });
+
+    // Então o aplicativo deve retornar uma mensagem de erro indicando que todos os campos devem ser preenchidos
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe('Por favor, preencha todos os campos.');
+  });
+});
+
+// TESTES DE PRESSÃO ARTERIAL
+describe('Testes de Pressão Arterial', () => {
+  it('Deve inserir e monitorar a pressão arterial corretamente quando os valores estão fora dos limites saudáveis', async () => {
+      // Cenário: Inserir e monitorar pressão arterial com valores fora dos limites saudáveis
+      // Dado que sou um usuário do aplicativo de gestão de saúde
+      // Quando eu inserir informações sobre minha pressão arterial
+      // E os valores de pressão arterial estiverem fora dos limites saudáveis
+      const response = await request(app)
+          .post('/calcularPressao')
+          .send({ sistolica: 140, diastolica: 90 });
+
+      // Então o aplicativo deve gerar um alerta
+      // E fornecer orientações sobre ações a serem tomadas
+      expect(response.status).toBe(200);
+      expect(response.body.alerta).toBe(true);
+      expect(response.body.orientacoes).toBeTruthy(); // Verificar se as orientações não estão vazias
+  });
+
+  it('Deve retornar erro se a sistólica estiver em branco', async () => {
+      // Cenário: Tentativa de inserir informações em branco de sistólica
+      // Dado que sou um usuário do aplicativo de gestão de saúde
+      // Quando eu inserir informações em branco de sistólica
+      const response = await request(app)
+          .post('/calcularPressao')
+          .send({ sistolica: '', diastolica: 80 });
+
+      // Então o aplicativo deve retornar uma mensagem de erro indicando que todos os campos devem ser preenchidos
+      expect(response.status).toBe(400);
+      expect(response.body.success).toBe(false);
+      expect(response.body.message).toBe('Por favor, preencha todos os campos.');
+  });
+
+  it('Deve retornar erro se a diastólica estiver em branco', async () => {
+      // Cenário: Tentativa de inserir informações em branco de diastólica
+      // Dado que sou um usuário do aplicativo de gestão de saúde
+      // Quando eu inserir informações em branco de diastólica
+      const response = await request(app)
+          .post('/calcularPressao')
+          .send({ sistolica: 120, diastolica: '' });
+
+      // Então o aplicativo deve retornar uma mensagem de erro indicando que todos os campos devem ser preenchidos
+      expect(response.status).toBe(400);
+      expect(response.body.success).toBe(false);
+      expect(response.body.message).toBe('Por favor, preencha todos os campos.');
+  });
 });
