@@ -259,9 +259,14 @@ app.post('/saveExam', (req, res) => {
 });
 
 // Iniciar o servidor
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
 
+
 // Exportar a instância do servidor Express para uso em outros arquivos
 module.exports = app;
+
+module.exports.closeServer = function() {
+  server.close();
+};
