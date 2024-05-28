@@ -108,7 +108,10 @@ const Consultas = ({ navigation }) => {
                     <PageTitle welcome={true} style={{ flexWrap: 'wrap', lineHeight: 30, color: customGreen, marginTop: 25, fontSize: 30 }}>
                         CONSULTAS
                     </PageTitle>
+                    
+                    
                     <Text style={{ color: roxinho, alignItems: 'center' }}>{'Salve aqui seu próximo exame'}</Text>
+                    
                 </WelcomeContainer>
 
                 <View style={styles.inputCon}>
@@ -130,6 +133,16 @@ const Consultas = ({ navigation }) => {
                         placeholderTextColor={backgroundGreen}
                         style={{ backgroundColor: customGreen, color: backgroundGreen }}
                     />
+
+                    <View style={styles.notesContainer}>
+                                                <Text style={styles.notesText}>Bloco de Notas:</Text>
+                                                <TextInput
+                                                    style={styles.notesInput}
+                                                    multiline={true}
+                                                    numberOfLines={4}
+                                                    placeholder="Anote aqui as observações das consultas"
+                                                />
+                    </View>
                     <MyTextInput
                         onChangeText={setRetorno}
                         placeholder="Retorno:"
@@ -165,9 +178,33 @@ const Consultas = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+
+    notesContainer: {
+        backgroundColor: roxinho,
+        borderRadius: 10,
+        padding: 10,
+        
+        width: '100%',
+        alignSelf: 'center',
+        
+    },
+    notesText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 5,
+        color: backgroundGreen,
+    },
+    notesInput: {
+        height: 70,
+        backgroundColor: backgroundGreen,
+        borderRadius: 5,
+        padding: 5,
+        color: customGreen
+    },
+
     inputCon: {
         backgroundColor: backgroundGreen,
-        marginBottom: 20,
+        
         color: backgroundGreen,
         padding: 10,
         width: '90%',
