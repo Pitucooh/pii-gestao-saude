@@ -79,3 +79,11 @@ VALUES
     ('Calcitonina','pg/mL', 0, 8.4),
     ('Zinco Sanguineo','ug/dL', 75, 140);
 
+CREATE TABLE Consultas (
+    especialidade varchar(50) PRIMARY KEY,
+    dataCons data,
+    horario time,
+    --resumoCons varchar(150),
+    retorno text,
+    lembrete text
+);

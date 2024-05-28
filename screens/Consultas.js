@@ -23,7 +23,7 @@ import {
 
 const Consultas = ({ navigation }) => {
     const [especialidade, setEspecialidade] = useState('');
-    const [data, setData] = useState('');
+    const [dataCons, setDataCons] = useState('');
     const [horario, setHorario] = useState('');
     const [resumoCons, setResumo] = useState('');
     const [retorno, setRetorno] = useState('');
@@ -32,7 +32,7 @@ const Consultas = ({ navigation }) => {
     const SalvarExam = () => {
         axios.post('http://${ipmaquina}:3000/Consultas', {
             especialidade,
-            data,
+            dataCons,
             horario,
             resumoCons,
             retorno,
@@ -61,7 +61,7 @@ const Consultas = ({ navigation }) => {
                     style={{ backgroundColor: customGreen, color: backgroundGreen }}
                 />
                 <MyTextInput
-                    onChangeText={setData}
+                    onChangeText={setDataCons}
                     placeholder="Data:"
                     placeholderTextColor={backgroundGreen}
                     style={{ backgroundColor: customGreen, color: backgroundGreen }}

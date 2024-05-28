@@ -253,9 +253,9 @@ app.post('/calcularPressao', (req, res) => {
 });
 
 app.post('/saveExam', (req, res) => {
-  const { especialidade, data, horario, retorno, lembrete } = req.body;
-  const sql = 'INSERT INTO exams (especialidade, data, horario, retorno, lembrete) VALUES (?, ?, ?, ?, ?)';
-  db.query(sql, [especialidade, data, horario, retorno, lembrete], (err, result) => {
+  const { especialidade, dataCons, horario, retorno, lembrete } = req.body;
+  const sql = 'INSERT INTO exams (especialidade, dataCons, horario, retorno, lembrete) VALUES (?, ?, ?, ?, ?)';
+  db.query(sql, [especialidade, dataCons, horario, retorno, lembrete], (err, result) => {
       if (err) {
           return res.status(500).send(err);
       }
