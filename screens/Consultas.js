@@ -182,14 +182,6 @@ const Consultas = ({ navigation }) => {
     );
 }
 
-// const filtroTelas = useNavigation();
-
-// const filtroColunasTelas = () => {
-//   filtroTelas.navigate('NextScreen', {
-//     dataCons: dataCons,
-//     especialidade: especialidade
-//   });
-// };
 
 const styles = StyleSheet.create({
 
