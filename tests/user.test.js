@@ -1,6 +1,7 @@
 const request = require('supertest');
 const express = require('express');
 const app = require('./../server');
+const { closeServer } = require('./../server');
 
 // TESTES LOGIN
 
@@ -254,7 +255,7 @@ describe('Testes de Pressão Arterial', () => {
       expect(response.body.success).toBe(false);
       expect(response.body.message).toBe('Por favor, preencha todos os campos.');
   });
-  
+
   afterAll(() => {
     closeServer();
   });
