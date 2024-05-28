@@ -254,4 +254,8 @@ describe('Testes de Pressão Arterial', () => {
       expect(response.body.success).toBe(false);
       expect(response.body.message).toBe('Por favor, preencha todos os campos.');
   });
+  
+  afterAll(() => {
+    closeServer();
+  });
 });

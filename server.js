@@ -263,20 +263,10 @@ const server = app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
 
-// Função para fechar o servidor
-function closeServer() {
-  server.close(() => {
-    console.log('Servidor fechado');
-    // Encerrar a conexão com o MySQL
-    db.end((err) => {
-      if (err) {
-        console.error('Erro ao encerrar conexão com o banco de dados MySQL:', err);
-        return;
-      }
-      console.log('Conexão com o banco de dados MySQL encerrada');
-    });
-  });
-}
 
 // Exportar a instância do servidor Express para uso em outros arquivos
 module.exports = app;
+
+module.exports.closeServer = function() {
+  server.close();
+};
