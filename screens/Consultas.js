@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, Button, Alert, Platform } from 'react-native';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 import { ipMaquina } from '../ips';
 import { KeyboardAvoidingView } from 'react-native';
 
@@ -180,6 +181,15 @@ const Consultas = ({ navigation }) => {
         </TouchableWithoutFeedback>
     );
 }
+
+// const filtroTelas = useNavigation();
+
+// const filtroColunasTelas = () => {
+//   filtroTelas.navigate('NextScreen', {
+//     dataCons: dataCons,
+//     especialidade: especialidade
+//   });
+// };
 
 const styles = StyleSheet.create({
 

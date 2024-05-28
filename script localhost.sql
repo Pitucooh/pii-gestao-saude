@@ -80,7 +80,8 @@ VALUES
     ('Zinco Sanguineo','ug/dL', 75, 140);
 
 CREATE TABLE exams (
-    especialidade varchar(50) PRIMARY KEY,
+    id_consulta INT AUTO_INCREMENT PRIMARY KEY
+    especialidade varchar(50),
     dataCons date,
     horario time,
     resumoCons varchar(150),
