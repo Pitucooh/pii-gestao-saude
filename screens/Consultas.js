@@ -105,7 +105,7 @@ const Consultas = ({ navigation }) => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <InnerContainer style={{ backgroundColor: backgroundGreen }}>
                 <WelcomeContainer style={{ backgroundColor: backgroundGreen }}>
-                    <PageTitle welcome={true} style={{ flexWrap: 'wrap', lineHeight: 30, color: customGreen, marginTop: 25, fontSize: 30 }}>
+                    <PageTitle welcome={true} style={{ flexWrap: 'wrap', lineHeight: 30, color: customGreen, marginTop:30, fontSize: 30 }}>
                         CONSULTAS
                     </PageTitle>
                     
@@ -119,19 +119,19 @@ const Consultas = ({ navigation }) => {
                         onChangeText={setEspecialidade}
                         placeholder="Especialidade:"
                         placeholderTextColor={backgroundGreen} // Certifique-se de definir a cor do texto do placeholder
-                        style={{ backgroundColor: customGreen, color: backgroundGreen }}
+                        style={{ backgroundColor: greenForm, color: backgroundGreen }}
                     />
                     <MyTextInput
                         onChangeText={setDataCons}
                         placeholder="Data:"
                         placeholderTextColor={backgroundGreen}
-                        style={{ backgroundColor: customGreen, color: backgroundGreen }}
+                        style={{ backgroundColor: greenForm, color: backgroundGreen }}
                     />
                     <MyTextInput
                         onChangeText={setHorario}
                         placeholder="Horário:"
                         placeholderTextColor={backgroundGreen}
-                        style={{ backgroundColor: customGreen, color: backgroundGreen }}
+                        style={{ backgroundColor: greenForm, color: backgroundGreen }}
                     />
 
                     <View style={styles.notesContainer}>
@@ -143,17 +143,21 @@ const Consultas = ({ navigation }) => {
                                                     placeholder="Anote aqui as observações das consultas"
                                                 />
                     </View>
+
+                    <PageTitle welcome={true} style={{ flexWrap: 'wrap', lineHeight: 20, color: customGreen,fontSize:20}}>
+                        Retorno e lembrete
+                    </PageTitle>
                     <MyTextInput
                         onChangeText={setRetorno}
                         placeholder="Retorno:"
                         placeholderTextColor={backgroundGreen}
-                        style={{ backgroundColor: customGreen, color: backgroundGreen }}
+                        style={{ backgroundColor: greenForm, color: backgroundGreen }}
                     />
                     <MyTextInput
                         onChangeText={setLembrete}
                         placeholder="Lembrete Agendamento:"
                         placeholderTextColor={backgroundGreen}
-                        style={{ backgroundColor: customGreen, color: backgroundGreen }}
+                        style={{ backgroundColor: greenForm, color: backgroundGreen }}
                     />
                 </View>
 
@@ -183,7 +187,7 @@ const styles = StyleSheet.create({
         backgroundColor: roxinho,
         borderRadius: 10,
         padding: 10,
-        
+        marginBottom: 7,
         width: '100%',
         alignSelf: 'center',
         
@@ -199,7 +203,7 @@ const styles = StyleSheet.create({
         backgroundColor: backgroundGreen,
         borderRadius: 5,
         padding: 5,
-        color: customGreen
+        color: roxinho
     },
 
     inputCon: {

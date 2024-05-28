@@ -90,10 +90,13 @@ const Meusdados = ({ navigation }) => {
     
     const styles = StyleSheet.create({
       container: {
-        flex: 0.9,
+        flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: backgroundGreen,
+        alignItems: 'left',
+        backgroundColor: greenForm,
+        borderRadius: 20,
+        borderWidth: 5, 
+        borderColor: customGreen
       },
       profileContainer: {
         marginBottom: 30,
@@ -138,16 +141,7 @@ const Meusdados = ({ navigation }) => {
         borderRadius: 10,
         
       },
-      metricInfo: {
-        marginTop: 10,
-        fontSize: 16,
-        color: backgroundGreen,
-        borderWidth: 2, 
-        padding: 10,
-        borderRadius: 10, 
-        borderColor: backgroundGreen, 
-        width: 1000
-      },
+     
       buttonText: {
         color: '#fff',
         fontSize: 16,
