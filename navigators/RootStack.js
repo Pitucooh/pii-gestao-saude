@@ -18,7 +18,7 @@ import Meusdados from './../screens/Meusdados';
 import AtualizarGlicemia from './../screens/AtualizarGlicemia';
 import AtualizarImc from './../screens/AtualizarImc';
 import AtualizarPressao from './../screens/AtualizarPressao';
-
+import DataCons from '../screens/DatasCons';
 
 const Stack = createStackNavigator();
 
@@ -52,6 +52,7 @@ const RootStack = () => {
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "AtualizarGlicemia" component={AtualizarGlicemia} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "AtualizarImc" component={AtualizarImc} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "AtualizarPressao" component={AtualizarPressao} />
+                <Stack.Screen options = {{headerTintColor: '#000' }} name="DatasCons" component={DataCons} />
             </Stack.Navigator>
         </NavigationContainer>
     )    

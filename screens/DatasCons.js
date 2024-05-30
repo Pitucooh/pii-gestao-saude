@@ -1,15 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
-const DataCons = ({ route }) => {
-    const { dataCons } = route.params;
-
+const DataCons = () => {
+    const route = useRoute();
+    const { dataCons, especialidade } = route.params;
+  
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>Data da Consulta: {dataCons}</Text>
-        </View>
+      <View style={styles.container}>
+        <Text style={styles.text}>Data da Consulta: {dataCons}</Text>
+        <Text style={styles.text}>Especialidade: {especialidade}</Text>
+      </View>
     );
-}
+  };
 
 const styles = StyleSheet.create({
     container: {

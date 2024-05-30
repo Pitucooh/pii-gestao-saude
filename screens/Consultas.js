@@ -36,6 +36,10 @@ const Consultas = ({ navigation }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
+    const SalvarData = () => {
+        // Lógica de salvar
+        navigation.navigate('DataCons'); // Navegar sem passar parâmetros
+    };
 
     const SalvarExam = async () => {
 
@@ -100,6 +104,8 @@ const Consultas = ({ navigation }) => {
             console.error(error);
             setFeedbackMessage('Erro ao salvar o exame.');
         }
+
+        
     };
     
         return (
