@@ -3,6 +3,30 @@ import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, Key
 import { SwipeListView } from 'react-native-swipe-list-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
+
+import {
+    StyledContainer,
+    InnerContainer,
+    PageTitle,
+    SubTitle,
+    StyledFormArea,
+    LeftIcon,
+    StyledInputLabel,
+    StyledTextInput,
+    RightIcon,
+    StyledButton,
+    ButtonText,
+    Colors,
+    MsgBox,
+    Line,
+    ExtraText,
+    ExtraView,
+    TextLink,
+    TextLinkContent,
+    WelcomeContainer,
+  } from './../components/styles';
+
 const AtualizarIMC = () => {
     const [peso, setPeso] = useState('');
     const [altura, setAltura] = useState('');
@@ -106,6 +130,9 @@ const AtualizarIMC = () => {
             keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
         >
             <Text style={styles.title}>Atualizar IMC</Text>
+            <Text style={styles.descriptionText}>
+                 Atualize seu IMC colocando seus dados mais recentes
+            </Text>
             <SwipeListView
                 data={records}
                 keyExtractor={(item, index) => index.toString()}
@@ -162,8 +189,12 @@ const AtualizarIMC = () => {
                     />
                     <Text style={styles.imcResult}>{imcResult}</Text>
                     <View style={styles.buttonContainer}>
-                        <Button title="Salvar" onPress={handleSave} />
-                        <Button title="Cancelar" onPress={handleCancel} color="#FF0000" />
+                        <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
+                            <Text style={styles.buttonText}>Salvar</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
+                            <Text style={styles.buttonText}>Cancelar</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             )}
@@ -180,19 +211,27 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#f8f9fa',
+        backgroundColor: backgroundGreen,
     },
     title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        marginTop: 20,
+        flexWrap: 'wrap',
+        lineHeight: 30,
+        color: customGreen,
+        fontSize: 30,
+        marginTop: 45,
         textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    descriptionText: {
+        color: roxinho,
+        textAlign: 'center',
+        marginTop: 10,
+        fontSize: 16,
     },
     record: {
         padding: 10,
-        marginBottom: 10,
-        backgroundColor: '#fff',
+        marginTop: 10,
+        backgroundColor: backgroundGreen,
         borderRadius: 5,
         shadowColor: '#000',
         shadowOpacity: 0.1,
@@ -200,6 +239,9 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         elevation: 3,
         width: '100%',
+        borderWidth: 2, 
+        borderColor: greenForm
+        
     },
     recordRow: {
         flexDirection: 'row',
@@ -217,25 +259,29 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         paddingBottom: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     input: {
         borderWidth: 1,
-        borderColor: '#ddd',
+        borderColor: greenForm,
         padding: 10,
         marginBottom: 10,
         borderRadius: 5,
-        width: '100%',
+        width: '70%',
+        backgroundColor: greenForm,  
+        color: backgroundGreen
+        
     },
     imcResult: {
         marginTop: 10,
-        fontWeight: 'bold',
         textAlign: 'center',
     },
     addButton: {
         position: 'absolute',
         right: 20,
         bottom: 20,
-        backgroundColor: '#007bff',
+        backgroundColor: roxinho,
         width: 50,
         height: 50,
         borderRadius: 25,
@@ -243,7 +289,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     addButtonText: {
-        color: '#fff',
+        color: greenForm,
         fontSize: 30,
         lineHeight: 30,
     },
@@ -280,8 +326,26 @@ const styles = StyleSheet.create({
     },
     actionText: {
         color: '#fff',
-        fontWeight: 'bold',
         fontSize: 16,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 20,
+        color: '#f0eadd'
+    },
+    saveButton: {
+        backgroundColor: customGreen, 
+        marginRight: 10,
+        padding: 15,
+        borderRadius: 10
+    },
+    cancelButton: {
+        backgroundColor: '#752723', 
+        color: '#f0eadd',
+        padding: 15,
+        borderRadius: 10
+        
     },
 });
 
