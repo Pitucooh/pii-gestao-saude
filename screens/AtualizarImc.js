@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform, Animated } from 'react-native';
-import { SwipeListView } from 'react-native-swipe-list-view';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
@@ -25,7 +24,7 @@ import {
     TextLink,
     TextLinkContent,
     WelcomeContainer,
-  } from './../components/styles';
+} from './../components/styles';
 
 const AtualizarIMC = () => {
     const [peso, setPeso] = useState('');
@@ -33,6 +32,7 @@ const AtualizarIMC = () => {
     const [imcResult, setImcResult] = useState('');
     const [records, setRecords] = useState([]);
     const [adding, setAdding] = useState(false);
+    const [showAdvice, setShowAdvice] = useState({});
 
     useEffect(() => {
         const loadRecords = async () => {
@@ -88,6 +88,7 @@ const AtualizarIMC = () => {
             setPeso('');
             setAltura('');
             setImcResult('');
+            setShowAdvice({});
             setAdding(false);
 
             Alert.alert(
@@ -112,32 +113,26 @@ const AtualizarIMC = () => {
         setRecords(records.filter(record => record.key !== key));
     };
 
-    const renderHiddenItem = ({ item }) => (
-        <View style={styles.rowBack}>
-            <TouchableOpacity
-                style={[styles.deleteButton, styles.rightAction]}
-                onPress={() => handleDelete(item.key)}
-            >
-                <Text style={styles.actionText}>Deletar</Text>
-            </TouchableOpacity>
-        </View>
-    );
+    const toggleAdvice = (key) => {
+        setShowAdvice(prevState => ({
+            ...prevState,
+            [key]: !prevState[key]
+        }));
+    };
 
     return (
         <KeyboardAvoidingView
-            style={{ flex: 1 }}
+            style={{ flex: 1, backgroundColor: backgroundGreen }}
             behavior={Platform.OS === 'ios' ? 'padding' : null}
             keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
         >
             <Text style={styles.title}>Atualizar IMC</Text>
             <Text style={styles.descriptionText}>
-                 Atualize seu IMC colocando seus dados mais recentes
+                Atualize seu IMC colocando seus dados mais recentes
             </Text>
-            <SwipeListView
-                data={records}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => (
-                    <View style={styles.record}>
+            <View>
+                {records.map((item, index) => (
+                    <View key={index} style={styles.record}>
                         <View style={styles.recordRow}>
                             <Text style={styles.recordLabel}>Data:</Text>
                             <Text style={styles.recordValue}>{item.date}</Text>
@@ -151,15 +146,19 @@ const AtualizarIMC = () => {
                             <Text style={styles.recordValue}>{item.altura} cm</Text>
                         </View>
                         <View style={styles.recordRow}>
-                            <Text style={styles.recordLabel}>IMC:</Text>
-                            <Text style={styles.recordValue}>{item.imc}</Text>
+                            
+                            
+                            <TouchableOpacity style={styles.adviceButton} onPress={() => toggleAdvice(item.key)}>
+                                <Text style={styles.adviceButtonText}>Mostrar Conselho</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.key)}>
+                                <Text style={styles.deleteButtonText}>Deletar</Text>
+                            </TouchableOpacity>
                         </View>
+                        {showAdvice[item.key] && <Text style={styles.adviceText}>{item.imc}</Text>}
                     </View>
-                )}
-                renderHiddenItem={renderHiddenItem}
-                rightOpenValue={-100}
-                stopRightSwipe={-100}
-            />
+                ))}
+            </View>
 
             {adding && (
                 <View style={styles.inputContainer}>
@@ -212,6 +211,9 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20,
         backgroundColor: backgroundGreen,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: '50%'
     },
     title: {
         flexWrap: 'wrap',
@@ -233,14 +235,9 @@ const styles = StyleSheet.create({
         marginTop: 10,
         backgroundColor: backgroundGreen,
         borderRadius: 5,
-        shadowColor: '#000',
-        shadowOpacity: 0.1,
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 5,
-        elevation: 3,
         width: '100%',
-        borderWidth: 2, 
-        borderColor: greenForm
+        borderWidth: 2,
+        borderColor: greenForm,
         
     },
     recordRow: {
@@ -248,14 +245,35 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginBottom: 5,
         flexWrap: 'wrap',
+
     },
     recordLabel: {
         fontWeight: 'bold',
         flexShrink: 1,
     },
     recordValue: {
-        color: '#555',
         flexShrink: 1,
+    },
+    deleteButton: {
+        backgroundColor: 'red',
+        padding: 5,
+        borderRadius: 5,
+    },
+    deleteButtonText: {
+        color: 'white',
+    },
+    adviceButton: {
+        backgroundColor: customGreen,
+        padding: 5,
+        borderRadius: 5,
+        
+    },
+    adviceButtonText: {
+        color: 'white',
+    },
+    adviceText: {
+        marginTop: 5,
+        color: 'black',
     },
     inputContainer: {
         paddingBottom: 20,
@@ -271,11 +289,6 @@ const styles = StyleSheet.create({
         width: '70%',
         backgroundColor: greenForm,  
         color: backgroundGreen
-        
-    },
-    imcResult: {
-        marginTop: 10,
-        textAlign: 'center',
     },
     addButton: {
         position: 'absolute',
@@ -289,7 +302,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     addButtonText: {
-        color: greenForm,
+        color: backgroundGreen,
         fontSize: 30,
         lineHeight: 30,
     },
@@ -303,13 +316,11 @@ const styles = StyleSheet.create({
     },
     deleteButton: {
         alignItems: 'center',
-        bottom: 0,
-        justifyContent: 'center',
-        position: 'absolute',
-        top: 0,
-        width: 75,
-        backgroundColor: 'red',
-        right: 0,
+        padding: 5,
+        backgroundColor: '#ab4038',
+        marginLeft: '75%', 
+        borderRadius: 10, 
+        
     },
     deleteButtonText: {
         color: 'white',
