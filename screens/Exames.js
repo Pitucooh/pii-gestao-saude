@@ -38,20 +38,6 @@ const App = () => {
   const [botaoVisivel, setBotaoVisivel] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    loadSavedResults();
-  }, []);
-
-  const loadSavedResults = async () => {
-    try {
-      const savedResults = await AsyncStorage.getItem('resultados');
-      if (savedResults !== null) {
-        setResultados(JSON.parse(savedResults));
-      }
-    } catch (error) {
-      console.error('Erro ao carregar resultados salvos:', error);
-    }
-  };
 
   const saveResults = async () => {
     try {

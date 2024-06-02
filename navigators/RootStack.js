@@ -13,7 +13,7 @@ import Signup from './../screens/Signup';
 import Menu from './../screens/Menu';
 import Consultas from './../screens/Consultas';
 import Exames from '../screens/Exames';
-import Medicacoes from './../screens/Medicacoes';
+import Medicamentos from './../screens/Medicamentos';
 import Meusdados from './../screens/Meusdados';
 import AtualizarGlicemia from './../screens/AtualizarGlicemia';
 import AtualizarImc from './../screens/AtualizarImc';
@@ -47,7 +47,7 @@ const RootStack = () => {
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "Menu" component={Menu} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "Consultas" component={Consultas} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "Exames" component={Exames} />
-                <Stack.Screen options = {{headerTintColor: '#000' }} name= "Medicacoes" component={Medicacoes} />
+                <Stack.Screen options = {{headerTintColor: '#000' }} name= "Medicamentos" component={Medicamentos} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "Meusdados" component={Meusdados} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "AtualizarGlicemia" component={AtualizarGlicemia} />
                 <Stack.Screen options = {{headerTintColor: '#000' }} name= "AtualizarImc" component={AtualizarImc} />

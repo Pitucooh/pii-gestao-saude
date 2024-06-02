@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   },
   metricInfo: {
     color: backgroundGreen,
-    fontSize: 13,
+    fontSize: 16,
     marginTop: 5,
     backgroundColor: greenForm,
     padding: 7,

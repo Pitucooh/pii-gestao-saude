@@ -31,7 +31,7 @@ def carregar_valores_referencia():
         conn = mysql.connector.connect(
             host='localhost',
             user='root',
-            password='matsql',
+            password='Mamacosma2!',
             database='wepink',
             auth_plugin='mysql_native_password'
         )
