@@ -1,30 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
 
 import {
-    StyledContainer,
-    InnerContainer,
-    PageTitle,
-    SubTitle,
-    StyledFormArea,
-    LeftIcon,
-    StyledInputLabel,
-    StyledTextInput,
-    RightIcon,
-    StyledButton,
-    ButtonText,
-    Colors,
-    MsgBox,
-    Line,
-    ExtraText,
-    ExtraView,
-    TextLink,
-    TextLinkContent,
-    WelcomeContainer,
+  StyledContainer,
+  InnerContainer,
+  PageTitle,
+  SubTitle,
+  StyledFormArea,
+  LeftIcon,
+  StyledInputLabel,
+  StyledTextInput,
+  RightIcon,
+  StyledButton,
+  ButtonText,
+  Colors,
+  MsgBox,
+  Line,
+  ExtraText,
+  ExtraView,
+  TextLink,
+  TextLinkContent,
+  WelcomeContainer,
 } from './../components/styles';
+
 
 const AtualizarIMC = () => {
     const [peso, setPeso] = useState('');
@@ -146,8 +147,6 @@ const AtualizarIMC = () => {
                             <Text style={styles.recordValue}>{item.altura} cm</Text>
                         </View>
                         <View style={styles.recordRow}>
-                            
-                            
                             <TouchableOpacity style={styles.adviceButton} onPress={() => toggleAdvice(item.key)}>
                                 <Text style={styles.adviceButtonText}>Mostrar Conselho</Text>
                             </TouchableOpacity>
@@ -160,43 +159,53 @@ const AtualizarIMC = () => {
                 ))}
             </View>
 
-            {adding && (
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        placeholder="Peso (kg)"
-                        keyboardType="numeric"
-                        value={peso}
-                        onChangeText={(text) => {
-                            setPeso(text);
-                            if (text && altura) {
-                                setImcResult(calcIMC(parseFloat(text), parseFloat(altura)));
-                            }
-                        }}
-                        style={styles.input}
-                    />
-                    <TextInput
-                        placeholder="Altura (cm)"
-                        keyboardType="numeric"
-                        value={altura}
-                        onChangeText={(text) => {
-                            setAltura(text);
-                            if (text && peso) {
-                                setImcResult(calcIMC(parseFloat(peso), parseFloat(text)));
-                            }
-                        }}
-                        style={styles.input}
-                    />
-                    <Text style={styles.imcResult}>{imcResult}</Text>
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
-                            <Text style={styles.buttonText}>Salvar</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
-                            <Text style={styles.buttonText}>Cancelar</Text>
-                        </TouchableOpacity>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={adding}
+                onRequestClose={() => setAdding(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                    <Text style={styles.modalTitle}>Adicionar Registro de IMC</Text>
+                        <TextInput
+                            placeholder="Peso (kg)"
+                            keyboardType="numeric"
+                            value={peso}
+                            onChangeText={(text) => {
+                                setPeso(text);
+                                if (text && altura) {
+                                    setImcResult(calcIMC(parseFloat(text), parseFloat(altura)));
+                                }
+                            }}
+                            style={styles.input}
+                        />
+                        <TextInput
+                            placeholder="Altura (cm)"
+                            keyboardType="numeric"
+                            value={altura}
+                            onChangeText={(text) => {
+                                setAltura(text);
+                                if (text && peso) {
+                                    setImcResult(calcIMC(parseFloat(peso), parseFloat(text)));
+                                }
+                            }}
+                            style={styles.input}
+                        />
+                        <Text style={styles.imcResult}>{imcResult}</Text>
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
+                                <Text style={styles.buttonText}>Salvar</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
+                                <Text style={styles.buttonText}>Cancelar</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-            )}
+            </Modal>
+
+
             {!adding && (
                 <TouchableOpacity style={styles.addButton} onPress={() => setAdding(true)}>
                     <Text style={styles.addButtonText}>+</Text>
@@ -213,10 +222,8 @@ const styles = StyleSheet.create({
         backgroundColor: backgroundGreen,
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: '50%'
     },
     title: {
-        flexWrap: 'wrap',
         lineHeight: 30,
         color: customGreen,
         fontSize: 30,
@@ -233,130 +240,179 @@ const styles = StyleSheet.create({
     record: {
         padding: 10,
         marginTop: 10,
-        backgroundColor: backgroundGreen,
+        backgroundColor: 'white',
         borderRadius: 5,
         width: '100%',
-        borderWidth: 2,
-        borderColor: greenForm,
-        
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3,
+        borderWidth: 2, 
+        borderColor: greenForm
     },
     recordRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         marginBottom: 5,
-        flexWrap: 'wrap',
-
     },
     recordLabel: {
         fontWeight: 'bold',
-        flexShrink: 1,
+        color: '#333',
     },
     recordValue: {
-        flexShrink: 1,
+        color: '#666',
     },
-    deleteButton: {
-        backgroundColor: 'red',
-        padding: 5,
+    adviceText: {
+        color: '#333',
+        fontStyle: 'italic',
+        marginTop: 10,
+    },
+    inputContainer: {
+        marginTop: 20,
+        width: '70%',
+        alignItems: 'center',
+        
+    },
+    input: {
+        width: '100%',
+        padding: 10,
+        marginVertical: 5,
+        borderWidth: 1,
+        borderColor: '#ccc',
         borderRadius: 5,
     },
-    deleteButtonText: {
+    imcResult: {
+        color: customGreen,
+        fontWeight: 'bold',
+        marginTop: 10,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    button: {
+        flex: 1,
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginHorizontal: 5,
+    },
+    saveButton: {
+        backgroundColor: customGreen,
+    },
+    cancelButton: {
+        backgroundColor: '#ccc',
+    },
+    buttonText: {
         color: 'white',
+        fontWeight: 'bold',
+    },
+    addButton: {
+        backgroundColor: customGreen,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+    },
+    addButtonText: {
+        color: 'white',
+        fontSize: 30,
+        lineHeight: 30,
     },
     adviceButton: {
         backgroundColor: customGreen,
         padding: 5,
         borderRadius: 5,
-        
     },
     adviceButtonText: {
         color: 'white',
     },
-    adviceText: {
-        marginTop: 5,
-        color: 'black',
-    },
-    inputContainer: {
-        paddingBottom: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: greenForm,
-        padding: 10,
-        marginBottom: 10,
-        borderRadius: 5,
-        width: '70%',
-        backgroundColor: greenForm,  
-        color: backgroundGreen
-    },
-    addButton: {
-        position: 'absolute',
-        right: 20,
-        bottom: 20,
-        backgroundColor: roxinho,
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    addButtonText: {
-        color: backgroundGreen,
-        fontSize: 30,
-        lineHeight: 30,
-    },
-    rowBack: {
-        alignItems: 'center',
-        backgroundColor: '#DDD',
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        paddingRight: 15,
-    },
     deleteButton: {
-        alignItems: 'center',
+        backgroundColor: '#8c3030',
         padding: 5,
-        backgroundColor: '#ab4038',
-        marginLeft: '75%', 
-        borderRadius: 10, 
-        
+        borderRadius: 5,
+        marginLeft: 10,
     },
     deleteButtonText: {
         color: 'white',
     },
-    rightAction: {
-        backgroundColor: '#dd2c00',
+    modalContainer: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingRight: 10,
-        marginTop: 10,
-        marginBottom: 10,
-        borderRadius: 8,
-        width: 100,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
     },
-    actionText: {
-        color: '#fff',
-        fontSize: 16,
+    modalContent: {
+        backgroundColor: backgroundGreen,
+        padding: 20,
+        borderRadius: 10,
+        width: '80%',
+    },
+    input: {
+        width: '100%',
+        padding: 10,
+        marginVertical: 5,
+        borderRadius: 10,
+        backgroundColor: greenForm,
+        color: backgroundGreen
+    },
+    imcResult: {
+        color: 'black',
+        marginTop: 10,
     },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 20,
-        color: '#f0eadd'
+        width: '100%',
+    },
+    button: {
+        flex: 1,
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginHorizontal: 5,
     },
     saveButton: {
-        backgroundColor: customGreen, 
-        marginRight: 10,
-        padding: 15,
-        borderRadius: 10
+        backgroundColor: customGreen,
     },
     cancelButton: {
-        backgroundColor: '#752723', 
-        color: '#f0eadd',
-        padding: 15,
-        borderRadius: 10
-        
+        backgroundColor: '#8c3030',
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
+    addButton: {
+        backgroundColor: customGreen,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+    },
+    addButtonText: {
+        color: 'white',
+        fontSize: 30,
+        lineHeight: 30,
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign: 'center',
+        color: customGreen
+
+
     },
 });
 
