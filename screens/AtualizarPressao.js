@@ -2,7 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
+import {
+    StyledContainer,
+    InnerContainer,
+    PageTitle,
+    SubTitle,
+    StyledFormArea,
+    LeftIcon,
+    StyledInputLabel,
+    StyledTextInput,
+    RightIcon,
+    StyledButton,
+    ButtonText,
+    Colors,
+    MsgBox,
+    Line,
+    ExtraText,
+    ExtraView,
+    TextLink,
+    TextLinkContent,
+    WelcomeContainer,
+  } from './../components/styles';
 const AtualizarPressao = () => {
     const [sistolica, setSistolica] = useState('');
     const [diastolica, setDiastolica] = useState('');
@@ -103,7 +124,7 @@ const AtualizarPressao = () => {
 
     return (
         <KeyboardAvoidingView
-            style={{ flex: 1 }}
+            style={{ flex: 1, backgroundColor: backgroundGreen }}
             behavior={Platform.OS === 'ios' ? 'padding' : null}
             keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
         >
@@ -176,10 +197,7 @@ const AtualizarPressao = () => {
     paddingBottom: 100, // Ajuste para evitar que o botão "Adicionar" seja sobreposto pelo teclado
     },
     title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
+   
     },
     record: {
     padding: 10,

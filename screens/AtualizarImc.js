@@ -1,7 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform, Animated } from 'react-native';
-import { SwipeListView } from 'react-native-swipe-list-view';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
+
+import {
+  StyledContainer,
+  InnerContainer,
+  PageTitle,
+  SubTitle,
+  StyledFormArea,
+  LeftIcon,
+  StyledInputLabel,
+  StyledTextInput,
+  RightIcon,
+  StyledButton,
+  ButtonText,
+  Colors,
+  MsgBox,
+  Line,
+  ExtraText,
+  ExtraView,
+  TextLink,
+  TextLinkContent,
+  WelcomeContainer,
+} from './../components/styles';
+
 
 const AtualizarIMC = () => {
     const [peso, setPeso] = useState('');
@@ -9,6 +33,7 @@ const AtualizarIMC = () => {
     const [imcResult, setImcResult] = useState('');
     const [records, setRecords] = useState([]);
     const [adding, setAdding] = useState(false);
+    const [showAdvice, setShowAdvice] = useState({});
 
     useEffect(() => {
         const loadRecords = async () => {
@@ -64,6 +89,7 @@ const AtualizarIMC = () => {
             setPeso('');
             setAltura('');
             setImcResult('');
+            setShowAdvice({});
             setAdding(false);
 
             Alert.alert(
@@ -88,29 +114,26 @@ const AtualizarIMC = () => {
         setRecords(records.filter(record => record.key !== key));
     };
 
-    const renderHiddenItem = ({ item }) => (
-        <View style={styles.rowBack}>
-            <TouchableOpacity
-                style={[styles.deleteButton, styles.rightAction]}
-                onPress={() => handleDelete(item.key)}
-            >
-                <Text style={styles.actionText}>Deletar</Text>
-            </TouchableOpacity>
-        </View>
-    );
+    const toggleAdvice = (key) => {
+        setShowAdvice(prevState => ({
+            ...prevState,
+            [key]: !prevState[key]
+        }));
+    };
 
     return (
         <KeyboardAvoidingView
-            style={{ flex: 1 }}
+            style={{ flex: 1, backgroundColor: backgroundGreen }}
             behavior={Platform.OS === 'ios' ? 'padding' : null}
             keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
         >
             <Text style={styles.title}>Atualizar IMC</Text>
-            <SwipeListView
-                data={records}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => (
-                    <View style={styles.record}>
+            <Text style={styles.descriptionText}>
+                Atualize seu IMC colocando seus dados mais recentes
+            </Text>
+            <View>
+                {records.map((item, index) => (
+                    <View key={index} style={styles.record}>
                         <View style={styles.recordRow}>
                             <Text style={styles.recordLabel}>Data:</Text>
                             <Text style={styles.recordValue}>{item.date}</Text>
@@ -124,49 +147,65 @@ const AtualizarIMC = () => {
                             <Text style={styles.recordValue}>{item.altura} cm</Text>
                         </View>
                         <View style={styles.recordRow}>
-                            <Text style={styles.recordLabel}>IMC:</Text>
-                            <Text style={styles.recordValue}>{item.imc}</Text>
+                            <TouchableOpacity style={styles.adviceButton} onPress={() => toggleAdvice(item.key)}>
+                                <Text style={styles.adviceButtonText}>Mostrar Conselho</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.key)}>
+                                <Text style={styles.deleteButtonText}>Deletar</Text>
+                            </TouchableOpacity>
+                        </View>
+                        {showAdvice[item.key] && <Text style={styles.adviceText}>{item.imc}</Text>}
+                    </View>
+                ))}
+            </View>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={adding}
+                onRequestClose={() => setAdding(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                    <Text style={styles.modalTitle}>Adicionar Registro de IMC</Text>
+                        <TextInput
+                            placeholder="Peso (kg)"
+                            keyboardType="numeric"
+                            value={peso}
+                            onChangeText={(text) => {
+                                setPeso(text);
+                                if (text && altura) {
+                                    setImcResult(calcIMC(parseFloat(text), parseFloat(altura)));
+                                }
+                            }}
+                            style={styles.input}
+                        />
+                        <TextInput
+                            placeholder="Altura (cm)"
+                            keyboardType="numeric"
+                            value={altura}
+                            onChangeText={(text) => {
+                                setAltura(text);
+                                if (text && peso) {
+                                    setImcResult(calcIMC(parseFloat(peso), parseFloat(text)));
+                                }
+                            }}
+                            style={styles.input}
+                        />
+                        <Text style={styles.imcResult}>{imcResult}</Text>
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
+                                <Text style={styles.buttonText}>Salvar</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
+                                <Text style={styles.buttonText}>Cancelar</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
-                )}
-                renderHiddenItem={renderHiddenItem}
-                rightOpenValue={-100}
-                stopRightSwipe={-100}
-            />
-
-            {adding && (
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        placeholder="Peso (kg)"
-                        keyboardType="numeric"
-                        value={peso}
-                        onChangeText={(text) => {
-                            setPeso(text);
-                            if (text && altura) {
-                                setImcResult(calcIMC(parseFloat(text), parseFloat(altura)));
-                            }
-                        }}
-                        style={styles.input}
-                    />
-                    <TextInput
-                        placeholder="Altura (cm)"
-                        keyboardType="numeric"
-                        value={altura}
-                        onChangeText={(text) => {
-                            setAltura(text);
-                            if (text && peso) {
-                                setImcResult(calcIMC(parseFloat(peso), parseFloat(text)));
-                            }
-                        }}
-                        style={styles.input}
-                    />
-                    <Text style={styles.imcResult}>{imcResult}</Text>
-                    <View style={styles.buttonContainer}>
-                        <Button title="Salvar" onPress={handleSave} />
-                        <Button title="Cancelar" onPress={handleCancel} color="#FF0000" />
-                    </View>
                 </View>
-            )}
+            </Modal>
+
+
             {!adding && (
                 <TouchableOpacity style={styles.addButton} onPress={() => setAdding(true)}>
                     <Text style={styles.addButtonText}>+</Text>
@@ -180,108 +219,200 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#f8f9fa',
+        backgroundColor: backgroundGreen,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        marginTop: 20,
+        lineHeight: 30,
+        color: customGreen,
+        fontSize: 30,
+        marginTop: 45,
         textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    descriptionText: {
+        color: roxinho,
+        textAlign: 'center',
+        marginTop: 10,
+        fontSize: 16,
     },
     record: {
         padding: 10,
-        marginBottom: 10,
-        backgroundColor: '#fff',
+        marginTop: 10,
+        backgroundColor: 'white',
         borderRadius: 5,
+        width: '100%',
         shadowColor: '#000',
-        shadowOpacity: 0.1,
         shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 3,
-        width: '100%',
+        borderWidth: 2, 
+        borderColor: greenForm
     },
     recordRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         marginBottom: 5,
-        flexWrap: 'wrap',
     },
     recordLabel: {
         fontWeight: 'bold',
-        flexShrink: 1,
+        color: '#333',
     },
     recordValue: {
-        color: '#555',
-        flexShrink: 1,
+        color: '#666',
+    },
+    adviceText: {
+        color: '#333',
+        fontStyle: 'italic',
+        marginTop: 10,
     },
     inputContainer: {
-        paddingBottom: 20,
+        marginTop: 20,
+        width: '70%',
+        alignItems: 'center',
+        
     },
     input: {
-        borderWidth: 1,
-        borderColor: '#ddd',
-        padding: 10,
-        marginBottom: 10,
-        borderRadius: 5,
         width: '100%',
+        padding: 10,
+        marginVertical: 5,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
     },
     imcResult: {
-        marginTop: 10,
+        color: customGreen,
         fontWeight: 'bold',
-        textAlign: 'center',
+        marginTop: 10,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    button: {
+        flex: 1,
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginHorizontal: 5,
+    },
+    saveButton: {
+        backgroundColor: customGreen,
+    },
+    cancelButton: {
+        backgroundColor: '#ccc',
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
     },
     addButton: {
-        position: 'absolute',
-        right: 20,
-        bottom: 20,
-        backgroundColor: '#007bff',
-        width: 50,
-        height: 50,
-        borderRadius: 25,
+        backgroundColor: customGreen,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
     },
     addButtonText: {
-        color: '#fff',
+        color: 'white',
         fontSize: 30,
         lineHeight: 30,
     },
-    rowBack: {
-        alignItems: 'center',
-        backgroundColor: '#DDD',
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        paddingRight: 15,
+    adviceButton: {
+        backgroundColor: customGreen,
+        padding: 5,
+        borderRadius: 5,
+    },
+    adviceButtonText: {
+        color: 'white',
     },
     deleteButton: {
-        alignItems: 'center',
-        bottom: 0,
-        justifyContent: 'center',
-        position: 'absolute',
-        top: 0,
-        width: 75,
-        backgroundColor: 'red',
-        right: 0,
+        backgroundColor: '#8c3030',
+        padding: 5,
+        borderRadius: 5,
+        marginLeft: 10,
     },
     deleteButtonText: {
         color: 'white',
     },
-    rightAction: {
-        backgroundColor: '#dd2c00',
+    modalContainer: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingRight: 10,
-        marginTop: 10,
-        marginBottom: 10,
-        borderRadius: 8,
-        width: 100,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
     },
-    actionText: {
-        color: '#fff',
+    modalContent: {
+        backgroundColor: backgroundGreen,
+        padding: 20,
+        borderRadius: 10,
+        width: '80%',
+    },
+    input: {
+        width: '100%',
+        padding: 10,
+        marginVertical: 5,
+        borderRadius: 10,
+        backgroundColor: greenForm,
+        color: backgroundGreen
+    },
+    imcResult: {
+        color: 'black',
+        marginTop: 10,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    button: {
+        flex: 1,
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginHorizontal: 5,
+    },
+    saveButton: {
+        backgroundColor: customGreen,
+    },
+    cancelButton: {
+        backgroundColor: '#8c3030',
+    },
+    buttonText: {
+        color: 'white',
         fontWeight: 'bold',
-        fontSize: 16,
+    },
+    addButton: {
+        backgroundColor: customGreen,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+    },
+    addButtonText: {
+        color: 'white',
+        fontSize: 30,
+        lineHeight: 30,
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign: 'center',
+        color: customGreen
+
+
     },
 });
 

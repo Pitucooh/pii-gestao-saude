@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Formik } from 'formik';
 import { Octicons, Ionicons } from '@expo/vector-icons';
-import { View } from 'react-native';
+
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import { ipMaquina } from '../ips'; 
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 import {
     StyledContainer,
@@ -24,10 +25,11 @@ import {
     ExtraText,
     ExtraView,
     TextLink,
-    TextLinkContent
+    TextLinkContent,
+    
 } from './../components/styles';
 
-const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm } = Colors;
+const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
 
 const Signup = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true);
@@ -107,9 +109,9 @@ const Signup = ({ navigation }) => {
                         {"YE GESTÃO EM SAÚDE"}
                     </PageTitle>
 
-                    <View style={{ height: 2, backgroundColor: customGreen, width: '50%' }}></View>
-                    <SubTitle style={{ color: greenForm, padding:3}}>Fazer cadastro 
-                    </SubTitle>
+                    <View style={{ height: 2, backgroundColor: roxinho, width: '50%' }}></View>
+                    <Text style={{ color: roxinho, padding:4, marginBottom: 20}}>Fazer cadastro 
+                    </Text>
 
                     <Formik
                         initialValues={{ nome: '', email: '', CPF: '', senha: '', confirmeSenha: '' }}
@@ -210,11 +212,11 @@ const Signup = ({ navigation }) => {
 
                                 <MsgBox type={errorMsg ? 'ERRO' : 'SUCESSO'}>{errorMsg || successMsg}</MsgBox>
 
-                                <StyledButton onPress={handleSubmit} style={{marginBottom: 10, borderWidth: 3, width: 149, borderColor: customGreen, backgroundColor: 'transparent', flex: 1, justifyContent: 'center', alignItems: 'center', marginLeft:55  }}>
+                                <StyledButton onPress={handleSubmit} style={{marginBottom: 10, width: 149,  backgroundColor: greenForm, flex: 1, justifyContent: 'center', alignItems: 'center', marginLeft:55  }}>
                                     
-                                    <ButtonText style={{ color: greenForm }}>Cadastrar</ButtonText>
+                                    <ButtonText style={{ color: backgroundGreen }}>Cadastrar</ButtonText>
                                 </StyledButton>
-                                    <View style={{ height: 2, backgroundColor: customGreen, marginVertical: 10, width: '50%', alignItems:'center', marginLeft:60  }}></View>
+                                    <View style={{ height: 2, backgroundColor: roxinho, marginVertical: 10, width: '50%', alignItems:'center', marginLeft:60  }}></View>
                                 <ExtraView>
                                     <ExtraText>Já tem uma conta?</ExtraText>
                                     <TextLink onPress={() => navigation.navigate('Login')}>

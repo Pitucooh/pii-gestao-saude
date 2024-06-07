@@ -16,14 +16,14 @@ import{
 } from './../components/styles';
 
 
-const Medicacoes = ({navigation}) => {
+const Welcome = ({navigation}) => {
     return (
         <>
             <StatusBar style = "light" />
             <InnerContainer>
                 <WelcomeImage resizeMode= "cover" source = {require('./../assets/logo.png')}/>
                 <WelcomeContainer>
-                    <PageTitle welcome={true}>Medicações</PageTitle>
+                    <PageTitle welcome={true}>Bem vindo!</PageTitle>
                     <SubTitle welcome={true}>Fulano</SubTitle>
                     <StyledFormArea>
                     <Avatar resizeMode= "cover" source = {require('./../assets/logo.png')} />
@@ -39,4 +39,5 @@ const Medicacoes = ({navigation}) => {
 };
 
 
-export default Medicacoes;
+
+export default Welcome;

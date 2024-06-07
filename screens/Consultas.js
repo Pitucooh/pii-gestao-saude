@@ -142,7 +142,7 @@ const Consultas = ({ navigation }) => {
                     />
 
                     <View style={styles.notesContainer}>
-                                                <Text style={styles.notesText}>Bloco de Notas:</Text>
+                                                <Text style={styles.notesText}>Detalhes:</Text>
                                                 <TextInput
                                                     style={styles.notesInput}
                                                     multiline={true}

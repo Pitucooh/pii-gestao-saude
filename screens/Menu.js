@@ -32,7 +32,7 @@ const Menu = ({ navigation }) => {
                         <PageTitle welcome={true} style={{ flexWrap: 'wrap', lineHeight: 30, color: customGreen, fontSize: 30, marginTop: 25 }}>MENU</PageTitle>
                         <View style={{ height: 2, backgroundColor: roxinho, width: '50%' }}></View>
                         <SubTitle welcome={true} style={{ color: greenForm, marginTop: 10 }}>Seja bem-vindo!</SubTitle>
-                        <Text style={{ color: roxinho, marginBottom: 20 }}>{'Monitore a sua saúde'} </Text>
+                        <Text style={{ color: greenForm, marginBottom: 20 }}>{'Monitore a sua saúde'} </Text>
 
                         <View style={styles.notesContainer}>
                             <Text style={styles.notesText}>Bloco de Notas:</Text>
@@ -50,8 +50,8 @@ const Menu = ({ navigation }) => {
                             <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Consultas')}>
                                 <Text style={styles.cardText}>Consultas</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Medicacoes')}>
-                                <Text style={styles.cardText}>Medicações</Text>
+                            <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Medicamentos')}>
+                                <Text style={styles.cardText}>Medicamentos</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Meusdados')}>
                                 <Text style={styles.cardText}>Meus Dados</Text>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     },
     card: {
         backgroundColor: backgroundGreen,
-        width: 110,
+        width: 140,
         marginRight: 1000,
         flex: 1,
         marginHorizontal: 5,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
         backgroundColor: backgroundGreen,
         borderRadius: 5,
         padding: 5,
-        color: customGreen
+        color: black
     },
 });
 
