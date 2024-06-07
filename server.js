@@ -23,7 +23,7 @@ app.use(cors({
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "Mamacosma2!",
+  password: "matsql",
   database: "wepink",
   port: 3306,
 });
@@ -256,6 +256,16 @@ app.post('/saveExam', (req, res) => {
     }
     res.status(201).json({ success: true, message: 'Exame salvo com sucesso.' });
   });
+});
+
+app.get('/getExam/:id', (req, res) => {
+  const { id } = req.params;
+  const exam = exams.find(e => e.id == id);
+  if (exam) {
+      res.json(exam);
+  } else {
+      res.status(404).json({ message: 'Exame não encontrado' });
+  }
 });
 
 // Iniciar o servidor

@@ -1,31 +1,23 @@
 import React, { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, Button, Alert, Platform } from 'react-native';
-import axios from 'axios';
+import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, Button, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ipMaquina } from '../ips';
-import { KeyboardAvoidingView } from 'react-native';
-
-const { primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black, roxinho } = Colors;
-
 import {
     InnerContainer,
     PageTitle,
     Colors,
-    SubTitle,
-    StyledFormArea,
     StyledButton,
     ButtonText,
-    Line,
     WelcomeContainer,
-    WelcomeImage,
-    Avatar,
     MyTextInput
 } from './../components/styles';
 
+const { customGreen, backgroundGreen, greenForm, roxinho } = Colors;
+
 import Modal from 'react-native-modal';
 
-const Consultas = ({ navigation }) => {
+const Consultas = () => {
+    const navigation = useNavigation();
     const [especialidade, setEspecialidade] = useState('');
     const [dataCons, setDataCons] = useState('');
     const [horario, setHorario] = useState('');
@@ -36,33 +28,29 @@ const Consultas = ({ navigation }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
-    const SalvarData = () => {
-        // Lógica de salvar
-        navigation.navigate('DataCons'); // Navegar sem passar parâmetros
+    const handleSaveAndNavigate = (examId) => {
+        navigation.navigate('DataCons', { examId });
     };
 
     const SalvarExam = async () => {
-
-        const dataPattern = /^\d{2}-\d{2}-\d{4}$/;  // Formato DD-MM-YYYY
-        const horarioPattern = /^([01]\d|2[0-3]):([0-5]\d)$/;  // Formato HH:MM
+        const dataPattern = /^\d{2}-\d{2}-\d{4}$/;
+        const horarioPattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
 
         if (!especialidade || !dataCons || !horario || !retorno || !lembrete) {
             setFeedbackMessage('Por favor, preencha todos os campos.');
             return;
         }
-    
-        // Verificar se a data está no formato correto
+
         if (!dataPattern.test(dataCons)) {
             setFeedbackMessage('Data no formato inválido. Use o formato DD-MM-YYYY.');
             return;
         }
-    
-        // Verificar se o horário está no formato correto
+
         if (!horarioPattern.test(horario)) {
             setFeedbackMessage('Horário no formato inválido. Use o formato HH:MM.');
             return;
         }
-    
+
         try {
             const response = await fetch(`http://${ipMaquina}:3000/saveExam`, {
                 method: 'POST',
@@ -79,21 +67,22 @@ const Consultas = ({ navigation }) => {
                     lembrete
                 })
             });
-    
+
             const data = await response.json();
-    
+
             if (response.ok) {
+                const examId = data.id; // supondo que a resposta contenha um campo 'id'
                 Alert.alert(
                     'Exame Salvo',
                     'O registro do seu exame foi salvo com sucesso.',
                     [{ text: 'OK', onPress: () => {
-                        // Limpar os inputs após o usuário fechar o alerta
                         setEspecialidade('');
                         setDataCons('');
                         setHorario('');
                         setResumo('');
                         setRetorno('');
                         setLembrete('');
+                        handleSaveAndNavigate(examId);
                     }}],
                     { cancelable: false }
                 );
@@ -104,11 +93,9 @@ const Consultas = ({ navigation }) => {
             console.error(error);
             setFeedbackMessage('Erro ao salvar o exame.');
         }
-
-        
     };
-    
-        return (
+
+    return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <InnerContainer style={{ backgroundColor: backgroundGreen }}>
                 <WelcomeContainer style={{ backgroundColor: backgroundGreen }}>
@@ -116,20 +103,20 @@ const Consultas = ({ navigation }) => {
                         CONSULTAS
                     </PageTitle>
                     
-                    
                     <Text style={{ color: roxinho, alignItems: 'center' }}>{'Salve aqui seu próximo exame'}</Text>
-                    
                 </WelcomeContainer>
 
                 <View style={styles.inputCon}>
                     <MyTextInput
                         onChangeText={setEspecialidade}
+                        value={especialidade}
                         placeholder="Especialidade:"
-                        placeholderTextColor={backgroundGreen} // Certifique-se de definir a cor do texto do placeholder
+                        placeholderTextColor={backgroundGreen}
                         style={{ backgroundColor: greenForm, color: backgroundGreen }}
                     />
                     <MyTextInput
                         onChangeText={setDataCons}
+                        value={dataCons}
                         placeholder="Data:"
                         placeholderTextColor={backgroundGreen}
                         style={{ backgroundColor: greenForm, color: backgroundGreen }}
@@ -142,16 +129,16 @@ const Consultas = ({ navigation }) => {
                     />
 
                     <View style={styles.notesContainer}>
-                                                <Text style={styles.notesText}>Detalhes:</Text>
-                                                <TextInput
-                                                    style={styles.notesInput}
-                                                    multiline={true}
-                                                    numberOfLines={4}
-                                                    placeholder="Anote aqui as observações das consultas"
-                                                />
+                        <Text style={styles.notesText}>Bloco de Notas:</Text>
+                        <TextInput
+                            style={styles.notesInput}
+                            multiline={true}
+                            numberOfLines={4}
+                            placeholder="Anote aqui as observações das consultas"
+                        />
                     </View>
 
-                    <PageTitle welcome={true} style={{ flexWrap: 'wrap', lineHeight: 20, color: customGreen,fontSize:20}}>
+                    <PageTitle welcome={true} style={{ flexWrap: 'wrap', lineHeight: 20, color: customGreen, fontSize: 20 }}>
                         Retorno e lembrete
                     </PageTitle>
                     <MyTextInput
@@ -182,15 +169,12 @@ const Consultas = ({ navigation }) => {
                         <Button title="Fechar" onPress={() => setIsModalVisible(false)} />
                     </View>
                 </Modal>
-
             </InnerContainer>
         </TouchableWithoutFeedback>
     );
 }
 
-
 const styles = StyleSheet.create({
-
     notesContainer: {
         backgroundColor: roxinho,
         borderRadius: 10,
@@ -198,7 +182,6 @@ const styles = StyleSheet.create({
         marginBottom: 7,
         width: '100%',
         alignSelf: 'center',
-        
     },
     notesText: {
         fontSize: 16,
@@ -213,10 +196,8 @@ const styles = StyleSheet.create({
         padding: 5,
         color: roxinho
     },
-
     inputCon: {
         backgroundColor: backgroundGreen,
-        
         color: backgroundGreen,
         padding: 10,
         width: '90%',
@@ -231,12 +212,12 @@ const styles = StyleSheet.create({
     },
     errorMessage: {
         color: 'red',
-        fontSize: 15, // Reduzindo o tamanho da fonte
-        opacity: 0.8, // Reduzindo a opacidade para tornar o texto menos proeminente
-        marginTop: 3, // Reduzindo a margem superior para encolher o espaço ocupado
-        marginBottom: 3, // Reduzindo a margem inferior para encolher o espaço ocupado
-        paddingHorizontal: 5, // Adicionando preenchimento horizontal para encolher o espaço ocupado
-        paddingVertical: 2, // Adicionando preenchimento vertical para encolher o espaço ocupado
+        fontSize: 15,
+        opacity: 0.8,
+        marginTop: 3,
+        marginBottom: 3,
+        paddingHorizontal: 5,
+        paddingVertical: 2,
         textAlign: 'center',
     },
 });
