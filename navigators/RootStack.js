@@ -40,7 +40,7 @@ const RootStack = () => {
                     color: '#000' 
                 }            
             }}
-            initialRouteName="Menu"
+            initialRouteName="DatasCons"
             >
                 <Stack.Screen name= "Login" component={Login} />
                 <Stack.Screen name= "Signup" component={Signup} />

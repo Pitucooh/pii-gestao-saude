@@ -23,7 +23,7 @@ app.use(cors({
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "matsql",
+  password: "Mamacosma2!",
   database: "wepink",
   port: 3306,
 });
@@ -260,12 +260,20 @@ app.post('/saveExam', (req, res) => {
 
 app.get('/getExam/:id', (req, res) => {
   const { id } = req.params;
-  const exam = exams.find(e => e.id == id);
-  if (exam) {
-      res.json(exam);
-  } else {
+  const query = 'SELECT * FROM exams WHERE id = ?';
+
+  db.query(query, [id], (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar exame no banco de dados:', err);
+      return res.status(500).json({ message: 'Erro interno do servidor.' });
+    }
+
+    if (results.length > 0) {
+      res.json(results[0]);
+    } else {
       res.status(404).json({ message: 'Exame não encontrado' });
-  }
+    }
+  });
 });
 
 // Iniciar o servidor

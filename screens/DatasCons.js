@@ -1,31 +1,36 @@
-import React, { useState, useEffect } from 'react';
+
+import { ipMaquina } from '../ips'; 
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Button, ActivityIndicator } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 const DataCons = () => {
-    const navigation = useNavigation();
     const route = useRoute();
+    const navigation = useNavigation();
     const { examId } = route.params || {};
-    const [dataCons, setDataCons] = useState('');
-    const [especialidade, setEspecialidade] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    const [dataCons, setDataCons] = useState(null);
+    const [especialidade, setEspecialidade] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            setError('');
-
+        const fetchExam = async () => {
             try {
-                // Substitua 'your-api-endpoint' pelo endpoint correto da sua API
-                const response = await fetch(`your-api-endpoint/exams/${examId}`);
-                const data = await response.json();
+                // Substitua '192.168.0.100' pelo IP da sua máquina de desenvolvimento
+                const response = await fetch(`http://${ipMaquina}:3000/getExam/${examId}`);
+                const contentType = response.headers.get('content-type');
 
-                if (response.ok) {
-                    setDataCons(data.dataCons);
-                    setEspecialidade(data.especialidade);
+                if (contentType && contentType.includes('application/json')) {
+                    const data = await response.json();
+                    if (response.ok) {
+                        setDataCons(data.dataCons);
+                        setEspecialidade(data.especialidade);
+                    } else {
+                        setError('Erro ao buscar os detalhes da consulta');
+                    }
                 } else {
-                    setError('Erro ao buscar os detalhes da consulta');
+                    setError('Resposta inesperada do servidor');
+                    console.error('Resposta inesperada do servidor:', await response.text());
                 }
             } catch (error) {
                 setError('Erro ao conectar ao servidor');
@@ -35,22 +40,22 @@ const DataCons = () => {
             }
         };
 
-        fetchData();
+        if (examId) {
+            fetchExam();
+        } else {
+            setLoading(false);
+        }
     }, [examId]);
 
     if (loading) {
-        return (
-            <View style={styles.container}>
-                <ActivityIndicator size="large" color="#0000ff" />
-            </View>
-        );
+        return <ActivityIndicator size="large" color="#0000ff" />;
     }
 
     if (error) {
         return (
             <View style={styles.container}>
-                <Text>{error}</Text>
-                <Button title="Voltar" onPress={() => navigation.goBack()} />
+                <Text style={styles.text}>{error}</Text>
+                <Button title="Tentar novamente" onPress={() => navigation.goBack()} />
             </View>
         );
     }
