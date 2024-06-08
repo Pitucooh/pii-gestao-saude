@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform, Modal } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform, Modal,  ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
@@ -127,6 +127,7 @@ const AtualizarIMC = () => {
             behavior={Platform.OS === 'ios' ? 'padding' : null}
             keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
         >
+             <ScrollView>
             <Text style={styles.title}>Atualizar IMC</Text>
             <Text style={styles.descriptionText}>
                 Atualize seu IMC colocando seus dados mais recentes
@@ -151,13 +152,14 @@ const AtualizarIMC = () => {
                                 <Text style={styles.adviceButtonText}>Mostrar Conselho</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.key)}>
-                                <Text style={styles.deleteButtonText}>Deletar</Text>
+                                <Text style={styles.deleteButtonText}>Excluir</Text>
                             </TouchableOpacity>
                         </View>
                         {showAdvice[item.key] && <Text style={styles.adviceText}>{item.imc}</Text>}
                     </View>
                 ))}
             </View>
+            </ScrollView>
 
             <Modal
                 animationType="slide"
@@ -227,7 +229,7 @@ const styles = StyleSheet.create({
         lineHeight: 30,
         color: customGreen,
         fontSize: 30,
-        marginTop: 45,
+        marginTop: 2,
         textAlign: 'center',
         fontWeight: 'bold',
     },
@@ -236,20 +238,22 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 10,
         fontSize: 16,
+        
     },
     record: {
         padding: 10,
         marginTop: 10,
         backgroundColor: 'white',
         borderRadius: 5,
-        width: '100%',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 3,
         borderWidth: 2, 
-        borderColor: greenForm
+        borderColor: greenForm,
+        width: '90%',
+        marginLeft:17,
     },
     recordRow: {
         flexDirection: 'row',
@@ -338,7 +342,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#8c3030',
         padding: 5,
         borderRadius: 5,
-        marginLeft: 10,
     },
     deleteButtonText: {
         color: 'white',

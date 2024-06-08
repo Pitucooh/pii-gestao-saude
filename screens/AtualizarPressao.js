@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform, Modal } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
+
 import {
     StyledContainer,
     InnerContainer,
@@ -23,7 +25,8 @@ import {
     TextLink,
     TextLinkContent,
     WelcomeContainer,
-  } from './../components/styles';
+} from './../components/styles';
+
 const AtualizarPressao = () => {
     const [sistolica, setSistolica] = useState('');
     const [diastolica, setDiastolica] = useState('');
@@ -105,23 +108,6 @@ const AtualizarPressao = () => {
         setRecords(records.filter(record => record.key !== key));
     };
 
-    const renderRightActions = (progress, dragX, index) => {
-        const trans = dragX.interpolate({
-            inputRange: [-100, 0],
-            outputRange: [1, 0],
-        });
-    
-        return (
-            <TouchableOpacity
-                onPress={() => handleDelete(records[index].key)}
-                style={[styles.rightAction, { transform: [{ scale: trans }] }]}
-            >
-                <Text style={styles.actionText}>Deletar</Text>
-            </TouchableOpacity>
-        );
-    };
-    
-
     return (
         <KeyboardAvoidingView
             style={{ flex: 1, backgroundColor: backgroundGreen }}
@@ -131,30 +117,36 @@ const AtualizarPressao = () => {
             <ScrollView>
                 <View style={styles.container}>
                     <Text style={styles.title}>Atualizar Pressão Arterial</Text>
+                    <Text style={styles.descriptionText}>
+                    Atualize sua pressão colocando seus dados mais recentes
+                    </Text>
                     {records.map((item, index) => (
-                        <Swipeable
-                            key={index}
-                            renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, index)}
-                        >
-                            <View style={styles.record}>
-                                <View style={styles.recordRow}>
-                                    <Text style={styles.recordLabel}>Data:</Text>
-                                    <Text style={styles.recordValue}>{item.date}</Text>
-                                </View>
-                                <View style={styles.recordRow}>
-                                    <Text style={styles.recordLabel}>Sistólica:</Text>
-                                    <Text style={styles.recordValue}>{item.sistolica} mmHg</Text>
-                                </View>
-                                <View style={styles.recordRow}>
-                                    <Text style={styles.recordLabel}>Diastólica:</Text>
-                                    <Text style={styles.recordValue}>{item.diastolica} mmHg</Text>
-                                </View>
-                                <View style={styles.recordRow}>
-                                    <Text style={styles.recordLabel}>Resultado:</Text>
-                                    <Text style={styles.recordValue}>{item.pressao}</Text>
-                                </View>
+                        <View key={index} style={styles.record}>
+                            <View style={styles.recordRow}>
+                                <Text style={styles.recordLabel}>Data:</Text>
+                                <Text style={styles.recordValue}>{item.date}</Text>
                             </View>
-                        </Swipeable>
+                            <View style={styles.recordRow}>
+                                <Text style={styles.recordLabel}>Sistólica:</Text>
+                                <Text style={styles.recordValue}>{item.sistolica} mmHg</Text>
+                            </View>
+                            <View style={styles.recordRow}>
+                                <Text style={styles.recordLabel}>Diastólica:</Text>
+                                <Text style={styles.recordValue}>{item.diastolica} mmHg</Text>
+                            </View>
+                            <View style={styles.recordRow}>
+                                <Text style={styles.recordLabel}>Resultado:</Text>
+                               
+                            </View>
+                            <Text style={styles.recordValue}>{item.pressao}</Text>
+                            <TouchableOpacity
+                                onPress={() => handleDelete(item.key)}
+                                style={styles.deleteButton}
+                            >
+                                <Text style={styles.deleteButtonText}>Excluir</Text>
+                                
+                            </TouchableOpacity>
+                        </View>
                     ))}
                     {adding && (
                         <View style={styles.inputContainer}>
@@ -174,109 +166,227 @@ const AtualizarPressao = () => {
                             />
                             <Text style={styles.pressaoResult}>{pressaoResult}</Text>
                             <View style={styles.buttonContainer}>
-                                <Button title="Salvar" onPress={handleSave} />
-                                <Button title="Cancelar" onPress={handleCancel} color="#FF0000" />
+                                <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+                                    <Text style={styles.buttonText}>Salvar</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
+                                    <Text style={styles.buttonText}>Cancelar</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     )}
                 </View>
-                {!adding && (
+                
+            </ScrollView>
+            {!adding && (
                     <TouchableOpacity style={styles.addButton} onPress={() => setAdding(true)}>
                         <Text style={styles.addButtonText}>+</Text>
                     </TouchableOpacity>
-                            )}
-            </ScrollView>
-            </KeyboardAvoidingView>
-            );
-            };
+                )}
+        </KeyboardAvoidingView>
+    );
+};
 
-    const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-    flex: 1,
-    padding: 20,
-    paddingBottom: 100, // Ajuste para evitar que o botão "Adicionar" seja sobreposto pelo teclado
+        flex: 1,
+        padding: 20,
+        backgroundColor: backgroundGreen,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     title: {
-   
+        lineHeight: 30,
+        color: customGreen,
+        fontSize: 30,
+        marginTop: 45,
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    descriptionText: {
+        color: roxinho,
+        textAlign: 'center',
+        marginTop: 10,
+        fontSize: 16,
+        
     },
     record: {
-    padding: 10,
-    marginBottom: 10,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 5,
-    elevation: 3,
-    width: '100%',
+        padding: 10,
+        marginTop: 10,
+        backgroundColor: 'white',
+        borderRadius: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3,
+        borderWidth: 2, 
+        borderColor: greenForm
     },
     recordRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 5,
-    flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 5,
     },
     recordLabel: {
-    fontWeight: 'bold',
-    flexShrink: 1,
+        fontWeight: 'bold',
+        color: '#333',
     },
     recordValue: {
-    color: '#555',
-    flexShrink: 1,
+        color: '#666',
+    },
+    adviceText: {
+        color: '#333',
+        fontStyle: 'italic',
+        marginTop: 10,
     },
     inputContainer: {
-    paddingBottom: 20,
+        marginTop: 20,
+        width: '70%',
+        alignItems: 'center',
+        
     },
     input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-    width: '100%',
+        width: '100%',
+        padding: 10,
+        marginVertical: 5,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
     },
-    pressaoResult: {
-    marginTop: 10,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    imcResult: {
+        color: customGreen,
+        fontWeight: 'bold',
+        marginTop: 10,
     },
     buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    button: {
+        flex: 1,
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginHorizontal: 5,
+    },
+    saveButton: {
+        backgroundColor: customGreen,
+    },
+    cancelButton: {
+        backgroundColor: '#ccc',
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
     },
     addButton: {
-    position: 'absolute',
-    right: 20,
-    bottom: 20,
-    backgroundColor: '#007bff',
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
+        backgroundColor: customGreen,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
     },
     addButtonText: {
-    color: '#fff',
-    fontSize: 30,
-    lineHeight: 30,
+        color: 'white',
+        fontSize: 30,
+        lineHeight: 30,
     },
-    rightAction: {
-    backgroundColor: '#dd2c00',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingRight: 10,
-    marginTop: 10,
-    marginBottom: 10,
-    borderRadius: 8,
-    width: 100,
+    adviceButton: {
+        backgroundColor: customGreen,
+        padding: 5,
+        borderRadius: 5,
     },
-    actionText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
+    adviceButtonText: {
+        color: 'white',
     },
-    });
+    deleteButton: {
+        backgroundColor: '#8c3030',
+        padding: 5,
+        borderRadius: 5,
+        marginLeft: '80%',
+        width: 55
+    },
+    deleteButtonText: {
+        color: 'white',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+    },
+    modalContent: {
+        backgroundColor: backgroundGreen,
+        padding: 20,
+        borderRadius: 10,
+        width: '80%',
+    },
+    input: {
+        width: '100%',
+        padding: 10,
+        marginVertical: 5,
+        borderRadius: 10,
+        backgroundColor: greenForm,
+        color: backgroundGreen
+    },
+    imcResult: {
+        color: 'black',
+        marginTop: 10,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    button: {
+        flex: 1,
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginHorizontal: 5,
+    },
+    saveButton: {
+        backgroundColor: customGreen,
+    },
+    cancelButton: {
+        backgroundColor: '#8c3030',
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
+    addButton: {
+        backgroundColor: customGreen,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+    },
+    addButtonText: {
+        color: 'white',
+        fontSize: 30,
+        lineHeight: 30,
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign: 'center',
+        color: customGreen
 
-    export default AtualizarPressao;
 
+    },
+});
+
+export default AtualizarPressao;
