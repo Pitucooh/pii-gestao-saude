@@ -1,20 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, Button, Alert, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ipMaquina } from '../ips';
-import {
-    InnerContainer,
-    PageTitle,
-    Colors,
-    StyledButton,
-    ButtonText,
-    WelcomeContainer,
-    MyTextInput
-} from './../components/styles';
+import { InnerContainer, PageTitle, Colors, StyledButton, ButtonText, WelcomeContainer, MyTextInput } from './../components/styles';
+import Modal from 'react-native-modal';
 
 const { customGreen, backgroundGreen, greenForm, roxinho } = Colors;
-
-import Modal from 'react-native-modal';
 
 const Consultas = () => {
     const navigation = useNavigation();
@@ -28,8 +19,16 @@ const Consultas = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
-    const handleSaveAndNavigate = (examId) => {
-        navigation.navigate('DataCons', { examId });
+    const handleSaveAndNavigate = async (consulta) => {
+        // Limpar os campos de entrada após salvar
+        setEspecialidade('');
+        setDataCons('');
+        setHorario('');
+        setResumo('');
+        setRetorno('');
+        setLembrete('');
+
+        navigation.navigate('DatasCons', { consultas: [{ especialidade, dataCons }] });
     };
 
     const SalvarExam = async () => {
@@ -71,24 +70,17 @@ const Consultas = () => {
             const data = await response.json();
 
             if (response.ok) {
-                const examId = data.id; // supondo que a resposta contenha um campo 'id'
                 Alert.alert(
                     'Exame Salvo',
                     'O registro do seu exame foi salvo com sucesso.',
                     [{ text: 'OK', onPress: () => {
-                        setEspecialidade('');
-                        setDataCons('');
-                        setHorario('');
-                        setResumo('');
-                        setRetorno('');
-                        setLembrete('');
-                        handleSaveAndNavigate(examId);
+                        handleSaveAndNavigate(data); // Chamar a função para salvar e navegar
                     }}],
                     { cancelable: false }
                 );
             } else {
                 setFeedbackMessage('Erro ao salvar o exame. Por favor, tente novamente mais tarde.');
-            }                                                     
+            }
         } catch (error) {
             console.error(error);
             setFeedbackMessage('Erro ao salvar o exame.');
@@ -102,7 +94,6 @@ const Consultas = () => {
                     <PageTitle welcome={true} style={{ flexWrap: 'wrap', lineHeight: 30, color: customGreen, marginTop:30, fontSize: 30 }}>
                         CONSULTAS
                     </PageTitle>
-                    
                     <Text style={{ color: roxinho, alignItems: 'center' }}>{'Salve aqui seu próximo exame'}</Text>
                 </WelcomeContainer>
 
@@ -123,6 +114,7 @@ const Consultas = () => {
                     />
                     <MyTextInput
                         onChangeText={setHorario}
+                        value={horario}
                         placeholder="Horário:"
                         placeholderTextColor={backgroundGreen}
                         style={{ backgroundColor: greenForm, color: backgroundGreen }}
@@ -135,6 +127,8 @@ const Consultas = () => {
                             multiline={true}
                             numberOfLines={4}
                             placeholder="Anote aqui as observações das consultas"
+                            value={resumoCons}
+                            onChangeText={setResumo}
                         />
                     </View>
 
@@ -143,10 +137,10 @@ const Consultas = () => {
                     </PageTitle>
                     <MyTextInput
                         onChangeText={setRetorno}
+                        value={retorno}
                         placeholder="Retorno:"
                         placeholderTextColor={backgroundGreen}
                         inputStyle={{
-                            
                             borderRadius: 10,
                             borderWidth: 0,
                             textAlign: 'left',
@@ -155,6 +149,7 @@ const Consultas = () => {
                     />
                     <MyTextInput
                         onChangeText={setLembrete}
+                        value={lembrete}
                         placeholder="Lembrete Agendamento:"
                         placeholderTextColor={backgroundGreen}
                         inputStyle={{
@@ -211,10 +206,8 @@ const styles = StyleSheet.create({
     inputCon: {
         backgroundColor: backgroundGreen,
         color: backgroundGreen,
-
     },
     button: {
-        
         borderRadius: 5,
         backgroundColor: roxinho,
         marginBottom: 20,
@@ -232,3 +225,4 @@ const styles = StyleSheet.create({
 });
 
 export default Consultas;
+
