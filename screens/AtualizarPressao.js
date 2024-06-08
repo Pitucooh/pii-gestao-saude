@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     record: {
         padding: 10,
         marginTop: 10,
-        backgroundColor: 'white',
+        backgroundColor: greenForm,
         borderRadius: 5,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
@@ -231,16 +231,12 @@ const styles = StyleSheet.create({
     },
     recordLabel: {
         fontWeight: 'bold',
-        color: '#333',
+        color: backgroundGreen,
     },
     recordValue: {
-        color: '#666',
+        color: backgroundGreen,
     },
-    adviceText: {
-        color: '#333',
-        fontStyle: 'italic',
-        marginTop: 10,
-    },
+
     inputContainer: {
         marginTop: 20,
         width: '70%',

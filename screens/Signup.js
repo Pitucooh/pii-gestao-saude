@@ -128,11 +128,11 @@ const Signup = ({ navigation }) => {
                                     value={values.nome}
                                     maxLength={50}
                                     inputStyle={{
-                                        backgroundColor: customGreen,
-                                        borderRadius: 20,
+                                        backgroundColor: greenForm,
+                                        borderRadius: 10,
                                         borderWidth: 0,
                                         textAlign: 'left',
-                                        color: primary
+                                        color: backgroundGreen
                                     }}
                                 />
                                 <MyTextInput
@@ -145,11 +145,11 @@ const Signup = ({ navigation }) => {
                                     keyboardType="email-address"
                                     maxLength={30}
                                     inputStyle={{
-                                        backgroundColor: customGreen,
-                                        borderRadius: 20,
+                                        backgroundColor: greenForm,
+                                        borderRadius: 10,
                                         borderWidth: 0,
                                         textAlign: 'left',
-                                        color: primary
+                                        color: backgroundGreen
                                     }}
                                 />
                                 <MyTextInput
@@ -162,11 +162,11 @@ const Signup = ({ navigation }) => {
                                     keyboardType="numeric"
                                     maxLength={14}
                                     inputStyle={{
-                                        backgroundColor: customGreen,
-                                        borderRadius: 20,
+                                        backgroundColor: greenForm,
+                                        borderRadius: 10,
                                         borderWidth: 0,
                                         textAlign: 'left',
-                                        color: primary
+                                        color: backgroundGreen
                                     }}
                                 />
                                 <MyTextInput
@@ -182,11 +182,11 @@ const Signup = ({ navigation }) => {
                                     setHidePassword={setHidePassword}
                                     maxLength={20}
                                     inputStyle={{
-                                        backgroundColor: customGreen,
-                                        borderRadius: 20,
+                                        backgroundColor: greenForm,
+                                        borderRadius: 10,
                                         borderWidth: 0,
                                         textAlign: 'left',
-                                        color: primary
+                                        color: backgroundGreen
                                     }}
                                 />
                                 <MyTextInput
@@ -202,11 +202,11 @@ const Signup = ({ navigation }) => {
                                     setHidePassword={setHidePassword}
                                     maxLength={20}
                                     inputStyle={{
-                                        backgroundColor: customGreen,
-                                        borderRadius: 20,
+                                        backgroundColor: greenForm,
+                                        borderRadius: 10,
                                         borderWidth: 0,
                                         textAlign: 'left',
-                                        color: primary
+                                        color: backgroundGreen
                                     }}
                                 />
 

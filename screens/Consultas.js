@@ -112,7 +112,7 @@ const Consultas = () => {
                         value={especialidade}
                         placeholder="Especialidade:"
                         placeholderTextColor={backgroundGreen}
-                        style={{ backgroundColor: greenForm, color: backgroundGreen }}
+                        style={{ backgroundColor: greenForm, color: backgroundGreen, borderRadius: 10 }}
                     />
                     <MyTextInput
                         onChangeText={setDataCons}
@@ -145,13 +145,25 @@ const Consultas = () => {
                         onChangeText={setRetorno}
                         placeholder="Retorno:"
                         placeholderTextColor={backgroundGreen}
-                        style={{ backgroundColor: greenForm, color: backgroundGreen }}
+                        inputStyle={{
+                            
+                            borderRadius: 10,
+                            borderWidth: 0,
+                            textAlign: 'left',
+                            color: backgroundGreen
+                        }}
                     />
                     <MyTextInput
                         onChangeText={setLembrete}
                         placeholder="Lembrete Agendamento:"
                         placeholderTextColor={backgroundGreen}
-                        style={{ backgroundColor: greenForm, color: backgroundGreen }}
+                        inputStyle={{
+                            backgroundColor: greenForm,
+                            borderRadius: 10,
+                            borderWidth: 0,
+                            textAlign: 'left',
+                            color: backgroundGreen
+                        }}
                     />
                 </View>
 
@@ -192,16 +204,14 @@ const styles = StyleSheet.create({
     notesInput: {
         height: 70,
         backgroundColor: backgroundGreen,
-        borderRadius: 5,
+        borderRadius: 10,
         padding: 5,
         color: roxinho
     },
     inputCon: {
         backgroundColor: backgroundGreen,
         color: backgroundGreen,
-        padding: 10,
-        width: '90%',
-        textAlign: 'left',
+
     },
     button: {
         

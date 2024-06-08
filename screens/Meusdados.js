@@ -74,7 +74,7 @@ const Meusdados = ({ navigation }) => {
                 <Icon name="cog" size={30} color={backgroundGreen} style={styles.profileIcon} />
               </TouchableOpacity>
             </View>
-            <Text style={styles.profileTitle}>Perfil -----------</Text>
+            <Text style={styles.profileTitle}>Perfil</Text>
             <Text style={styles.profileText}>Nome: {name}</Text>
             <Text style={styles.profileText}>Idade: {age}</Text>
             <Text style={styles.profileText}>Email: {email}</Text>
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: greenForm,
-    borderRadius: 20,
+    borderRadius: 10,
     borderWidth: 5,
     borderColor: customGreen,
     padding: 20,
@@ -192,18 +192,18 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     padding: 20,
     width: '100%',
-    backgroundColor: customGreen,
+    backgroundColor:backgroundGreen,
     borderRadius: 10,
   },
   profileTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: backgroundGreen,
+    color: customGreen,
   },
   profileText: {
     fontSize: 18,
-    color: backgroundGreen,
+    color: greenForm,
     marginBottom: 5,
   },
   metricsGrid: {
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
   modalView: {
     margin: 50,
     backgroundColor: backgroundGreen,
-    borderRadius: 20,
+    borderRadius: 10,
     borderWidth: 2,
     borderColor: customGreen,
     padding: 35,
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: '#ccc',
     borderWidth: 1,
-    borderRadius: 20,
+    borderRadius: 10,
     paddingLeft: 8,
     marginBottom: 10,
     width: '100%',

@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: greenForm,
         width: 300,
-        borderRadius: 20,
+        borderRadius: 10,
         height: 350,
         alignItems: 'flex-start'
     },

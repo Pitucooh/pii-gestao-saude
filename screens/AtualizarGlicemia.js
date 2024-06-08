@@ -1,15 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Button, StyleSheet, Alert, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Animated } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Button, StyleSheet, Alert, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Animated, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Swipeable } from 'react-native-gesture-handler';
+import {
+  StyledContainer,
+  InnerContainer,
+  PageTitle,
+  SubTitle,
+  StyledFormArea,
+  LeftIcon,
+  StyledInputLabel,
+  StyledTextInput,
+  RightIcon,
+  StyledButton,
+  ButtonText,
+  Colors,
+  MsgBox,
+  Line,
+  ExtraText,
+  ExtraView,
+  TextLink,
+  TextLinkContent,
+  WelcomeContainer,
+} from './../components/styles';
+const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
 
-const STORAGE_KEY = '@glicemiaRecords';
-
-const SegundoComponente = () => {
+const AtualizarGlicemia = () => {
     const [showInput, setShowInput] = useState(false);
     const [glicemia, setGlicemia] = useState('');
     const [glicemiaResult, setGlicemiaResult] = useState('');
     const [pilha, setPilha] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false); // Adicionando estado para controlar a visibilidade do modal
 
     useEffect(() => {
         const loadRecords = async () => {
@@ -151,34 +172,56 @@ const SegundoComponente = () => {
                                     <Text style={styles.recordText}>Data: {formatDate(record.date)}</Text>
                                         <Text style={styles.recordText}>Glicemia: {record.glicemia}</Text>
                                         <Text style={styles.recordText}>Resultado: {record.result}</Text>
-                                    </View>
+                                        </View>
                                 </Swipeable>
                             ))}
                         </>
                     )}
                 </View>
             </ScrollView>
+            {/*modal ta aqui!!!*/}
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>Título do Modal</Text>
+                        <Text>Conteúdo do Modal</Text>
+                        <Button title="Fechar Modal" onPress={() => setModalVisible(!modalVisible)} />
+                    </View>
+                </View>
+            </Modal>
         </KeyboardAvoidingView>
     );
 };
 
+// Estilos adicionais do Modal
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: backgroundGreen,
     },
     scrollContainer: {
         flexGrow: 1,
     },
     content: {
-        paddingTop: 150, // Espaçamento superior
+        paddingTop: 150, 
         paddingHorizontal: 20,
     },
     title: {
-        fontSize: 24,
+        marginTop: 30,
+        textAlign: 'center',
+        fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 50,
-        textAlign: 'center',
+        flexWrap: 'wrap',
+        lineHeight: 30,
+        color: customGreen
     },
     subtitle: {
         fontSize: 18,
@@ -254,6 +297,25 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 16,
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        width: '80%',
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign: 'center',
+        color: customGreen,
     },
 });
 

@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     record: {
         padding: 10,
         marginTop: 10,
-        backgroundColor: 'white',
+        backgroundColor: greenForm,
         borderRadius: 5,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
@@ -254,6 +254,7 @@ const styles = StyleSheet.create({
         borderColor: greenForm,
         width: '90%',
         marginLeft:17,
+        
     },
     recordRow: {
         flexDirection: 'row',
@@ -263,13 +264,14 @@ const styles = StyleSheet.create({
     },
     recordLabel: {
         fontWeight: 'bold',
-        color: '#333',
+        color: backgroundGreen
+        
     },
     recordValue: {
-        color: '#666',
+        color: backgroundGreen
     },
     adviceText: {
-        color: '#333',
+        color: backgroundGreen,
         fontStyle: 'italic',
         marginTop: 10,
     },
@@ -285,7 +287,7 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         borderWidth: 1,
         borderColor: '#ccc',
-        borderRadius: 5,
+        borderRadius: 10,
     },
     imcResult: {
         color: customGreen,

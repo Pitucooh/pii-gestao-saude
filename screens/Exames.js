@@ -138,7 +138,7 @@ const App = () => {
                   </View>
                   <View style={{ height: 2, backgroundColor: roxinho, width: '100%', marginTop:15, marginBottom: 15}}></View>
                    <View style={styles.uploadButtonContainer}>
-                   {!selectedFile ? ( <Button title="Selecionar Arquivo PDF" onPress={handleFilePick} color={roxinho} />
+                   {!selectedFile ? ( <Button title="Selecionar Arquivo PDF" onPress={handleFilePick} color={roxinho} padding={7} />
                     ) : (
                       <View>
                       <Button title="Enviar para a analise"  onPress={uploadFileAndGetResults} color={roxinho} borderRadius={20}/>
@@ -160,7 +160,7 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 0.79,
-    borderRadius:20,
+    borderRadius:10,
     padding: 20,
     height: 70,
     backgroundColor: greenForm,
@@ -174,6 +174,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     
     
+  },
+
+  button:{
+    padding: 50
+  },
+
+  uploadButtonContainer:{
+    padding: 7
   },
 
   fileName: {
