@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
         lineHeight: 30,
         color: customGreen,
         fontSize: 30,
-        marginTop: 2,
+        marginTop: 45,
         textAlign: 'center',
         fontWeight: 'bold',
     },

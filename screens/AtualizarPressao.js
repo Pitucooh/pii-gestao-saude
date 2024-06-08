@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
         lineHeight: 30,
         color: customGreen,
         fontSize: 30,
-        marginTop: 45,
+        marginTop: 23,
         textAlign: 'center',
         fontWeight: 'bold',
     },

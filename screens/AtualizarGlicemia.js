@@ -5,7 +5,7 @@ import { Swipeable } from 'react-native-gesture-handler';
 
 const STORAGE_KEY = '@glicemiaRecords';
 
-const AtualizarGlicemia = () => {
+const SegundoComponente = () => {
     const [showInput, setShowInput] = useState(false);
     const [glicemia, setGlicemia] = useState('');
     const [glicemiaResult, setGlicemiaResult] = useState('');
@@ -117,7 +117,7 @@ const AtualizarGlicemia = () => {
         <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <View style={styles.content}>
-                    <Text style={styles.title}>Atualizar Glicemia</Text>
+                    <Text style={styles.title}>Segundo Componente</Text>
                     {showInput ? (
                         <>
                             <Text style={styles.subtitle}>Informe sua Glicemia</Text>
@@ -190,6 +190,11 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 10,
         marginBottom: 20,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+   
     },
     buttonContainer: {
         flexDirection: 'row',

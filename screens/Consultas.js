@@ -204,8 +204,7 @@ const styles = StyleSheet.create({
         textAlign: 'left',
     },
     button: {
-        width: 100,
-        padding: 10,
+        
         borderRadius: 5,
         backgroundColor: roxinho,
         marginBottom: 20,
