@@ -159,7 +159,8 @@ const AtualizarPressao = () => {
                     <View style={styles.modalContent}>
                     <Text style={styles.modalTitle}>Adicionar Registro de Pressão</Text>
                          {adding && (
-                        <View style={styles.inputContainer}>
+                        <View >
+                            <StyledInputLabel>Pressão sistólica</StyledInputLabel>
                             <TextInput
                                 placeholder="Sistólica (mmHg)"
                                 keyboardType="numeric"
@@ -167,6 +168,7 @@ const AtualizarPressao = () => {
                                 onChangeText={(text) => setSistolica(text)}
                                 style={styles.input}
                             />
+                            <StyledInputLabel>pressão diastolica</StyledInputLabel>
                             <TextInput
                                 placeholder="Diastólica (mmHg)"
                                 keyboardType="numeric"
@@ -176,13 +178,13 @@ const AtualizarPressao = () => {
                             />
                             <Text style={styles.pressaoResult}>{pressaoResult}</Text>
                             <View style={styles.buttonContainer}>
-                                <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-                                    <Text style={styles.buttonText}>Salvar</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-                                    <Text style={styles.buttonText}>Cancelar</Text>
-                                </TouchableOpacity>
-                            </View>
+                            <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
+                                <Text style={styles.buttonText}>Salvar</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
+                                <Text style={styles.buttonText}>Cancelar</Text>
+                            </TouchableOpacity>
+                        </View>
                         </View>
                     )}
                     </View>
@@ -274,6 +276,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
+        borderRadius: 5,
     },
     button: {
         flex: 1,
@@ -346,8 +349,7 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         borderRadius: 10,
         backgroundColor: greenForm,
-        color: backgroundGreen,
-        marginLeft: 60
+        color: backgroundGreen
     },
     imcResult: {
         color: 'black',
@@ -357,24 +359,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        marginLeft: 25
     },
     button: {
         flex: 1,
+        padding: 10,
         borderRadius: 5,
         alignItems: 'center',
         marginHorizontal: 5,
     },
     saveButton: {
         backgroundColor: customGreen,
-        padding: 5,
-        borderRadius: 5,
-        marginLeft: 40
     },
     cancelButton: {
         backgroundColor: '#8c3030',
-        padding: 5,
-        borderRadius: 5
     },
     buttonText: {
         color: 'white',

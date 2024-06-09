@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, FlatList } 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
+
 import {
     StyledContainer,
     InnerContainer,
@@ -24,6 +25,7 @@ import {
     TextLinkContent,
     WelcomeContainer,
   } from './../components/styles';
+
 const Medicamentos = () => {
     const [medicamentos, setMedicamentos] = useState([]);
     const [isModalVisible, setModalVisible] = useState(false);
@@ -111,53 +113,51 @@ const Medicamentos = () => {
             <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Adicionar os dados das suas medicações</Text>
-                        <TextInput
-                            placeholder="Nome do Remédio"
+                        <Text style={styles.modalTitle}>Adicionar Medicamento</Text>
+                        <StyledInputLabel>Nome do Remédio</StyledInputLabel>
+                        <StyledTextInput
+                            onChangeText={text => setNomeRemedio(text)}
                             value={nomeRemedio}
-                            onChangeText={setNomeRemedio}
-                            style={styles.input}
+                            placeholder="Digite o nome do remédio"  style={styles.input}
                         />
-                        <TextInput
-                            placeholder="Horário"
+                        <StyledInputLabel>Horário</StyledInputLabel>
+                        <StyledTextInput
+                            onChangeText={text => setHorario(text)}
                             value={horario}
-                            onChangeText={setHorario}
-                            style={styles.input}
+                            placeholder="Digite o horário" style={styles.input}
                         />
-                        <TextInput
-                            placeholder="Dosagem"
+                        <StyledInputLabel>Dosagem</StyledInputLabel>
+                        <StyledTextInput
+                            onChangeText={text => setDosagem(text)}
                             value={dosagem}
-                            onChangeText={setDosagem}
-                            style={styles.input}
+                            placeholder="Digite a dosagem" style={styles.input}
                         />
-                        <TextInput
-                            placeholder="Intervalo (em horas)"
+                        <StyledInputLabel>Intervalo (horas)</StyledInputLabel>
+                        <StyledTextInput
+                            onChangeText={text => setIntervalo(text)}
                             value={intervalo}
-                            onChangeText={setIntervalo}
+                            placeholder="Digite o intervalo"
+                            keyboardType="numeric"
                             style={styles.input}
                         />
-                        <TextInput
-                            placeholder="Período (em dias)"
+                        <StyledInputLabel>Período (dias)</StyledInputLabel>
+                        <StyledTextInput
+                            onChangeText={text => setPeriodo(text)}
                             value={periodo}
-                            onChangeText={setPeriodo}
-                            style={styles.input}
+                            placeholder="Digite o período"
+                            keyboardType="numeric"  style={styles.input}
                         />
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
-                                <Text style={styles.buttonText}>Salvar</Text>
+                        <View style={styles.modalButtons}>
+                            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+                                <Text style={styles.modalButtonText}>Salvar</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={toggleModal}>
-                                <Text style={styles.buttonText}>Cancelar</Text>
+                            <TouchableOpacity style={styles.cancelButton} onPress={toggleModal}>
+                                <Text style={styles.modalButtonText}>Cancelar</Text>
                             </TouchableOpacity>
                         </View>
-
-                        <TouchableOpacity style={styles.infoButton} onPress={() => Alert.alert('Importância', 'É essencial tomar os medicamentos na hora e data corretas para garantir a eficácia do tratamento.')}>
-                            <Text style={styles.infoButtonText}>ℹ️</Text>
-                        </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
-
         </View>
     );
 };
@@ -167,14 +167,14 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20,
         backgroundColor: backgroundGreen,
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingTop: 50,
     },
     title: {
         lineHeight: 30,
         color: customGreen,
         fontSize: 30,
-        marginTop: 45,
+        marginBorrom: 40,
         textAlign: 'center',
         fontWeight: 'bold',
     },
@@ -197,183 +197,109 @@ const styles = StyleSheet.create({
         elevation: 3,
         borderWidth: 2, 
         borderColor: greenForm,
-        width: '100%',
+        width: '90%',
         marginLeft:17,
         
     },
-    recordRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+    recordLabel: {
+        fontSize: 16,
+        color: backgroundGreen,
         marginBottom: 5,
     },
-    recordLabel: {
-        fontWeight: 'bold',
-        color: backgroundGreen
-        
-    },
     recordValue: {
-        color: backgroundGreen
-    },
-    adviceText: {
-        color: backgroundGreen,
-        fontStyle: 'italic',
-        marginTop: 10,
-    },
-    inputContainer: {
-        marginTop: 20,
-        width: '70%',
-        alignItems: 'center',
-        
-    },
-    input: {
-        width: '100%',
-        padding: 10,
-        marginVertical: 5,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 10,
-    },
-    imcResult: {
-        color: customGreen,
-        fontWeight: 'bold',
-        marginTop: 10,
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-    },
-    button: {
-        flex: 1,
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-        marginHorizontal: 5,
-    },
-    saveButton: {
-        backgroundColor: customGreen,
-    },
-    cancelButton: {
-        backgroundColor: '#ccc',
-    },
-    buttonText: {
-        color: 'white',
         fontWeight: 'bold',
     },
-    addButton: {
-        backgroundColor: customGreen,
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute',
-        bottom: 20,
-        right: 20,
-    },
-    addButtonText: {
-        color: 'white',
-        fontSize: 30,
-        lineHeight: 30,
-    },
-    
     deleteButton: {
         backgroundColor: '#8c3030',
-        padding: 5,
-        borderRadius: 5,
+        padding: 10,
+        borderRadius: 8,
+        marginTop: 10,
+        alignSelf: 'flex-end',
     },
     deleteButtonText: {
         color: 'white',
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    modalContent: {
-        backgroundColor: backgroundGreen,
-        padding: 20,
-        borderRadius: 10,
-        width: '80%',
-    },
-    infoButton: {
-        position: 'absolute',
-        borderRadius: 20,
-        width: 40,
-        height: 40,
-        justifyContent: 'right',
-        alignItems: 'center',
-        marginLeft:225
-    },
-    infoButtonText: {
-        color: 'white',
-        fontSize: 20,
-    },
-    input: {
-        width: '100%',
-        padding: 10,
-        marginVertical: 5,
-        borderRadius: 10,
-        backgroundColor: greenForm,
-        color: backgroundGreen
-    },
-    imcResult: {
-        color: 'black',
-        marginTop: 10,
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-    },
-    button: {
-        flex: 1,
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-        marginHorizontal: 5,
-    },
-    saveButton: {
-        backgroundColor: customGreen,
-    },
-    cancelButton: {
-        backgroundColor: '#8c3030',
-    },
-    buttonText: {
-        color: 'white',
         fontWeight: 'bold',
     },
     addButton: {
         backgroundColor: customGreen,
-        width: 60,
-        height: 60,
-        borderRadius: 30,
+        width: 50,
+        height: 50,
         justifyContent: 'center',
         alignItems: 'center',
+        borderRadius: 25,
         position: 'absolute',
-        bottom: 20,
-        right: 20,
+        bottom: 30,
+        right: 30,
+        elevation: 5,
     },
     addButtonText: {
         color: 'white',
-        fontSize: 30,
-        lineHeight: 30,
+        fontSize: 25,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContent: {
+        backgroundColor: backgroundGreen,
+        borderRadius: 10,
+        padding: 20,
+        width: '80%',
     },
     modalTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 10,
+        color: customGreen,
+        marginBottom: 20,
         textAlign: 'center',
-        color: customGreen
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: 20,
+    },
+    modalButton: {
+        backgroundColor: greenForm,
+        padding: 10,
+        borderRadius: 8,
+        width: '40%',
+    },
+    modalButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    saveButton: {
+        backgroundColor: customGreen,
+        padding: 5,
+        borderRadius: 5
+    },
+    cancelButton: {
+        backgroundColor: '#8c3030',
+        padding: 5,
+        borderRadius: 5
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: 20,
+    },
 
-
+    input: {
+        backgroundColor: greenForm,
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 10,
+    },
+    inputLabel: {
+        fontSize: 16,
+        color: customGreen,
+        marginBottom: 5,
     },
 });
 
