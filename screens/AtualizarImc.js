@@ -1,424 +1,259 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform, Modal,  ScrollView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Modal from 'react-native-modal';
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
 
 import {
-  StyledContainer,
-  InnerContainer,
-  PageTitle,
-  SubTitle,
-  StyledFormArea,
-  LeftIcon,
-  StyledInputLabel,
-  StyledTextInput,
-  RightIcon,
-  StyledButton,
-  ButtonText,
-  Colors,
-  MsgBox,
-  Line,
-  ExtraText,
-  ExtraView,
-  TextLink,
-  TextLinkContent,
-  WelcomeContainer,
-} from './../components/styles';
+    StyledContainer,
+    InnerContainer,
+    PageTitle,
+    SubTitle,
+    StyledFormArea,
+    LeftIcon,
+    StyledInputLabel,
+    StyledTextInput,
+    RightIcon,
+    StyledButton,
+    ButtonText,
+    Colors,
+    MsgBox,
+    Line,
+    ExtraText,
+    ExtraView,
+    TextLink,
+    TextLinkContent,
+    WelcomeContainer,
+  } from './../components/styles';
 
-
-const AtualizarIMC = () => {
-    const [peso, setPeso] = useState('');
-    const [altura, setAltura] = useState('');
-    const [imcResult, setImcResult] = useState('');
-    const [records, setRecords] = useState([]);
-    const [adding, setAdding] = useState(false);
-    const [showAdvice, setShowAdvice] = useState({});
+const Medicamentos = () => {
+    const [medicamentos, setMedicamentos] = useState([]);
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [nomeRemedio, setNomeRemedio] = useState('');
+    const [horario, setHorario] = useState('');
+    const [dosagem, setDosagem] = useState('');
+    const [intervalo, setIntervalo] = useState('');
+    const [periodo, setPeriodo] = useState('');
 
     useEffect(() => {
-        const loadRecords = async () => {
+        const loadMedicamentos = async () => {
             try {
-                const savedRecords = await AsyncStorage.getItem('imcRecords');
-                if (savedRecords) {
-                    setRecords(JSON.parse(savedRecords));
+                const savedMedicamentos = await AsyncStorage.getItem('medicamentos');
+                if (savedMedicamentos) {
+                    setMedicamentos(JSON.parse(savedMedicamentos));
                 }
             } catch (error) {
-                console.error('Failed to load records', error);
+                console.error('Failed to load medicamentos', error);
             }
         };
-        loadRecords();
+        loadMedicamentos();
     }, []);
 
-    useEffect(() => {
-        const saveRecords = async () => {
-            try {
-                await AsyncStorage.setItem('imcRecords', JSON.stringify(records));
-            } catch (error) {
-                console.error('Failed to save records', error);
-            }
-        };
-        saveRecords();
-    }, [records]);
-
-    const calcIMC = (peso, altura) => {
-        const alturaMetros = altura / 100;
-        const imc = peso / (alturaMetros * alturaMetros);
-        if (imc < 18.5) {
-            return "Você está um pouco abaixo do peso ideal, seria interessante mudar seus hábitos, que tal procurar um nutricionista para ganhar peso com saúde?";
-        } else if (imc >= 18.5 && imc < 25) {
-            return "Uau, que incrível, você está no seu peso ideal, parabéns!! Mas não se esqueça, sempre mantenha uma alimentação saudável e busque fazer exercícios físicos.";
-        } else if (imc >= 25 && imc < 30) {
-            return "Sobrepeso. Eita, acho que está na hora de prestar atenção no seu peso, tome cuidado com sua alimentação, pratique exercícios físicos, sua saúde pode melhorar muito com isso.";
-        } else if (imc >= 30 && imc < 35) {
-            return "Obesidade I. Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disso, é sempre importante realizar algum tipo de atividade física, isso vai ajudar muito a sua saúde.";
-        } else if (imc >= 35 && imc < 40) {
-            return "Obesidade II. Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disso, é sempre importante realizar algum tipo de atividade física, isso vai ajudar muito a sua saúde.";
-        } else {
-            return "Obesidade grave. Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disso, é sempre importante realizar algum tipo de atividade física, isso vai ajudar muito a sua saúde.";
-        }
-    }
-
-    const handleSave = () => {
-        const pesoFloat = parseFloat(peso);
-        const alturaFloat = parseFloat(altura);
-        if (!isNaN(pesoFloat) && !isNaN(alturaFloat)) {
-            const imc = calcIMC(pesoFloat, alturaFloat);
-            const date = new Date().toLocaleString();
-            const newRecord = { peso, altura, imc, date, key: `${records.length}` };
-            setRecords([newRecord, ...records]);
-            setPeso('');
-            setAltura('');
-            setImcResult('');
-            setShowAdvice({});
-            setAdding(false);
-
-            Alert.alert(
-                'Registro Salvo',
-                'O registro do seu IMC foi salvo com sucesso.',
-                [{ text: 'OK', onPress: () => console.log('Registro salvo') }],
-                { cancelable: false }
-            );
-        } else {
-            Alert.alert('Erro', 'Por favor, insira números válidos para peso e altura.');
-        }
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
     };
 
-    const handleCancel = () => {
-        setPeso('');
-        setAltura('');
-        setImcResult('');
-        setAdding(false);
+    const handleSave = async () => {
+        if (nomeRemedio && horario && dosagem && intervalo && periodo) {
+            try {
+                const savedMedicamentos = await AsyncStorage.getItem('medicamentos');
+                const medicamentos = savedMedicamentos ? JSON.parse(savedMedicamentos) : [];
+                const newMedicamento = { nomeRemedio, horario, dosagem, intervalo, periodo, key: `${medicamentos.length}` };
+                const updatedMedicamentos = [newMedicamento, ...medicamentos];
+                await AsyncStorage.setItem('medicamentos', JSON.stringify(updatedMedicamentos));
+                setMedicamentos(updatedMedicamentos);
+                setNomeRemedio('');
+                setHorario('');
+                setDosagem('');
+                setIntervalo('');
+                setPeriodo('');
+                toggleModal();
+                Alert.alert('Medicamento Salvo', 'O registro do medicamento foi salvo com sucesso.');
+            } catch (error) {
+                console.error('Failed to save medicamento', error);
+            }
+        } else {
+            Alert.alert('Erro', 'Por favor, preencha todos os campos.');
+        }
     };
 
     const handleDelete = (key) => {
-        setRecords(records.filter(record => record.key !== key));
-    };
-
-    const toggleAdvice = (key) => {
-        setShowAdvice(prevState => ({
-            ...prevState,
-            [key]: !prevState[key]
-        }));
+        const updatedMedicamentos = medicamentos.filter(medicamento => medicamento.key !== key);
+        setMedicamentos(updatedMedicamentos);
+        AsyncStorage.setItem('medicamentos', JSON.stringify(updatedMedicamentos));
     };
 
     return (
-        <KeyboardAvoidingView
-            style={{ flex: 1, backgroundColor: backgroundGreen }}
-            behavior={Platform.OS === 'ios' ? 'padding' : null}
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
-        >
-             <ScrollView>
-            <Text style={styles.title}>Atualizar IMC</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Gerenciar Medicamentos</Text>
             <Text style={styles.descriptionText}>
-                Atualize seu IMC colocando seus dados mais recentes
+               Adicione aqui seus medicamentos! É importante o monitoramento das suas medicações!
             </Text>
-            <View>
-                {records.map((item, index) => (
-                    <View key={index} style={styles.record}>
-                        <View style={styles.recordRow}>
-                            <Text style={styles.recordLabel}>Data:</Text>
-                            <Text style={styles.recordValue}>{item.date}</Text>
-                        </View>
-                        <View style={styles.recordRow}>
-                            <Text style={styles.recordLabel}>Peso:</Text>
-                            <Text style={styles.recordValue}>{item.peso} kg</Text>
-                        </View>
-                        <View style={styles.recordRow}>
-                            <Text style={styles.recordLabel}>Altura:</Text>
-                            <Text style={styles.recordValue}>{item.altura} cm</Text>
-                        </View>
-                        <View style={styles.recordRow}>
-                            <TouchableOpacity style={styles.adviceButton} onPress={() => toggleAdvice(item.key)}>
-                                <Text style={styles.adviceButtonText}>Mostrar Conselho</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.key)}>
-                                <Text style={styles.deleteButtonText}>Excluir</Text>
-                            </TouchableOpacity>
-                        </View>
-                        {showAdvice[item.key] && <Text style={styles.adviceText}>{item.imc}</Text>}
+            <FlatList
+                data={medicamentos}
+                keyExtractor={(item) => item.key}
+                renderItem={({ item }) => (
+                    <View style={styles.record}>
+                        <Text style={styles.recordLabel}>Nome: <Text style={styles.recordValue}>{item.nomeRemedio}</Text></Text>
+                        <Text style={styles.recordLabel}>Horário: <Text style={styles.recordValue}>{item.horario}</Text></Text>
+                        <Text style={styles.recordLabel}>Dosagem: <Text style={styles.recordValue}>{item.dosagem}</Text></Text>
+                        <Text style={styles.recordLabel}>Intervalo: <Text style={styles.recordValue}>{item.intervalo} horas</Text></Text>
+                        <Text style={styles.recordLabel}>Período: <Text style={styles.recordValue}>{item.periodo} dias</Text></Text>
+                        <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.key)}>
+                            <Text style={styles.deleteButtonText}>Deletar</Text>
+                        </TouchableOpacity>
                     </View>
-                ))}
-            </View>
-            </ScrollView>
+                )}
+            />
 
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={adding}
-                onRequestClose={() => setAdding(false)}
-            >
-                <View style={styles.modalContainer}>
+            <TouchableOpacity style={styles.addButton} onPress={toggleModal}>
+                <Text style={styles.addButtonText}>+</Text>
+            </TouchableOpacity>
+
+            <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
+                <View style={styles.centeredView}>
                     <View style={styles.modalContent}>
-                    <Text style={styles.modalTitle}>Adicionar Registro de IMC</Text>
-                        <TextInput
-                            placeholder="Peso (kg)"
-                            keyboardType="numeric"
-                            value={peso}
-                            onChangeText={(text) => {
-                                setPeso(text);
-                                if (text && altura) {
-                                    setImcResult(calcIMC(parseFloat(text), parseFloat(altura)));
-                                }
-                            }}
-                            style={styles.input}
+                        <Text style={styles.modalTitle}>Adicionar Medicamento</Text>
+                        <StyledInputLabel>Nome do Remédio</StyledInputLabel>
+                        <StyledTextInput
+                            onChangeText={text => setNomeRemedio(text)}
+                            value={nomeRemedio}
+                            placeholder="Digite o nome do remédio"
                         />
-                        <TextInput
-                            placeholder="Altura (cm)"
-                            keyboardType="numeric"
-                            value={altura}
-                            onChangeText={(text) => {
-                                setAltura(text);
-                                if (text && peso) {
-                                    setImcResult(calcIMC(parseFloat(peso), parseFloat(text)));
-                                }
-                            }}
-                            style={styles.input}
+                        <StyledInputLabel>Horário</StyledInputLabel>
+                        <StyledTextInput
+                            onChangeText={text => setHorario(text)}
+                            value={horario}
+                            placeholder="Digite o horário"
                         />
-                        <Text style={styles.imcResult}>{imcResult}</Text>
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
-                                <Text style={styles.buttonText}>Salvar</Text>
+                        <StyledInputLabel>Dosagem</StyledInputLabel>
+                        <StyledTextInput
+                            onChangeText={text => setDosagem(text)}
+                            value={dosagem}
+                            placeholder="Digite a dosagem"
+                        />
+                        <StyledInputLabel>Intervalo (horas)</StyledInputLabel>
+                        <StyledTextInput
+                            onChangeText={text => setIntervalo(text)}
+                            value={intervalo}
+                            placeholder="Digite o intervalo"
+                            keyboardType="numeric"
+                        />
+                        <StyledInputLabel>Período (dias)</StyledInputLabel>
+                        <StyledTextInput
+                            onChangeText={text => setPeriodo(text)}
+                            value={periodo}
+                            placeholder="Digite o período"
+                            keyboardType="numeric"
+                        />
+                        <View style={styles.modalButtons}>
+                            <TouchableOpacity style={styles.modalButton} onPress={handleSave}>
+                                <Text style={styles.modalButtonText}>Salvar</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
-                                <Text style={styles.buttonText}>Cancelar</Text>
+                            <TouchableOpacity style={styles.modalButton} onPress={toggleModal}>
+                                <Text style={styles.modalButtonText}>Cancelar</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </View>
             </Modal>
-
-
-            {!adding && (
-                <TouchableOpacity style={styles.addButton} onPress={() => setAdding(true)}>
-                    <Text style={styles.addButtonText}>+</Text>
-                </TouchableOpacity>
-            )}
-        </KeyboardAvoidingView>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
         backgroundColor: backgroundGreen,
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingTop: 50,
     },
     title: {
-        lineHeight: 30,
-        color: customGreen,
-        fontSize: 30,
-        marginTop: 45,
-        textAlign: 'center',
+        fontSize: 22,
         fontWeight: 'bold',
+        color: primary,
+        marginBottom: 10,
     },
     descriptionText: {
-        color: roxinho,
-        textAlign: 'center',
-        marginTop: 10,
         fontSize: 16,
-        
+        color: darkLight,
+        marginBottom: 20,
     },
     record: {
-        padding: 10,
-        marginTop: 10,
-        backgroundColor: greenForm,
-        borderRadius: 5,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        elevation: 3,
-        borderWidth: 2, 
-        borderColor: greenForm,
-        width: '90%',
-        marginLeft:17,
-        
-    },
-    recordRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 5,
+        backgroundColor: customGreen,
+        padding: 15,
+        borderRadius: 10,
+        marginBottom: 10,
     },
     recordLabel: {
-        fontWeight: 'bold',
-        color: backgroundGreen
-        
+        fontSize: 16,
+        color: darkLight,
+        marginBottom: 5,
     },
     recordValue: {
-        color: backgroundGreen
-    },
-    adviceText: {
-        color: backgroundGreen,
-        fontStyle: 'italic',
-        marginTop: 10,
-    },
-    inputContainer: {
-        marginTop: 20,
-        width: '70%',
-        alignItems: 'center',
-        
-    },
-    input: {
-        width: '100%',
-        padding: 10,
-        marginVertical: 5,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 10,
-    },
-    imcResult: {
-        color: customGreen,
         fontWeight: 'bold',
-        marginTop: 10,
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-    },
-    button: {
-        flex: 1,
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-        marginHorizontal: 5,
-    },
-    saveButton: {
-        backgroundColor: customGreen,
-    },
-    cancelButton: {
-        backgroundColor: '#ccc',
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-    },
-    addButton: {
-        backgroundColor: customGreen,
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute',
-        bottom: 20,
-        right: 20,
-    },
-    addButtonText: {
-        color: 'white',
-        fontSize: 30,
-        lineHeight: 30,
-    },
-    adviceButton: {
-        backgroundColor: customGreen,
-        padding: 5,
-        borderRadius: 5,
-    },
-    adviceButtonText: {
-        color: 'white',
     },
     deleteButton: {
-        backgroundColor: '#8c3030',
-        padding: 5,
-        borderRadius: 5,
+        backgroundColor: roxinho,
+        padding: 10,
+        borderRadius: 8,
+        marginTop: 10,
+        alignSelf: 'flex-end',
     },
     deleteButtonText: {
         color: 'white',
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
-    },
-    modalContent: {
-        backgroundColor: backgroundGreen,
-        padding: 20,
-        borderRadius: 10,
-        width: '80%',
-    },
-    input: {
-        width: '100%',
-        padding: 10,
-        marginVertical: 5,
-        borderRadius: 10,
-        backgroundColor: greenForm,
-        color: backgroundGreen
-    },
-    imcResult: {
-        color: 'black',
-        marginTop: 10,
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-    },
-    button: {
-        flex: 1,
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-        marginHorizontal: 5,
-    },
-    saveButton: {
-        backgroundColor: customGreen,
-    },
-    cancelButton: {
-        backgroundColor: '#8c3030',
-    },
-    buttonText: {
-        color: 'white',
         fontWeight: 'bold',
     },
     addButton: {
-        backgroundColor: customGreen,
-        width: 60,
-        height: 60,
-        borderRadius: 30,
+        backgroundColor: primary,
+        width: 50,
+        height: 50,
         justifyContent: 'center',
         alignItems: 'center',
+        borderRadius: 25,
         position: 'absolute',
-        bottom: 20,
-        right: 20,
+        bottom: 30,
+        right: 30,
+        elevation: 5,
     },
     addButtonText: {
         color: 'white',
-        fontSize: 30,
-        lineHeight: 30,
+        fontSize: 25,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContent: {
+        backgroundColor: backgroundGreen,
+        borderRadius: 10,
+        padding: 20,
+        width: '80%',
     },
     modalTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 10,
+        color: primary,
+        marginBottom: 20,
         textAlign: 'center',
-        color: customGreen
-
-
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: 20,
+    },
+    modalButton: {
+        backgroundColor: primary,
+        padding: 10,
+        borderRadius: 8,
+        width: '40%',
+    },
+    modalButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
 });
 
-export default AtualizarIMC;
+export default Medicamentos;
