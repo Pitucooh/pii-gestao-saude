@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Button, StyleSheet, Alert, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Animated, Modal } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Button, StyleSheet, Alert, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Animated, Modal, } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Swipeable } from 'react-native-gesture-handler';
 import {
-  StyledContainer,
-  InnerContainer,
-  PageTitle,
-  SubTitle,
-  StyledFormArea,
-  LeftIcon,
-  StyledInputLabel,
-  StyledTextInput,
-  RightIcon,
-  StyledButton,
-  ButtonText,
-  Colors,
-  MsgBox,
-  Line,
-  ExtraText,
-  ExtraView,
-  TextLink,
-  TextLinkContent,
-  WelcomeContainer,
-} from './../components/styles';
+    StyledContainer,
+    InnerContainer,
+    PageTitle,
+    SubTitle,
+    StyledFormArea,
+    LeftIcon,
+    StyledInputLabel,
+    StyledTextInput,
+    RightIcon,
+    StyledButton,
+    ButtonText,
+    Colors,
+    MsgBox,
+    Line,
+    ExtraText,
+    ExtraView,
+    TextLink,
+    TextLinkContent,
+    WelcomeContainer,
+  } from './../components/styles';
+  
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
 
+
+  
 const AtualizarGlicemia = () => {
     const [showInput, setShowInput] = useState(false);
     const [glicemia, setGlicemia] = useState('');
     const [glicemiaResult, setGlicemiaResult] = useState('');
     const [pilha, setPilha] = useState([]);
-    const [modalVisible, setModalVisible] = useState(false); // Adicionando estado para controlar a visibilidade do modal
+    const [modalVisible, setModalVisible] = useState(false); 
+    const [adding, setAdding] = useState(false);
 
     useEffect(() => {
         const loadRecords = async () => {
@@ -75,6 +79,7 @@ const AtualizarGlicemia = () => {
 
     const handleAddRecord = () => {
         setShowInput(true);
+        setAdding(false);
     };
 
     const handleSave = () => {
@@ -95,6 +100,7 @@ const AtualizarGlicemia = () => {
         setShowInput(false);
         setGlicemia('');
         setGlicemiaResult('');
+        setAdding(false);
     };
 
     const handleDeleteRecord = (index) => {
@@ -138,7 +144,10 @@ const AtualizarGlicemia = () => {
         <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <View style={styles.content}>
-                    <Text style={styles.title}>Segundo Componente</Text>
+                    <Text style={styles.title}>Glicemia</Text>
+                    <Text style={styles.descriptionText}>
+                        Atualize sua glicemia colocando seus dados mais recentes
+                    </Text>
                     {showInput ? (
                         <>
                             <Text style={styles.subtitle}>Informe sua Glicemia</Text>
@@ -153,104 +162,177 @@ const AtualizarGlicemia = () => {
                                 style={styles.input}
                             />
                             <View style={styles.buttonContainer}>
-                                <Button title="Salvar" onPress={handleSave} />
-                                <Button title="Cancelar" onPress={handleCancel} />
+                                <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
+                                    <Text style={styles.buttonText}>Salvar</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
+                                    <Text style={styles.buttonText}>Cancelar</Text>
+                                </TouchableOpacity>
                             </View>
                             <Text style={styles.resultText}>{glicemiaResult}</Text>
                         </>
                     ) : (
-                         <>
-                            <TouchableOpacity style={styles.addButton} onPress={handleAddRecord}>
-                                <Text style={styles.addButtonText}>+</Text>
-                            </TouchableOpacity>
+                        <>
                             {pilha.map((record, index) => (
                                 <Swipeable
                                     key={index}
                                     renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, index)}
                                 >
                                     <View style={styles.recordContainer}>
-                                    <Text style={styles.recordText}>Data: {formatDate(record.date)}</Text>
+                                        <Text style={styles.recordText}>Data: {formatDate(record.date)}</Text>
                                         <Text style={styles.recordText}>Glicemia: {record.glicemia}</Text>
                                         <Text style={styles.recordText}>Resultado: {record.result}</Text>
-                                        </View>
+                                    </View>
                                 </Swipeable>
                             ))}
                         </>
                     )}
                 </View>
             </ScrollView>
-            {/*modal ta aqui!!!*/}
+            {!adding && (
+                <TouchableOpacity style={styles.addButton} onPress={handleAddRecord}>
+                    <Text style={styles.addButtonText}>+</Text>
+                </TouchableOpacity>
+            )}
             <Modal
                 animationType="slide"
                 transparent={true}
-                visible={modalVisible}
+                visible={adding}
                 onRequestClose={() => {
-                    setModalVisible(!modalVisible);
+                    setAdding(!adding);
                 }}
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Título do Modal</Text>
-                        <Text>Conteúdo do Modal</Text>
-                        <Button title="Fechar Modal" onPress={() => setModalVisible(!modalVisible)} />
+                        <Text style={styles.modalTitle}>Adicionar Registro de Pressão</Text>
+                        {adding && (
+                            <View style={styles.inputContainer}>
+                                <TextInput
+                                    placeholder="Digite a sua glicemia"
+                                    keyboardType="numeric"
+                                    value={glicemia}
+                                    onChangeText={text => {
+                                        setGlicemia(text);
+                                        setGlicemiaResult(calcGlicemia(parseFloat(text)));
+                                    }}
+                                    style={styles.input}
+                                />
+                                <Text style={styles.pressaoResult}>{glicemiaResult}</Text>
+                                <View style={styles.buttonContainer}>
+                                    <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
+                                        <Text style={styles.buttonText}>Salvar</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
+                                        <Text style={styles.buttonText}>Cancelar</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        )}
                     </View>
                 </View>
             </Modal>
+
+           
         </KeyboardAvoidingView>
     );
 };
 
-// Estilos adicionais do Modal
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        padding: 20,
         backgroundColor: backgroundGreen,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     scrollContainer: {
         flexGrow: 1,
     },
-    content: {
-        paddingTop: 150, 
-        paddingHorizontal: 20,
-    },
     title: {
+        lineHeight: 30,
+        color: customGreen,
+        fontSize: 30,
         marginTop: 30,
         textAlign: 'center',
-        fontSize: 30,
         fontWeight: 'bold',
-        marginBottom: 50,
-        flexWrap: 'wrap',
-        lineHeight: 30,
-        color: customGreen
     },
-    subtitle: {
-        fontSize: 18,
-        marginBottom: 10,
+    descriptionText: {
+        color: roxinho,
+        textAlign: 'center',
+        marginTop: 10,
+        fontSize: 16,
+    },
+    record: {
+        padding: 10,
+        marginTop: 10,
+        backgroundColor: greenForm,
+        borderRadius: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3,
+        borderWidth: 2,
+        borderColor: greenForm,
+    },
+    recordRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 5,
+    },
+    recordLabel: {
+        fontWeight: 'bold',
+        color: backgroundGreen,
+    },
+    recordValue: {
+        color: backgroundGreen,
+    },
+    inputContainer: {
+        marginTop: 20,
+        width: '70%',
+        alignItems: 'center',
     },
     input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
+        width: '100%',
         padding: 10,
-        marginBottom: 20,
+        marginVertical: 5,
+        borderRadius: 10,
+        backgroundColor: greenForm,
+        color: backgroundGreen,
+    },
+    pressaoResult: {
+        color: 'black',
+        marginTop: 10,
     },
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-   
+        justifyContent: 'space-between',
+        width: '100%',
     },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
+    button: {
+        flex: 1,
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginHorizontal: 5,
+    },
+    saveButton: {
+        backgroundColor: customGreen,
+    },
+    cancelButton: {
+        backgroundColor: '#8c3030',
     },
     addButton: {
-        backgroundColor: '#007bff',
+        backgroundColor: customGreen,
         width: 50,
         height: 50,
         borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
+        marginLeft: 270,
     },
     addButtonText: {
         color: '#fff',
@@ -305,18 +387,18 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContent: {
-        backgroundColor: 'white',
+        backgroundColor: backgroundGreen,
         padding: 20,
         borderRadius: 10,
         width: '80%',
     },
-    modalTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        textAlign: 'center',
-        color: customGreen,
-    },
+    box: {
+        width: 0, 
+        height: 100,
+        backgroundColor: 'red',
+        marginTop: 20,
+      },
 });
+
 
 export default AtualizarGlicemia;

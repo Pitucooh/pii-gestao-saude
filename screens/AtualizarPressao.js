@@ -148,7 +148,17 @@ const AtualizarPressao = () => {
                             </TouchableOpacity>
                         </View>
                     ))}
-                    {adding && (
+
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={adding}
+                        onRequestClose={() => setAdding(false)}
+                    >
+                    <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                    <Text style={styles.modalTitle}>Adicionar Registro de Pressão</Text>
+                         {adding && (
                         <View style={styles.inputContainer}>
                             <TextInput
                                 placeholder="Sistólica (mmHg)"
@@ -175,6 +185,10 @@ const AtualizarPressao = () => {
                             </View>
                         </View>
                     )}
+                    </View>
+                    </View>
+                    </Modal>
+                   
                 </View>
                 
             </ScrollView>
@@ -273,6 +287,8 @@ const styles = StyleSheet.create({
     },
     cancelButton: {
         backgroundColor: '#ccc',
+        padding: 5
+
     },
     buttonText: {
         color: 'white',
@@ -330,7 +346,8 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         borderRadius: 10,
         backgroundColor: greenForm,
-        color: backgroundGreen
+        color: backgroundGreen,
+        marginLeft: 60
     },
     imcResult: {
         color: 'black',
@@ -340,19 +357,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
+        marginLeft: 25
     },
     button: {
         flex: 1,
-        padding: 10,
         borderRadius: 5,
         alignItems: 'center',
         marginHorizontal: 5,
     },
     saveButton: {
         backgroundColor: customGreen,
+        padding: 5,
+        borderRadius: 5,
+        marginLeft: 40
     },
     cancelButton: {
         backgroundColor: '#8c3030',
+        padding: 5,
+        borderRadius: 5
     },
     buttonText: {
         color: 'white',
@@ -384,5 +406,4 @@ const styles = StyleSheet.create({
 
     },
 });
-
 export default AtualizarPressao;
