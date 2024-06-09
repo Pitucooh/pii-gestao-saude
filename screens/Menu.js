@@ -47,7 +47,7 @@ const Menu = ({ navigation }) => {
                             <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Exames')}>
                                 <Text style={styles.cardText}>Exames</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Consultas')}>
+                            <TouchableOpacity style={styles.card} onPress={() => handleCardPress('DatasCons')}>
                                 <Text style={styles.cardText}>Consultas</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Medicamentos')}>

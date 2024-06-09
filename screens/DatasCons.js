@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { InnerContainer, PageTitle, Colors, StyledButton, ButtonText, WelcomeContainer, MyTextInput } from './../components/styles';
 
+const { primary, secondary, tertiary, darkLight, brand, green, red, customGreen, backgroundGreen, green2, greenForm, black, roxinho } = Colors;
 const DatasCons = ({ route, navigation }) => {
     const { consultas: initialConsultas } = route.params || {};
     const [consultas, setConsultas] = useState(initialConsultas || []);
-
+    
+    const handleCardPress = (screenName) => {
+        navigation.navigate(screenName);
+    };
     useEffect(() => {
         // Salvar as consultas no estado local quando a página for montada
         setConsultas(initialConsultas || []);
@@ -33,13 +38,15 @@ const DatasCons = ({ route, navigation }) => {
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>Consultas Agendadas</Text>
+                <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Consultas')}>
+                    <Text style={styles.cardText}>Adicione uma Consulta</Text>
+                </TouchableOpacity>
             </View>
             {consultas.map((consulta, index) => (
                 <TouchableOpacity
                     key={index}
                     style={styles.consultaContainer}
                     onPress={() => {
-                        // Aqui você pode adicionar qualquer ação quando um item é pressionado, se necessário
                     }}
                 >
                     <Text style={styles.label}>Especialidade:</Text>
@@ -55,6 +62,7 @@ const DatasCons = ({ route, navigation }) => {
                     </TouchableOpacity>
                 </TouchableOpacity>
             ))}
+            
         </ScrollView>
     );
 };
