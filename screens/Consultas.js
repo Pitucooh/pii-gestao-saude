@@ -103,7 +103,7 @@ const Consultas = () => {
                         value={especialidade}
                         placeholder="Especialidade:"
                         placeholderTextColor={backgroundGreen}
-                        style={{ backgroundColor: greenForm, color: backgroundGreen, borderRadius: 10 }}
+                        style={styles.inputDados}
                     />
                     <MyTextInput
                         onChangeText={setDataCons}
@@ -140,25 +140,14 @@ const Consultas = () => {
                         value={retorno}
                         placeholder="Retorno:"
                         placeholderTextColor={backgroundGreen}
-                        inputStyle={{
-                            borderRadius: 10,
-                            borderWidth: 0,
-                            textAlign: 'left',
-                            color: backgroundGreen
-                        }}
+                        
                     />
                     <MyTextInput
                         onChangeText={setLembrete}
                         value={lembrete}
                         placeholder="Lembrete Agendamento:"
                         placeholderTextColor={backgroundGreen}
-                        inputStyle={{
-                            backgroundColor: greenForm,
-                            borderRadius: 10,
-                            borderWidth: 0,
-                            textAlign: 'left',
-                            color: backgroundGreen
-                        }}
+                        
                     />
                 </View>
 
@@ -222,6 +211,10 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
         textAlign: 'center',
     },
+
+    inputDados:{
+        borderRadius: 10
+    }
 });
 
 export default Consultas;
