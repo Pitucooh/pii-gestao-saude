@@ -110,7 +110,7 @@ const Login = ({ navigation }) => {
                                     value={values.email}
                                     keyboardType="email-address"
                                     style={{
-                                        backgroundColor: customGreen,
+                                        backgroundColor: greenForm,
                                         borderRadius: 20,
                                         borderWidth: 0,
                                         
@@ -129,7 +129,7 @@ const Login = ({ navigation }) => {
                                     hidePassword={hidePassword}
                                     setHidePassword={setHidePassword}
                                     style={{
-                                        backgroundColor: customGreen,
+                                        backgroundColor: greenForm,
                                         borderRadius: 20,
                                         borderWidth: 0,
                                         color: primary
@@ -143,7 +143,7 @@ const Login = ({ navigation }) => {
                                 <MsgBox>{errorMsg}</MsgBox>
                                 <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                                     <View>
-                                        <StyledButton onPress={handleSubmit} style={{ padding: 10, alignItems: 'center' ,marginBottom: 10, justifyContent: 'center', width: 100,backgroundColor: greenForm}}>
+                                        <StyledButton onPress={handleSubmit} style={{ padding: 10, alignItems: 'center' ,marginBottom: 10, justifyContent: 'center', width: 100,backgroundColor: customGreen}}>
                                             <ButtonText style={{ color: backgroundGreen }}>Login</ButtonText>
                                         </StyledButton>
                                     </View>

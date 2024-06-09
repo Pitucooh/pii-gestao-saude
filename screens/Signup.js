@@ -212,7 +212,7 @@ const Signup = ({ navigation }) => {
 
                                 <MsgBox type={errorMsg ? 'ERRO' : 'SUCESSO'}>{errorMsg || successMsg}</MsgBox>
 
-                                <StyledButton onPress={handleSubmit} style={{marginBottom: 10, width: 149,  backgroundColor: greenForm, flex: 1, justifyContent: 'center', alignItems: 'center', marginLeft:55  }}>
+                                <StyledButton onPress={handleSubmit} style={{marginBottom: 10, width: 149,  backgroundColor: customGreen, flex: 1, justifyContent: 'center', alignItems: 'center', marginLeft:55  }}>
                                     
                                     <ButtonText style={{ color: backgroundGreen }}>Cadastrar</ButtonText>
                                 </StyledButton>
