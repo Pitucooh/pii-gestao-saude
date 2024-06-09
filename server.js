@@ -23,7 +23,7 @@ app.use(cors({
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "matsql",
+  password: "mysqlimt",
   database: "wepink",
   port: 3306,
 });
@@ -248,7 +248,7 @@ app.post('/saveExam', (req, res) => {
   const [dia, mes, ano] = dataCons.split('-');
   const dataFormatada = `${ano}-${mes}-${dia}`;
 
-  const sql = 'INSERT INTO exams (especialidade, dataCons, horario, retorno, lembrete) VALUES (?, ?, ?, ?, ?)';
+  const sql = 'INSERT INTO exams (especialidade, dataCons, horario, resumoCons, retorno, lembrete) VALUES (?, ?, ?, ?, ?)';
   db.query(sql, [especialidade, dataFormatada, horario, retorno, lembrete], (err, result) => {
     if (err) {
       // console.error('Erro ao inserir exame no banco de dados:', err); // Remova ou comente esta linha

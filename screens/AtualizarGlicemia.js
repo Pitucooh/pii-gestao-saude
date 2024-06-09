@@ -26,7 +26,7 @@ import {
   
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
 
-
+const STORAGE_KEY = 'glicemiaRecords';
   
 const AtualizarGlicemia = () => {
     const [showInput, setShowInput] = useState(false);

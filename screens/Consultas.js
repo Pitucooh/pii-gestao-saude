@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, Button, Alert, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, Alert, TextInput, Button, KeyboardAvoidingView, Platform, ScrollView} from 'react-native'; 
 import { useNavigation } from '@react-navigation/native';
-import { ipMaquina } from '../ips';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { InnerContainer, PageTitle, Colors, StyledButton, ButtonText, WelcomeContainer, MyTextInput } from './../components/styles';
 import Modal from 'react-native-modal';
+import { ipMaquina } from '../ips'; 
 
 const { customGreen, backgroundGreen, greenForm, roxinho } = Colors;
 
 const Consultas = () => {
     const navigation = useNavigation();
+    
     const [especialidade, setEspecialidade] = useState('');
     const [dataCons, setDataCons] = useState('');
     const [horario, setHorario] = useState('');
@@ -19,23 +21,36 @@ const Consultas = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
-    const handleSaveAndNavigate = async (consulta) => {
-        // Limpar os campos de entrada após salvar
-        setEspecialidade('');
-        setDataCons('');
-        setHorario('');
-        setResumo('');
-        setRetorno('');
-        setLembrete('');
+    const handleSaveAndNavigate = async () => {
+        const consulta = { especialidade, dataCons, horario, resumoCons, retorno, lembrete };
 
-        navigation.navigate('DatasCons', { consultas: [{ especialidade, dataCons }] });
+        // Salvar a consulta no AsyncStorage
+        try {
+            const storedConsultas = await AsyncStorage.getItem('consultas');
+            const consultas = storedConsultas ? JSON.parse(storedConsultas) : [];
+            consultas.push(consulta);
+            await AsyncStorage.setItem('consultas', JSON.stringify(consultas));
+
+            // Limpar os campos de entrada após salvar
+            setEspecialidade('');
+            setDataCons('');
+            setHorario('');
+            setResumo('');
+            setRetorno('');
+            setLembrete('');
+
+            // Navegar para a página DatasCons
+            navigation.navigate('DatasCons', { refresh: true });
+        } catch (error) {
+            console.error('Erro ao salvar a consulta:', error);
+        }
     };
 
     const SalvarExam = async () => {
         const dataPattern = /^\d{2}-\d{2}-\d{4}$/;
         const horarioPattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
 
-        if (!especialidade || !dataCons || !horario || !retorno || !lembrete) {
+        if (!especialidade || !dataCons || !horario || !resumoCons || !retorno || !lembrete) {
             setFeedbackMessage('Por favor, preencha todos os campos.');
             return;
         }
@@ -73,9 +88,7 @@ const Consultas = () => {
                 Alert.alert(
                     'Exame Salvo',
                     'O registro do seu exame foi salvo com sucesso.',
-                    [{ text: 'OK', onPress: () => {
-                        handleSaveAndNavigate(data); // Chamar a função para salvar e navegar
-                    }}],
+                    [{ text: 'OK', onPress: handleSaveAndNavigate }],
                     { cancelable: false }
                 );
             } else {
@@ -88,86 +101,99 @@ const Consultas = () => {
     };
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <InnerContainer style={{ backgroundColor: backgroundGreen }}>
-                <WelcomeContainer style={{ backgroundColor: backgroundGreen }}>
-                    <PageTitle welcome={true} style={{ flexWrap: 'wrap', lineHeight: 30, color: customGreen, marginTop:30, fontSize: 30 }}>
-                        CONSULTAS
-                    </PageTitle>
-                    <Text style={{ color: roxinho, alignItems: 'center' }}>{'Salve aqui seu próximo exame'}</Text>
-                </WelcomeContainer>
-
-                <View style={styles.inputCon}>
-                    <MyTextInput
-                        onChangeText={setEspecialidade}
-                        value={especialidade}
-                        placeholder="Especialidade:"
-                        placeholderTextColor={backgroundGreen}
-                        style={styles.inputDados}
-                    />
-                    <MyTextInput
-                        onChangeText={setDataCons}
-                        value={dataCons}
-                        placeholder="Data:"
-                        placeholderTextColor={backgroundGreen}
-                        style={{ backgroundColor: greenForm, color: backgroundGreen }}
-                    />
-                    <MyTextInput
-                        onChangeText={setHorario}
-                        value={horario}
-                        placeholder="Horário:"
-                        placeholderTextColor={backgroundGreen}
-                        style={{ backgroundColor: greenForm, color: backgroundGreen }}
-                    />
-
-                    <View style={styles.notesContainer}>
-                        <Text style={styles.notesText}>Bloco de Notas:</Text>
-                        <TextInput
-                            style={styles.notesInput}
-                            multiline={true}
-                            numberOfLines={4}
-                            placeholder="Anote aqui as observações das consultas"
-                            value={resumoCons}
-                            onChangeText={setResumo}
-                        />
-                    </View>
-
-                    <PageTitle welcome={true} style={{ flexWrap: 'wrap', lineHeight: 20, color: customGreen, fontSize: 20 }}>
-                        Retorno e lembrete
-                    </PageTitle>
-                    <MyTextInput
-                        onChangeText={setRetorno}
-                        value={retorno}
-                        placeholder="Retorno:"
-                        placeholderTextColor={backgroundGreen}
-                        
-                    />
-                    <MyTextInput
-                        onChangeText={setLembrete}
-                        value={lembrete}
-                        placeholder="Lembrete Agendamento:"
-                        placeholderTextColor={backgroundGreen}
-                        
-                    />
-                </View>
-
-                {feedbackMessage ? <Text style={styles.errorMessage}>{feedbackMessage}</Text> : null}
-
-                <View style={{ height: 2, backgroundColor: roxinho, width: '79%', marginTop: 15, marginBottom: 15 }}></View>
-
-                <StyledButton style={styles.button} onPress={SalvarExam}>
-                    <ButtonText>Salvar</ButtonText>
-                </StyledButton>
-
-                <Modal isVisible={isModalVisible}>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text>{modalMessage}</Text>
-                        <Button title="Fechar" onPress={() => setIsModalVisible(false)} />
-                    </View>
-                </Modal>
-            </InnerContainer>
-        </TouchableWithoutFeedback>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : null}
+            enabled
+        >
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <InnerContainer style={{ backgroundColor: backgroundGreen }}>
+                        <WelcomeContainer style={{ backgroundColor: backgroundGreen }}>
+                            <PageTitle welcome={true} style={{ flexWrap: 'wrap', lineHeight: 30, color: customGreen, marginTop:30, fontSize: 30 }}>
+                                CONSULTAS
+                            </PageTitle>
+                            <Text style={{ color: roxinho, alignItems: 'center' }}>{'Salve aqui seu próximo exame'}</Text>
+                        </WelcomeContainer>
+    
+                        <View style={styles.inputCon}>
+                            <MyTextInput
+                                onChangeText={setEspecialidade}
+                                value={especialidade}
+                                placeholder="Especialidade:"
+                                placeholderTextColor={backgroundGreen}
+                                maxLength={50}
+                                style={styles.inputDados}
+                            />
+                            <MyTextInput
+                                onChangeText={setDataCons}
+                                value={dataCons}
+                                placeholder="Data:"
+                                maxLength={10}
+                                placeholderTextColor={backgroundGreen}
+                                style={{ backgroundColor: greenForm, color: backgroundGreen }}
+                            />
+                            <MyTextInput
+                                onChangeText={setHorario}
+                                value={horario}
+                                maxLength={5}
+                                placeholder="Horário:"
+                                placeholderTextColor={backgroundGreen}
+                                style={{ backgroundColor: greenForm, color: backgroundGreen }}
+                            />
+    
+                            <View style={styles.notesContainer}>
+                                <Text style={styles.notesText}>Bloco de Notas:</Text>
+                                <TextInput
+                                    style={styles.notesInput}
+                                    multiline={true}
+                                    numberOfLines={4}
+                                    placeholder="Anote aqui as observações das consultas"
+                                    value={resumoCons}
+                                    onChangeText={setResumo}
+                                />
+                            </View>
+    
+                            <PageTitle welcome={true} style={{ flexWrap: 'wrap', lineHeight: 20, color: customGreen, fontSize: 20 }}>
+                                Retorno e lembrete
+                            </PageTitle>
+                            <MyTextInput
+                                onChangeText={setRetorno}
+                                value={retorno}
+                                placeholder="Retorno:"
+                                maxLength={50}
+                                placeholderTextColor={backgroundGreen}
+                                style={{ color: backgroundGreen }}
+                            />
+                            <MyTextInput
+                                onChangeText={setLembrete}
+                                value={lembrete}
+                                placeholder="Lembrete Agendamento:"
+                                maxLength={50}
+                                placeholderTextColor={backgroundGreen}
+                                style={{ color: backgroundGreen }}
+                            />
+                        </View>
+                        {feedbackMessage ? <Text style={styles.errorMessage}>{feedbackMessage}</Text> : null}
+    
+                        <View style={{ height: 2, backgroundColor: roxinho, width: '79%', marginTop: 15, marginBottom: 15 }}></View>
+    
+                        <StyledButton style={styles.button} onPress={SalvarExam}>
+                            <ButtonText>Salvar</ButtonText>
+                        </StyledButton>
+    
+                        <Modal isVisible={isModalVisible}>
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <Text>{modalMessage}</Text>
+                                <Button title="Fechar" onPress={() => setIsModalVisible(false)} />
+                            </View>
+                        </Modal>
+                    </InnerContainer>
+                </TouchableWithoutFeedback>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
+    
 }
 
 const styles = StyleSheet.create({
@@ -213,9 +239,9 @@ const styles = StyleSheet.create({
     },
 
     inputDados:{
-        borderRadius: 10
+        borderRadius: 10,
+        color: backgroundGreen,
     }
 });
 
 export default Consultas;
-

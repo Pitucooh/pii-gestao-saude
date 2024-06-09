@@ -35,7 +35,7 @@ const RootStack = () => {
                 headerLeftContainerStyle: {
                     paddingLeft: 20
                 },
-                headerBackTitle: 'Voltar',
+                headerBackTitleVisible: false,
                 headerBackTitleStyle: {
                     color: '#000' 
                 }            
