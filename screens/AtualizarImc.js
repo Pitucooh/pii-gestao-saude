@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform, Modal, ScrollView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform, Modal, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
