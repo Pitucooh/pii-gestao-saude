@@ -142,7 +142,7 @@ const Consultas = () => {
                             <View style={styles.notesContainer}>
                                 <Text style={styles.notesText}>Bloco de Notas:</Text>
                                 <TextInput
-                                    style={[styles.notesInput, styles.inputDados]}
+                                    style={{backgroundColor: backgroundGreen, borderRadius: 10, padding: 5}}
                                     multiline={true}
                                     numberOfLines={4}
                                     placeholder="Anote aqui as observações das consultas"
@@ -221,6 +221,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: roxinho,
         marginBottom: 20,
+        padding: 1
     },
     errorMessage: {
         color: 'red',
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         color: backgroundGreen,
         marginBottom: 10, 
-        padding: 10, 
+        padding: 12, 
         backgroundColor: greenForm, 
     },
 });
