@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform, Modal,  ScrollView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform, Modal, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
@@ -121,44 +121,48 @@ const AtualizarIMC = () => {
         }));
     };
 
+    const handleAdvicePress = (advice) => {
+        Alert.alert('Conselho de IMC', advice);
+    };
+
     return (
         <KeyboardAvoidingView
             style={{ flex: 1, backgroundColor: backgroundGreen }}
             behavior={Platform.OS === 'ios' ? 'padding' : null}
             keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
         >
-             <ScrollView>
-            <Text style={styles.title}>Atualizar IMC</Text>
-            <Text style={styles.descriptionText}>
-                Atualize seu IMC colocando seus dados mais recentes
-            </Text>
-            <View>
-                {records.map((item, index) => (
-                    <View key={index} style={styles.record}>
-                        <View style={styles.recordRow}>
-                            <Text style={styles.recordLabel}>Data:</Text>
-                            <Text style={styles.recordValue}>{item.date}</Text>
+            <ScrollView>
+                <Text style={styles.title}>Atualizar IMC</Text>
+                <Text style={styles.descriptionText}>
+                    Atualize seu IMC colocando seus dados mais recentes
+                </Text>
+                <View>
+                    {records.map((item, index) => (
+                        <View key={index} style={styles.record}>
+                            <View style={styles.recordRow}>
+                                <Text style={styles.recordLabel}>Data:</Text>
+                                <Text style={styles.recordValue}>{item.date}</Text>
+                            </View>
+                            <View style={styles.recordRow}>
+                                <Text style={styles.recordLabel}>Peso:</Text>
+                                <Text style={styles.recordValue}>{item.peso} kg</Text>
+                            </View>
+                            <View style={styles.recordRow}>
+                                <Text style={styles.recordLabel}>Altura:</Text>
+                                <Text style={styles.recordValue}>{item.altura} cm</Text>
+                            </View>
+                            <View style={styles.recordRow}>
+                                <TouchableOpacity style={styles.adviceButton} onPress={() => toggleAdvice(item.key)}>
+                                    <Text style={styles.adviceButtonText}>Mostrar Conselho</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.key)}>
+                                    <Text style={styles.deleteButtonText}>Excluir</Text>
+                                </TouchableOpacity>
+                            </View>
+                            {showAdvice[item.key] && <Text style={styles.adviceText}>{item.imc}</Text>}
                         </View>
-                        <View style={styles.recordRow}>
-                            <Text style={styles.recordLabel}>Peso:</Text>
-                            <Text style={styles.recordValue}>{item.peso} kg</Text>
-                        </View>
-                        <View style={styles.recordRow}>
-                            <Text style={styles.recordLabel}>Altura:</Text>
-                            <Text style={styles.recordValue}>{item.altura} cm</Text>
-                        </View>
-                        <View style={styles.recordRow}>
-                            <TouchableOpacity style={styles.adviceButton} onPress={() => toggleAdvice(item.key)}>
-                                <Text style={styles.adviceButtonText}>Mostrar Conselho</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.key)}>
-                                <Text style={styles.deleteButtonText}>Excluir</Text>
-                            </TouchableOpacity>
-                        </View>
-                        {showAdvice[item.key] && <Text style={styles.adviceText}>{item.imc}</Text>}
-                    </View>
-                ))}
-            </View>
+                    ))}
+                </View>
             </ScrollView>
 
             <Modal
@@ -169,9 +173,9 @@ const AtualizarIMC = () => {
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                    <Text style={styles.modalTitle}>Adicionar Registro de IMC</Text>
+                        <Text style={styles.modalTitle}>Adicionar Registro de IMC</Text>
 
-                    <StyledInputLabel>Peso mais recente</StyledInputLabel>
+                        <StyledInputLabel>Peso mais recente</StyledInputLabel>
                         <TextInput
                             placeholder="Peso (kg)"
                             keyboardType="numeric"
@@ -197,7 +201,14 @@ const AtualizarIMC = () => {
                             }}
                             style={styles.input}
                         />
-                        <Text style={styles.imcResult}>{imcResult}</Text>
+                         {imcResult && (
+                            <TouchableOpacity
+                                style={styles.adviceButton2}
+                                onPress={() => handleAdvicePress(imcResult)}
+                            >
+                                <Text style={styles.adviceButtonText2}>{imcResult.split(' ')[0]}</Text>
+                            </TouchableOpacity>
+                        )}
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
                                 <Text style={styles.buttonText}>Salvar</Text>
@@ -209,7 +220,6 @@ const AtualizarIMC = () => {
                     </View>
                 </View>
             </Modal>
-
 
             {!adding && (
                 <TouchableOpacity style={styles.addButton} onPress={() => setAdding(true)}>
@@ -256,7 +266,7 @@ const styles = StyleSheet.create({
         borderWidth: 2, 
         borderColor: greenForm,
         width: '90%',
-        marginLeft:17,
+        marginLeft: 17,
         
     },
     recordRow: {
@@ -339,9 +349,12 @@ const styles = StyleSheet.create({
         backgroundColor: customGreen,
         padding: 5,
         borderRadius: 5,
+        marginTop: 10,
+        
     },
     adviceButtonText: {
         color: 'white',
+        fontWeight: 'bold',
     },
     deleteButton: {
         backgroundColor: '#8c3030',
@@ -419,8 +432,19 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         textAlign: 'center',
         color: customGreen
+    },
 
-
+    adviceButton2: {
+        backgroundColor: 'transparent',
+        padding: 5,
+        borderRadius: 5,
+        marginBottom: 7,
+        borderWidth: 1,
+        borderColor: roxinho,
+    },
+    adviceButtonText2: {
+        color: roxinho,
+        
     },
 });
 
