@@ -8,6 +8,7 @@ import { ipMaquina } from '../ips';
 
 const { customGreen, backgroundGreen, greenForm, roxinho } = Colors;
 
+
 const Consultas = () => {
     const navigation = useNavigation();
     
@@ -46,22 +47,22 @@ const Consultas = () => {
     const SalvarExam = async () => {
         const dataPattern = /^\d{2}-\d{2}-\d{4}$/;
         const horarioPattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
-
+    
         if (!especialidade || !dataCons || !horario || !resumoCons || !retorno || !lembrete) {
             setFeedbackMessage('Por favor, preencha todos os campos.');
             return;
         }
-
+    
         if (!dataPattern.test(dataCons)) {
             setFeedbackMessage('Data no formato inválido. Use o formato DD-MM-YYYY.');
             return;
         }
-
+    
         if (!horarioPattern.test(horario)) {
             setFeedbackMessage('Horário no formato inválido. Use o formato HH:MM.');
             return;
         }
-
+    
         try {
             const response = await fetch(`http://${ipMaquina}:3000/saveExam`, {
                 method: 'POST',
@@ -78,9 +79,11 @@ const Consultas = () => {
                     lembrete
                 })
             });
-
+    
             const data = await response.json();
-
+    
+            console.log('Resposta do servidor:', data); // Logar a resposta do servidor
+    
             if (response.ok) {
                 Alert.alert(
                     'Exame Salvo',
@@ -92,10 +95,10 @@ const Consultas = () => {
                 setFeedbackMessage('Erro ao salvar o exame. Por favor, tente novamente mais tarde.');
             }
         } catch (error) {
-            console.error(error);
             setFeedbackMessage('Erro ao salvar o exame.');
         }
     };
+    
 
     return (
         <KeyboardAvoidingView

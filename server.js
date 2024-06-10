@@ -225,10 +225,12 @@ app.post('/calcularPressao', (req, res) => {
 
 // Rota para salvar exame
 app.post('/saveExam', (req, res) => {
-  const { especialidade, dataCons, horario, retorno, lembrete } = req.body;
+  const { especialidade, dataCons, horario, resumoCons, retorno, lembrete } = req.body;
+
+  console.log('Dados recebidos:', req.body); // Logar os dados recebidos
 
   // Verificar se todos os campos estão preenchidos
-  if (!especialidade || !dataCons || !horario || !retorno || !lembrete) {
+  if (!especialidade || !dataCons || !horario || !resumoCons || !retorno || !lembrete) {
     return res.status(400).json({ success: false, message: 'Por favor, preencha todos os campos.' });
   }
 
@@ -248,19 +250,24 @@ app.post('/saveExam', (req, res) => {
   const [dia, mes, ano] = dataCons.split('-');
   const dataFormatada = `${ano}-${mes}-${dia}`;
 
-  const sql = 'INSERT INTO exams (especialidade, dataCons, horario, resumoCons, retorno, lembrete) VALUES (?, ?, ?, ?, ?)';
-  db.query(sql, [especialidade, dataFormatada, horario, retorno, lembrete], (err, result) => {
+  const sql = 'INSERT INTO exams (especialidade, dataCons, horario, resumoCons, retorno, lembrete) VALUES (?, ?, ?, ?, ?, ?)';
+
+  console.log('Query SQL:', sql); // Logar a query SQL
+  console.log('Valores:', [especialidade, dataFormatada, horario, resumoCons, retorno, lembrete]); // Logar os valores
+
+  db.query(sql, [especialidade, dataFormatada, horario, resumoCons, retorno, lembrete], (err, result) => {
     if (err) {
-      // console.error('Erro ao inserir exame no banco de dados:', err); // Remova ou comente esta linha
+      console.error('Erro ao inserir exame no banco de dados:', err); // Adicionando log de erro
       return res.status(500).json({ success: false, message: 'Erro interno do servidor.' });
     }
     res.status(201).json({ success: true, message: 'Exame salvo com sucesso.' });
   });
 });
 
+
 app.get('/getExam/:id', (req, res) => {
   const { id } = req.params;
-  const query = 'SELECT * FROM exams WHERE id = ?';
+  const query = 'SELECT * FROM exams WHERE id_consulta = ?';
 
   db.query(query, [id], (err, results) => {
     if (err) {
