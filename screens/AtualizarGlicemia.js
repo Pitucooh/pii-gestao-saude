@@ -189,11 +189,7 @@ const AtualizarGlicemia = () => {
                     )}
                 </View>
             </ScrollView>
-            {!adding && (
-                <TouchableOpacity style={styles.addButton} onPress={handleAddRecord}>
-                    <Text style={styles.addButtonText}>+</Text>
-                </TouchableOpacity>
-            )}
+            
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -204,9 +200,10 @@ const AtualizarGlicemia = () => {
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Adicionar Registro de Pressão</Text>
+                        <Text style={styles.modalTitle}>Adicionar Registro de Glicemia</Text>
                         {adding && (
                             <View style={styles.inputContainer}>
+                                
                                 <TextInput
                                     placeholder="Digite a sua glicemia"
                                     keyboardType="numeric"
@@ -231,7 +228,11 @@ const AtualizarGlicemia = () => {
                     </View>
                 </View>
             </Modal>
-
+            {!adding && (
+                <TouchableOpacity style={styles.addButton} onPress={() => setAdding(true)}>
+                    <Text style={styles.addButtonText}>+</Text>
+                </TouchableOpacity>
+            )}
            
         </KeyboardAvoidingView>
     );
@@ -384,13 +385,48 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
     },
     modalContent: {
         backgroundColor: backgroundGreen,
         padding: 20,
         borderRadius: 10,
         width: '80%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    input: {
+        width: 220,
+        padding: 10,
+        marginVertical: 5,
+        borderRadius: 10,
+        backgroundColor: greenForm,
+        color: backgroundGreen
+    },
+    imcResult: {
+        color: 'black',
+        marginTop: 10,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    button: {
+        flex: 1,
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginHorizontal: 5,
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign: 'center',
+        color: customGreen
+
+
     },
     box: {
         width: 0, 
@@ -398,6 +434,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'red',
         marginTop: 20,
       },
+    
 });
 
 

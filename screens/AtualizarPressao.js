@@ -402,5 +402,11 @@ const styles = StyleSheet.create({
 
 
     },
+    box: {
+        width: 0, 
+        height: 100,
+        backgroundColor: 'red',
+        marginTop: 20,
+      },
 });
 export default AtualizarPressao;
