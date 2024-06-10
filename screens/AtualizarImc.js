@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, Platform, Modal,  ScrollView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, Modal,  ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
@@ -167,6 +167,7 @@ const AtualizarIMC = () => {
                 visible={adding}
                 onRequestClose={() => setAdding(false)}
             >
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
                     <Text style={styles.modalTitle}>Adicionar Registro de IMC</Text>
@@ -208,6 +209,7 @@ const AtualizarIMC = () => {
                         </View>
                     </View>
                 </View>
+                </TouchableWithoutFeedback>
             </Modal>
 
 

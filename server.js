@@ -252,9 +252,6 @@ app.post('/saveExam', (req, res) => {
 
   const sql = 'INSERT INTO exams (especialidade, dataCons, horario, resumoCons, retorno, lembrete) VALUES (?, ?, ?, ?, ?, ?)';
 
-  console.log('Query SQL:', sql); // Logar a query SQL
-  console.log('Valores:', [especialidade, dataFormatada, horario, resumoCons, retorno, lembrete]); // Logar os valores
-
   db.query(sql, [especialidade, dataFormatada, horario, resumoCons, retorno, lembrete], (err, result) => {
     if (err) {
       console.error('Erro ao inserir exame no banco de dados:', err); // Adicionando log de erro
