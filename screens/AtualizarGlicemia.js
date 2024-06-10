@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Button, StyleSheet, Alert, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Animated, Modal, } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Animated, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Swipeable } from 'react-native-gesture-handler';
 import {
@@ -23,11 +23,11 @@ import {
     TextLinkContent,
     WelcomeContainer,
   } from './../components/styles';
-  
+
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
 
 const STORAGE_KEY = 'glicemiaRecords';
-  
+
 const AtualizarGlicemia = () => {
     const [showInput, setShowInput] = useState(false);
     const [glicemia, setGlicemia] = useState('');
@@ -144,14 +144,12 @@ const AtualizarGlicemia = () => {
         <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <View style={styles.content}>
-                    <Text style={styles.title}>Glicemia</Text>
-                    <Text style={styles.descriptionText}>
-                        Atualize sua glicemia colocando seus dados mais recentes
-                    </Text>
+                    <PageTitle style={styles.pageTitle}>Glicemia</PageTitle>
+                    <Text style={styles.subTitle}>Atualize sua glicemia colocando seus dados mais recentes</Text>
                     {showInput ? (
                         <>
-                            <Text style={styles.subtitle}>Informe sua Glicemia</Text>
-                            <TextInput
+                            <StyledInputLabel>Informe sua Glicemia</StyledInputLabel>
+                            <StyledTextInput
                                 placeholder="Digite sua glicemia"
                                 keyboardType="numeric"
                                 value={glicemia}
@@ -159,17 +157,16 @@ const AtualizarGlicemia = () => {
                                     setGlicemia(text);
                                     setGlicemiaResult(calcGlicemia(parseFloat(text)));
                                 }}
-                                style={styles.input}
                             />
                             <View style={styles.buttonContainer}>
-                                <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
-                                    <Text style={styles.buttonText}>Salvar</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
-                                    <Text style={styles.buttonText}>Cancelar</Text>
-                                </TouchableOpacity>
+                                <StyledButton onPress={handleSave}>
+                                    <ButtonText>Salvar</ButtonText>
+                                </StyledButton>
+                                <StyledButton onPress={handleCancel} style={styles.cancelButton}>
+                                    <ButtonText>Cancelar</ButtonText>
+                                </StyledButton>
                             </View>
-                            <Text style={styles.resultText}>{glicemiaResult}</Text>
+                            <MsgBox>{glicemiaResult}</MsgBox>
                         </>
                     ) : (
                         <>
@@ -179,9 +176,19 @@ const AtualizarGlicemia = () => {
                                     renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, index)}
                                 >
                                     <View style={styles.recordContainer}>
-                                        <Text style={styles.recordText}>Data: {formatDate(record.date)}</Text>
-                                        <Text style={styles.recordText}>Glicemia: {record.glicemia}</Text>
-                                        <Text style={styles.recordText}>Resultado: {record.result}</Text>
+                                        <Text style={styles.boldText}>Data:</Text>
+                                        <Text style={styles.recordText}>{formatDate(record.date)}</Text>
+                                        <Text style={styles.boldText}>Glicemia:</Text>
+                                        <Text style={styles.recordText}>{record.glicemia}</Text>
+                                        <Text style={styles.boldText}>Resultado:</Text>
+                                        <Text style={styles.recordText}>{record.result}</Text>
+                                        <TouchableOpacity
+                                            onPress={() => handleDelete(item.key)}
+                                            style={styles.deleteButton}
+                                        >
+                                            <Text style={styles.deleteButtonText}>Excluir</Text>
+                                            
+                                        </TouchableOpacity>
                                     </View>
                                 </Swipeable>
                             ))}
@@ -238,7 +245,6 @@ const AtualizarGlicemia = () => {
     );
 };
 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -250,45 +256,43 @@ const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
     },
-    title: {
+    content: {
+        width: '100%',
+        alignItems: 'center',
+    },
+    pageTitle: {
         lineHeight: 30,
         color: customGreen,
         fontSize: 30,
         marginTop: 30,
-        textAlign: 'center',
-        fontWeight: 'bold',
+        
     },
-    descriptionText: {
+    subTitle: {
         color: roxinho,
         textAlign: 'center',
-        marginTop: 10,
+        marginBottom: 10,
         fontSize: 16,
     },
-    record: {
-        padding: 10,
-        marginTop: 10,
+    recordContainer: {
         backgroundColor: greenForm,
-        borderRadius: 5,
+        padding: 15,
+        marginVertical: 10,
+        width: '100%',
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: greenForm,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 3,
-        borderWidth: 2,
-        borderColor: greenForm,
     },
-    recordRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 5,
+    recordText: {
+        color: backgroundGreen,
     },
-    recordLabel: {
+    boldText: {
+        color: backgroundGreen,
         fontWeight: 'bold',
-        color: backgroundGreen,
-    },
-    recordValue: {
-        color: backgroundGreen,
     },
     inputContainer: {
         marginTop: 20,
@@ -317,13 +321,16 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         alignItems: 'center',
+        color: backgroundGreen,
         marginHorizontal: 5,
     },
     saveButton: {
         backgroundColor: customGreen,
+        color: backgroundGreen
     },
     cancelButton: {
         backgroundColor: '#8c3030',
+        color: backgroundGreen
     },
     addButton: {
         backgroundColor: customGreen,
@@ -344,27 +351,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
         fontSize: 18,
         fontWeight: 'bold',
-    },
-    updateButton: {
-        backgroundColor: '#007bff',
-        padding: 15,
-        borderRadius: 8,
-        marginBottom: 20,
-    },
-    updateButtonText: {
-        color: '#fff',
-        fontSize: 18,
-        textAlign: 'center',
-    },
-    recordContainer: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        padding: 10,
-        marginBottom: 10,
-    },
-    recordText: {
-        fontSize: 16,
     },
     rightAction: {
         backgroundColor: '#dd2c00',
@@ -394,39 +380,14 @@ const styles = StyleSheet.create({
         width: '80%',
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    input: {
-        width: 220,
-        padding: 10,
-        marginVertical: 5,
-        borderRadius: 10,
-        backgroundColor: greenForm,
         color: backgroundGreen
-    },
-    imcResult: {
-        color: 'black',
-        marginTop: 10,
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-    },
-    button: {
-        flex: 1,
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-        marginHorizontal: 5,
     },
     modalTitle: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: 'center',
-        color: customGreen
-
-
+        color: customGreen,
     },
     box: {
         width: 0, 
@@ -434,8 +395,16 @@ const styles = StyleSheet.create({
         backgroundColor: 'red',
         marginTop: 20,
       },
-    
+      deleteButton: {
+        backgroundColor: '#8c3030',
+        padding: 5,
+        borderRadius: 5,
+        marginLeft: '80%',
+        width: 55
+    },
+    deleteButtonText: {
+        color: 'white',
+    },
 });
-
 
 export default AtualizarGlicemia;
