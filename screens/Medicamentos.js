@@ -3,6 +3,8 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, FlatList } 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
+import KeyboardWrapper from '../components/KeyboardWrapper';
+
 
 import {
     StyledContainer,
@@ -111,6 +113,7 @@ const Medicamentos = () => {
             </TouchableOpacity>
 
             <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
+            <KeyboardWrapper>
                 <View style={styles.centeredView}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>Adicionar Medicamento</Text>
@@ -157,6 +160,7 @@ const Medicamentos = () => {
                         </View>
                     </View>
                 </View>
+                </KeyboardWrapper>
             </Modal>
         </View>
     );

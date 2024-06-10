@@ -1,18 +1,16 @@
-import React, { Children } from 'react';
-
-//keyboard avoiding view
-import {KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import React from 'react';
+import { KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 
 const KeyboardWrapper = ({ children }) => {
-    return (
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-        <ScrollView>
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            {children}
-          </TouchableWithoutFeedback>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    );
+  return (
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          {children}
+        </TouchableWithoutFeedback>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
 };
 
-export default KeyboardWrapper; 
+export default KeyboardWrapper;

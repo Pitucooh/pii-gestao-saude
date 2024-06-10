@@ -5,6 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { InnerContainer, PageTitle, Colors, StyledButton, ButtonText, WelcomeContainer, MyTextInput } from './../components/styles';
 import Modal from 'react-native-modal';
 import { ipMaquina } from '../ips';
+import KeyboardWrapper from '../components/KeyboardWrapper';
+
 
 const { customGreen, backgroundGreen, greenForm, roxinho } = Colors;
 
@@ -101,12 +103,7 @@ const Consultas = () => {
     
 
     return (
-        <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={Platform.OS === 'ios' ? 'padding' : null}
-            enabled
-        >
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <KeyboardWrapper>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <InnerContainer style={{ backgroundColor: backgroundGreen }}>
                         <WelcomeContainer style={{ backgroundColor: backgroundGreen }}>
@@ -190,8 +187,7 @@ const Consultas = () => {
                         </Modal>
                     </InnerContainer>
                 </TouchableWithoutFeedback>
-            </ScrollView>
-        </KeyboardAvoidingView>
+                </KeyboardWrapper>
     );
 };
 

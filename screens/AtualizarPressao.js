@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform, Modal } from 'react-native';
-import { Swipeable } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
@@ -78,14 +77,14 @@ const AtualizarPressao = () => {
         const diastolicaInt = parseInt(diastolica);
         if (!isNaN(sistolicaInt) && !isNaN(diastolicaInt)) {
             const pressao = calcPressao(sistolicaInt, diastolicaInt);
+            setPressaoResult(pressao); // Definindo o resultado da pressão arterial
             const date = new Date().toLocaleString();
             const newRecord = { sistolica, diastolica, pressao, date, key: `${records.length}` };
             setRecords([newRecord, ...records]);
             setSistolica('');
             setDiastolica('');
-            setPressaoResult('');
             setAdding(false);
-
+    
             Alert.alert(
                 'Registro Salvo',
                 'O registro da sua pressão arterial foi salvo com sucesso.',
@@ -96,7 +95,7 @@ const AtualizarPressao = () => {
             Alert.alert('Erro', 'Por favor, insira números válidos para sistólica e diastólica.');
         }
     };
-
+    
     const handleCancel = () => {
         setSistolica('');
         setDiastolica('');
@@ -138,12 +137,10 @@ const AtualizarPressao = () => {
                                 <Text style={styles.recordLabel}>Diastólica:</Text>
                                 <Text style={styles.recordValue}>{item.diastolica} mmHg</Text>
                             </View>
-                            <TouchableOpacity
-                                style={styles.adviceButton}
-                                onPress={() => handleAdvicePress(item.pressao)}
-                            >
-                                <Text style={styles.adviceButtonText}>{item.pressao.split(' ')[0]}</Text>
-                            </TouchableOpacity>
+                            <View style={styles.recordRow}>
+                                <Text style={styles.recordLabel}>Resultado:</Text>
+                                <Text style={styles.recordValue}>{item.pressao}</Text>
+                            </View>
                             <TouchableOpacity
                                 onPress={() => handleDelete(item.key)}
                                 style={styles.deleteButton}
@@ -238,6 +235,7 @@ const styles = StyleSheet.create({
         elevation: 3,
         borderWidth: 2,
         borderColor: greenForm,
+        borderColor: greenForm
     },
     recordRow: {
         flexDirection: 'row',
@@ -349,7 +347,7 @@ const styles = StyleSheet.create({
         backgroundColor: greenForm,
         color: backgroundGreen
     },
-    imcResult: {
+    pressaoResult: {
         color: 'black',
         marginTop: 10,
     },
@@ -391,14 +389,34 @@ const styles = StyleSheet.create({
         fontSize: 30,
         lineHeight: 30,
     },
+    deleteButton: {
+        backgroundColor: '#8c3030',
+        padding: 5,
+        borderRadius: 5,
+        marginLeft: '80%',
+        width: 55
+    },
+    deleteButtonText: {
+        color: 'white',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: backgroundGreen,
+        padding: 20,
+        borderRadius: 10,
+        width: '80%',
+    },
     modalTitle: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: 'center',
         color: customGreen
-
-
     },
     box: {
         width: 0, 
@@ -417,5 +435,6 @@ const styles = StyleSheet.create({
         color: roxinho
     },
 });
+
 export default AtualizarPressao;
 

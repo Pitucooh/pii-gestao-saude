@@ -171,6 +171,7 @@ const AtualizarIMC = () => {
                 visible={adding}
                 onRequestClose={() => setAdding(false)}
             >
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>Adicionar Registro de IMC</Text>
@@ -219,6 +220,7 @@ const AtualizarIMC = () => {
                         </View>
                     </View>
                 </View>
+                </TouchableWithoutFeedback>
             </Modal>
 
             {!adding && (
