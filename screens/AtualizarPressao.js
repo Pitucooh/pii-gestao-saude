@@ -126,7 +126,7 @@ const AtualizarPressao = () => {
         >
             <ScrollView>
                 <View style={styles.container}>
-                    <Text style={styles.title}>Atualizar Pressão Arterial</Text>
+                    <Text style={styles.title}>PRESSÃO ARTERIAL</Text>
                     <Text style={styles.descriptionText}>
                         Atualize sua pressão colocando seus dados mais recentes
                     </Text>
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
         lineHeight: 30,
         color: customGreen,
         fontSize: 30,
-        marginTop: 23,
+        marginTop: 50,
         textAlign: 'center',
         fontWeight: 'bold',
     },

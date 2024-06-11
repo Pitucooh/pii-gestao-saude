@@ -87,7 +87,7 @@ const Medicamentos = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Gerenciar Medicamentos</Text>
+            <Text style={styles.title}>GERENCIAR MEDICAMENTOS</Text>
             <Text style={styles.descriptionText}>
                Adicione aqui seus medicamentos! É importante o monitoramento das suas medicações!
             </Text>
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
         backgroundColor: backgroundGreen,
         borderRadius: 10,
         padding: 20,
-        width: '80%',
+        width: '100%',
     },
     modalTitle: {
         fontSize: 20,
@@ -262,10 +262,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: 20,
+        
     },
     modalButton: {
         backgroundColor: greenForm,
-        padding: 10,
         borderRadius: 8,
         width: '40%',
     },
@@ -276,23 +276,22 @@ const styles = StyleSheet.create({
     },
     saveButton: {
         backgroundColor: customGreen,
-        padding: 5,
-        borderRadius: 5
+        padding: 10,
+        borderRadius: 5,
+        width: '40%'
     },
     cancelButton: {
         backgroundColor: '#8c3030',
-        padding: 5,
-        borderRadius: 5
+        padding: 10,
+        borderRadius: 5,
+        width: '40%',
+
     },
     buttonText: {
         color: 'white',
         fontWeight: 'bold',
     },
-    modalButtons: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginTop: 20,
-    },
+    
 
     input: {
         backgroundColor: greenForm,

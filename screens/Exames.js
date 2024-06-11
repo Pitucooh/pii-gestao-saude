@@ -111,7 +111,7 @@ const App = () => {
        <WelcomeContainer>
                    
                    <PageTitle welcome={true} style={{flexWrap: 'wrap', lineHeight: 30, color:customGreen, 
-                        fontSize: 30, marginTop: 25}}>EXAMES</PageTitle>
+                        fontSize: 30,}}>EXAMES</PageTitle>
                    <Text style={{color: roxinho, marginBottom:20, alignItems: 'center'}}>{'Faça o upload dos exames e tenha os resultados'} </Text>
                    
                    <View style={styles.container}>
@@ -138,15 +138,15 @@ const App = () => {
                   </View>
                   <View style={{ height: 2, backgroundColor: roxinho, width: '100%', marginTop:15, marginBottom: 15}}></View>
                    <View style={styles.uploadButtonContainer}>
-                   {!selectedFile ? ( <Button title="Selecionar Arquivo PDF" onPress={handleFilePick} color={roxinho} padding={7} />
-                    ) : (
+                      {!selectedFile ? ( <Button title="Selecionar Arquivo PDF" onPress={handleFilePick} color={roxinho} padding={7} />
+                        ) : (
                       <View>
                       <Button title="Enviar para a analise"  onPress={uploadFileAndGetResults} color={roxinho} borderRadius={20}/>
                       <View style={styles.filePickerContainer}>
                         <Text style={styles.fileName}>{selectedFile.name}</Text>
                       </View>
                       </View>
-                    )}
+                      )}
                    </View>
                    <StyledFormArea>
                    </StyledFormArea>

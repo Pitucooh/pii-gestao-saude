@@ -163,7 +163,7 @@ const AtualizarGlicemia = () => {
     <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <View style={styles.content}>
-                    <PageTitle style={styles.pageTitle}>Glicemia</PageTitle>
+                    <PageTitle style={styles.pageTitle}>GLICEMIA</PageTitle>
                     <Text style={styles.subTitle}>Atualize sua glicemia colocando seus dados mais recentes</Text>
                     {showInput ? (
                         <View style={styles.inputButtonContainer}>

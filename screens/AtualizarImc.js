@@ -132,7 +132,7 @@ const AtualizarIMC = () => {
             keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
         >
             <ScrollView>
-                <Text style={styles.title}>Atualizar IMC</Text>
+                <Text style={styles.title}>IMC</Text>
                 <Text style={styles.descriptionText}>
                     Atualize seu IMC colocando seus dados mais recentes
                 </Text>
