@@ -185,13 +185,8 @@ const AtualizarPressao = () => {
                                 onChangeText={(text) => setDiastolica(text)}
                                 style={styles.input}
                             />
-                            <TouchableOpacity
-                                style={styles.adviceButton2}
-                                onPress={() => setCurrentAdvice(pressaoResult)}
-                            >
-                                <Icon name="information-circle-outline" size={20} color="black" />
-                                <Text style={styles.adviceButtonText}>{pressaoResult.split(' ')[0]}</Text>
-                            </TouchableOpacity>
+                            
+                           
                             <View style={styles.buttonContainer}>
                                 <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
                                     <Text style={styles.buttonText}>Salvar</Text>
@@ -200,11 +195,7 @@ const AtualizarPressao = () => {
                                     <Text style={styles.buttonText}>Cancelar</Text>
                                 </TouchableOpacity>
                             </View>
-                            {currentAdvice && (
-                                <View style={styles.adviceContainer}>
-                                    <Text style={styles.adviceText}>{currentAdvice}</Text>
-                                </View>
-                            )}
+                            
                         </View>
                     </View>
                 </Modal>
@@ -253,8 +244,8 @@ const styles = StyleSheet.create({
         elevation: 3,
         borderWidth: 2, 
         borderColor: greenForm,
-        width: '90%',
-        marginLeft: 17,
+        width: '100%',
+        marginLeft: 5,
     },
     recordRow: {
         flexDirection: 'row',
@@ -373,7 +364,23 @@ const styles = StyleSheet.create({
         borderColor: roxinho,
         marginBottom: 7
     },
-   
+    adviceButtonText2: {
+        color: roxinho,
+        
+    },
+
+    adviceText:{
+        color:backgroundGreen,
+        fontStyle: 'italic',
+    },
+    input: {
+        width: '100%',
+        padding: 10,
+        marginVertical: 5,
+        borderRadius: 10,
+        backgroundColor: greenForm,
+        color: backgroundGreen
+    },
 });
 
 export default AtualizarPressao;

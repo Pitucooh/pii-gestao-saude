@@ -175,48 +175,49 @@ const AtualizarIMC = () => {
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>Adicionar Registro de IMC</Text>
-
-                        <StyledInputLabel>Peso mais recente</StyledInputLabel>
-                        <TextInput
-                            placeholder="Peso (kg)"
-                            keyboardType="numeric"
-                            value={peso}
-                            onChangeText={(text) => {
-                                setPeso(text);
-                                if (text && altura) {
-                                    setImcResult(calcIMC(parseFloat(text), parseFloat(altura)));
-                                }
-                            }}
-                            style={styles.input}
-                        />
-                        <StyledInputLabel>Altura</StyledInputLabel>
-                        <TextInput
-                            placeholder="Altura (cm)"
-                            keyboardType="numeric"
-                            value={altura}
-                            onChangeText={(text) => {
-                                setAltura(text);
-                                if (text && peso) {
-                                    setImcResult(calcIMC(parseFloat(peso), parseFloat(text)));
-                                }
-                            }}
-                            style={styles.input}
-                        />
-                         {imcResult && (
-                            <TouchableOpacity
-                                style={styles.adviceButton2}
-                                onPress={() => handleAdvicePress(imcResult)}
-                            >
-                                <Text style={styles.adviceButtonText2}>{imcResult.split(' ')[0]}</Text>
-                            </TouchableOpacity>
-                        )}
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
-                                <Text style={styles.buttonText}>Salvar</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
-                                <Text style={styles.buttonText}>Cancelar</Text>
-                            </TouchableOpacity>
+                        <View style={styles.inputContainer}>
+                            <StyledInputLabel>Peso mais recente</StyledInputLabel>
+                            <TextInput
+                                placeholder="Peso (kg)"
+                                keyboardType="numeric"
+                                value={peso}
+                                onChangeText={(text) => {
+                                    setPeso(text);
+                                    if (text && altura) {
+                                        setImcResult(calcIMC(parseFloat(text), parseFloat(altura)));
+                                    }
+                                }}
+                                style={styles.input}
+                            />
+                            <StyledInputLabel>Altura</StyledInputLabel>
+                            <TextInput
+                                placeholder="Altura (cm)"
+                                keyboardType="numeric"
+                                value={altura}
+                                onChangeText={(text) => {
+                                    setAltura(text);
+                                    if (text && peso) {
+                                        setImcResult(calcIMC(parseFloat(peso), parseFloat(text)));
+                                    }
+                                }}
+                                style={styles.input}
+                            />
+                            {imcResult && (
+                                <TouchableOpacity
+                                    style={styles.adviceButton2}
+                                    onPress={() => handleAdvicePress(imcResult)}
+                                >
+                                    <Text style={styles.adviceButtonText2}>{imcResult.split(' ')[0]}</Text>
+                                </TouchableOpacity>
+                            )}
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
+                                    <Text style={styles.buttonText}>Salvar</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
+                                    <Text style={styles.buttonText}>Cancelar</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                 </View>
@@ -294,7 +295,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: '70%',
         alignItems: 'center',
-        
     },
     input: {
         width: '100%',

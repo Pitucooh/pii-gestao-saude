@@ -86,7 +86,7 @@ const AtualizarGlicemia = () => {
     const handleSave = () => {
         const glicemiaValue = parseFloat(glicemia);
         const glicemiaResultValue = calcGlicemia(glicemiaValue);
-        setGlicemiaResult(glicemiaResultValue); // Atualizando o estado glicemiaResult
+        setGlicemiaResult(glicemiaResultValue); 
         const newRecord = { glicemia: glicemiaValue, result: glicemiaResultValue, date: new Date() };
         setPilha(prevPilha => [...prevPilha, newRecord]);
         setGlicemia('');
@@ -127,6 +127,21 @@ const AtualizarGlicemia = () => {
         const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
         return `${formattedDay}/${formattedMonth}/${year}, ${formattedHours}:${formattedMinutes}`;
+    };
+
+    const handleDelete = (key) => {
+        setRecords(records.filter(record => record.key !== key));
+    };
+
+    const toggleAdvice = (key) => {
+        setShowAdvice(prevState => ({
+            ...prevState,
+            [key]: !prevState[key]
+        }));
+    };
+
+    const handleAdvicePress = (advice) => {
+        Alert.alert('Conselho de IMC', advice);
     };
 
     const renderRightActions = (progress, dragX, index) => {
@@ -174,25 +189,29 @@ const AtualizarGlicemia = () => {
                     ) : (
                         <>
                             {pilha.map((record, index) => (
-                                <Swipeable
-                                    key={index}
-                                    renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, index)}
-                                >
-                                    <View style={styles.recordContainer}>
-                                        <Text style={styles.boldText}>Data:</Text>
-                                        <Text style={styles.recordText}>{formatDate(record.date)}</Text>
-                                        <Text style={styles.boldText}>Glicemia:</Text>
-                                        <Text style={styles.recordText}>{record.glicemia}</Text>
-                                        <Text style={styles.boldText}>Resultado:</Text>
-                                        <Text style={styles.recordText}>{record.result}</Text>
-                                        <TouchableOpacity
-                                            onPress={() => handleDeleteRecord(index)}
-                                            style={styles.deleteButton}
-                                        >
-                                            <Text style={styles.deleteButtonText}>Excluir</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </Swipeable>
+                                
+                        <View key={index} style={styles.record}>
+                            <View style={styles.recordRow}>
+                                <Text style={styles.recordLabel}>Data:</Text>
+                                <Text style={styles.recordValue}>{record.date}</Text>
+                            </View>
+                            <View style={styles.recordRow}>
+                                <Text style={styles.recordLabel}>Glicemia:</Text>
+                                <Text style={styles.recordValue}>{record.glicemia}</Text>
+                            </View>
+                            <View style={styles.recordRow}>
+                                <Text style={styles.recordLabel}>Resultado:</Text>
+                               
+                            </View>
+                            <View style={styles.recordRow}>
+                                <TouchableOpacity style={styles.adviceButton} onPress={() => toggleAdvice(record.date)}>
+                                    <Text style={styles.adviceButtonText}>Mostrar Conselho</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteRecord(record.date)}>
+                                    <Text style={styles.deleteButtonText}>Excluir</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                             ))}
                         </>
                     )}
@@ -220,7 +239,7 @@ const AtualizarGlicemia = () => {
                                 }}
                                 style={styles.input}
                             />
-                            <Text style={styles.pressaoResult}>{glicemiaResult}</Text>
+                            
                             <View style={styles.buttonContainer}>
                                 <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
                                     <Text style={styles.buttonText}>Salvar</Text>
@@ -293,15 +312,7 @@ const AtualizarGlicemia = () => {
             color: backgroundGreen,
             fontWeight: 'bold',
         },
-        inputButtonContainer: {
-            width: '100%',
-            alignItems: 'center',
-        },
-        inputContainer: {
-            marginTop: 20,
-            width: '70%',
-            alignItems: 'center',
-        },
+       
         input: {
             width: '100%',
             padding: 10,
@@ -334,6 +345,10 @@ const AtualizarGlicemia = () => {
         cancelButton: {
             backgroundColor: '#8c3030',
             color: backgroundGreen
+        },
+        buttonText: {
+            color: 'white',
+            fontWeight: 'bold',
         },
         addButton: {
             backgroundColor: customGreen,
@@ -381,9 +396,6 @@ const AtualizarGlicemia = () => {
             padding: 20,
             borderRadius: 10,
             width: '80%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            color: backgroundGreen
         },
         modalTitle: {
             fontSize: 20,
@@ -405,8 +417,39 @@ const AtualizarGlicemia = () => {
             marginLeft: '80%',
             width: 55
         },
+        input: {
+            width: '100%',
+            padding: 10,
+            marginVertical: 5,
+            borderRadius: 10,
+            backgroundColor: greenForm,
+            color: backgroundGreen
+        },
         deleteButtonText: {
             color: 'white',
+        }
+        ,adviceButton: {
+            backgroundColor: customGreen,
+            padding: 5,
+            borderRadius: 5,
+            marginTop: 10,
+            width: 80
+            
+        },
+        adviceButtonText: {
+            color: 'white',
+            
+        },
+        buttonContainer: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
+        },
+        recordRow: {
+            
+            justifyContent: 'space-between',
+            
+            marginBottom: 5,
         },
     });
     
