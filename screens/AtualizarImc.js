@@ -64,17 +64,17 @@ const AtualizarIMC = () => {
         const alturaMetros = altura / 100;
         const imc = peso / (alturaMetros * alturaMetros);
         if (imc < 18.5) {
-            return "Você está um pouco abaixo do peso ideal, seria interessante mudar seus hábitos, que tal procurar um nutricionista para ganhar peso com saúde?";
+            return "Magreza - Você está abaixo do peso. É recomendado que você procure um especialista para ganhar massa com saúde!";
         } else if (imc >= 18.5 && imc < 25) {
-            return "Uau, que incrível, você está no seu peso ideal, parabéns!! Mas não se esqueça, sempre mantenha uma alimentação saudável e busque fazer exercícios físicos.";
+            return "Saudavél - Seu peso condiz com a sua altura, se mantenha assim. foque sempre em alimentos saudavéis e exercícios físicos";
         } else if (imc >= 25 && imc < 30) {
-            return "Sobrepeso. Eita, acho que está na hora de prestar atenção no seu peso, tome cuidado com sua alimentação, pratique exercícios físicos, sua saúde pode melhorar muito com isso.";
+            return "Sobrepeso - Eita, acho que está na hora de prestar atenção no seu peso, tome cuidado com sua alimentação, pratique exercícios físicos, sua saúde pode melhorar muito com isso.";
         } else if (imc >= 30 && imc < 35) {
-            return "Obesidade I. Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disso, é sempre importante realizar algum tipo de atividade física, isso vai ajudar muito a sua saúde.";
+            return "Obesidade I - Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disso, é sempre importante realizar algum tipo de atividade física, isso vai ajudar muito a sua saúde.";
         } else if (imc >= 35 && imc < 40) {
-            return "Obesidade II. Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disso, é sempre importante realizar algum tipo de atividade física, isso vai ajudar muito a sua saúde.";
+            return "Obesidade II - Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disso, é sempre importante realizar algum tipo de atividade física, isso vai ajudar muito a sua saúde.";
         } else {
-            return "Obesidade grave. Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disso, é sempre importante realizar algum tipo de atividade física, isso vai ajudar muito a sua saúde.";
+            return "Obesidade grave - .Huum, acho que está na hora de se cuidar um pouco mais, o que acha de passar com um endocrinologista ou um nutricionista para avaliar como você pode melhorar sua saúde e alimentação? Além disso, é sempre importante realizar algum tipo de atividade física, isso vai ajudar muito a sua saúde.";
         }
     }
 

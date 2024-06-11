@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform, Modal } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';import Icon from 'react-native-vector-icons/Ionicons';
+
 
 const { brand, darkLight, backgroundGreen, customGreen, primary, greenForm, roxinho } = Colors;
 
@@ -32,6 +33,7 @@ const AtualizarPressao = () => {
     const [pressaoResult, setPressaoResult] = useState('');
     const [records, setRecords] = useState([]);
     const [adding, setAdding] = useState(false);
+    const [showAdvice, setShowAdvice] = useState({});
 
     useEffect(() => {
         const loadRecords = async () => {
@@ -78,6 +80,7 @@ const AtualizarPressao = () => {
         if (!isNaN(sistolicaInt) && !isNaN(diastolicaInt)) {
             const pressao = calcPressao(sistolicaInt, diastolicaInt);
             setPressaoResult(pressao); // Definindo o resultado da pressão arterial
+            setCurrentAdvice(pressao); // Atualizando o conselho atual
             const date = new Date().toLocaleString();
             const newRecord = { sistolica, diastolica, pressao, date, key: `${records.length}` };
             setRecords([newRecord, ...records]);
@@ -96,6 +99,10 @@ const AtualizarPressao = () => {
         }
     };
     
+
+    const [currentAdvice, setCurrentAdvice] = useState('');
+
+    
     const handleCancel = () => {
         setSistolica('');
         setDiastolica('');
@@ -107,8 +114,8 @@ const AtualizarPressao = () => {
         setRecords(records.filter(record => record.key !== key));
     };
 
-    const handleAdvicePress = (advice) => {
-        Alert.alert('Conselho', advice, [{ text: 'OK' }], { cancelable: false });
+    const toggleAdvice = (key) => {
+        setShowAdvice((prev) => ({ ...prev, [key]: !prev[key] }));
     };
 
     return (
@@ -139,57 +146,68 @@ const AtualizarPressao = () => {
                             </View>
                             <View style={styles.recordRow}>
                                 <Text style={styles.recordLabel}>Resultado:</Text>
-                                <Text style={styles.recordValue}>{item.pressao}</Text>
+                                
                             </View>
-                            <TouchableOpacity
-                                onPress={() => handleDelete(item.key)}
-                                style={styles.deleteButton}
-                            >
-                                <Text style={styles.deleteButtonText}>Excluir</Text>
-                            </TouchableOpacity>
+                            <View style={styles.recordRow}>
+                                <TouchableOpacity style={styles.adviceButton} onPress={() => toggleAdvice(item.key)}>
+                                    <Text style={styles.adviceButtonText}>Mostrar Conselho</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.key)}>
+                                    <Text style={styles.deleteButtonText}>Excluir</Text>
+                                </TouchableOpacity>
+                            </View>
+                            {showAdvice[item.key] && <Text style={styles.adviceText}>{item.pressao}</Text>}
                         </View>
                     ))}
 
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={adding}
-                        onRequestClose={() => setAdding(false)}
-                    >
-                        <View style={styles.modalContainer}>
-                            <View style={styles.modalContent}>
-                                <Text style={styles.modalTitle}>Adicionar Registro de Pressão</Text>
-                                <StyledInputLabel>Pressão sistólica</StyledInputLabel>
-                                <TextInput
-                                    placeholder="Sistólica (mmHg)"
-                                    keyboardType="numeric"
-                                    value={sistolica}
-                                    onChangeText={(text) => setSistolica(text)}
-                                    style={styles.input}
-                                />
-                                <StyledInputLabel>Pressão diastólica</StyledInputLabel>
-                                <TextInput
-                                    placeholder="Diastólica (mmHg)"
-                                    keyboardType="numeric"
-                                    value={diastolica}
-                                    onChangeText={(text) => setDiastolica(text)}
-                                    style={styles.input}
-                                />
-                                <TouchableOpacity
-                                    style={[styles.adviceButton2]}
-                                    onPress={() => setShowAdvice('')}
-                                ></TouchableOpacity>
-                                <View style={styles.buttonContainer}>
-                                    <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
-                                        <Text style={styles.buttonText}>Salvar</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
-                                        <Text style={styles.buttonText}>Cancelar</Text>
-                                    </TouchableOpacity>
-                                </View>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={adding}
+                    onRequestClose={() => setAdding(false)}
+                >
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                            <Text style={styles.modalTitle}>Adicionar Registro de Pressão</Text>
+                            <StyledInputLabel>Pressão sistólica</StyledInputLabel>
+                            <TextInput
+                                placeholder="Sistólica (mmHg)"
+                                keyboardType="numeric"
+                                value={sistolica}
+                                onChangeText={(text) => setSistolica(text)}
+                                style={styles.input}
+                            />
+                            <StyledInputLabel>Pressão diastólica</StyledInputLabel>
+                            <TextInput
+                                placeholder="Diastólica (mmHg)"
+                                keyboardType="numeric"
+                                value={diastolica}
+                                onChangeText={(text) => setDiastolica(text)}
+                                style={styles.input}
+                            />
+                            <TouchableOpacity
+                                style={styles.adviceButton2}
+                                onPress={() => setCurrentAdvice(pressaoResult)}
+                            >
+                                <Icon name="information-circle-outline" size={20} color="black" />
+                                <Text style={styles.adviceButtonText}>{pressaoResult.split(' ')[0]}</Text>
+                            </TouchableOpacity>
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
+                                    <Text style={styles.buttonText}>Salvar</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
+                                    <Text style={styles.buttonText}>Cancelar</Text>
+                                </TouchableOpacity>
                             </View>
+                            {currentAdvice && (
+                                <View style={styles.adviceContainer}>
+                                    <Text style={styles.adviceText}>{currentAdvice}</Text>
+                                </View>
+                            )}
                         </View>
-                    </Modal>
+                    </View>
+                </Modal>
                 </View>
             </ScrollView>
             {!adding && (
@@ -233,9 +251,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 3,
-        borderWidth: 2,
+        borderWidth: 2, 
         borderColor: greenForm,
-        borderColor: greenForm
+        width: '90%',
+        marginLeft: 17,
     },
     recordRow: {
         flexDirection: 'row',
@@ -263,11 +282,7 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         borderRadius: 5,
     },
-    imcResult: {
-        color: customGreen,
-        fontWeight: 'bold',
-        marginTop: 10,
-    },
+    
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -285,9 +300,10 @@ const styles = StyleSheet.create({
         backgroundColor: customGreen,
     },
     cancelButton: {
-        backgroundColor: '#ccc',
-        padding: 5
-
+        backgroundColor: '#8c3030',
+        padding: 5,
+        textAlign: 'center',
+        justifyContent: 'center'
     },
     buttonText: {
         color: 'white',
@@ -321,8 +337,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#8c3030',
         padding: 5,
         borderRadius: 5,
-        marginLeft: '80%',
-        width: 55
+        marginLeft: 10,
+        width: 55,
     },
     deleteButtonText: {
         color: 'white',
@@ -339,102 +355,25 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: '80%',
     },
-    input: {
-        width: '100%',
-        padding: 10,
-        marginVertical: 5,
-        borderRadius: 10,
-        backgroundColor: greenForm,
-        color: backgroundGreen
-    },
-    pressaoResult: {
-        color: 'black',
-        marginTop: 10,
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-    },
-    button: {
-        flex: 1,
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-        marginHorizontal: 5,
-    },
-    saveButton: {
-        backgroundColor: customGreen,
-    },
-    cancelButton: {
-        backgroundColor: '#8c3030',
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-    },
-    addButton: {
-        backgroundColor: customGreen,
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute',
-        bottom: 20,
-        right: 20,
-    },
-    addButtonText: {
-        color: 'white',
-        fontSize: 30,
-        lineHeight: 30,
-    },
-    deleteButton: {
-        backgroundColor: '#8c3030',
-        padding: 5,
-        borderRadius: 5,
-        marginLeft: '80%',
-        width: 55
-    },
-    deleteButtonText: {
-        color: 'white',
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    modalContent: {
-        backgroundColor: backgroundGreen,
-        padding: 20,
-        borderRadius: 10,
-        width: '80%',
-    },
     modalTitle: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: 'center',
-        color: customGreen
+        color: customGreen,
     },
-    box: {
-        width: 0, 
-        height: 100,
-        backgroundColor: 'red',
-        marginTop: 20,
-      },
-
-      adviceButton2: {
+    adviceButton2: {
+        flexDirection: 'row',
+        alignItems: 'center',
         backgroundColor: 'transparent',
-        padding: 12,
+        padding: 10,
         borderRadius: 5,
-        marginBottom: 7,
+        marginTop: 10,
         borderWidth: 1,
         borderColor: roxinho,
-        color: roxinho
+        marginBottom: 7
     },
+   
 });
 
 export default AtualizarPressao;
-
