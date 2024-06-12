@@ -150,7 +150,7 @@ const AtualizarPressao = () => {
                             </View>
                             <View style={styles.recordRow}>
                                 <TouchableOpacity style={styles.adviceButton} onPress={() => toggleAdvice(item.key)}>
-                                    <Text style={styles.adviceButtonText}>Mostrar Conselho</Text>
+                                    <Text style={styles.adviceButtonText}>Exibir resultado</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.key)}>
                                     <Text style={styles.deleteButtonText}>Excluir</Text>
