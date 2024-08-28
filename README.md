@@ -2,7 +2,7 @@
 
 ## Descrição
 
-O projeto "Gestão de Saúde" é um sistema desenvolvido para auxiliar na gestão de informações relacionadas à saúde, oferecendo funcionalidades como autenticação de usuários, cadastro de dados e integração com banco de dados.
+O projeto "Gestão de Saúde" é um sistema desenvolvido para auxiliar na gestão de informações relacionadas à saúde, oferecendo funcionalidades como autenticação de usuários, análise e manipulação de exames médicos, cadastro de dados e integração com banco de dados.
 
 ## Tecnologias Utilizadas
 
@@ -10,6 +10,8 @@ O projeto "Gestão de Saúde" é um sistema desenvolvido para auxiliar na gestã
 - Express
 - MySQL
 - React Native
+- Python
+- Flask
 
 ## Servidor Node.js
 
